@@ -8,55 +8,55 @@
   </url>
 
   <url>
-    <loc>https://visualizemydata.in/excel-visualizer</loc>
+    <loc>https://visualizemydata.in/excel-visualizer/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://visualizemydata.in/csv-visualizer</loc>
+    <loc>https://visualizemydata.in/csv-visualizer/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://visualizemydata.in/pdf-visualizer</loc>
+    <loc>https://visualizemydata.in/pdf-visualizer/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://visualizemydata.in/google-sheets-visualizer</loc>
+    <loc>https://visualizemydata.in/google-sheets-visualizer/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://visualizemydata.in/about</loc>
+    <loc>https://visualizemydata.in/about/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://visualizemydata.in/contact</loc>
+    <loc>https://visualizemydata.in/contact/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
-    <loc>https://visualizemydata.in/privacy-policy</loc>
+    <loc>https://visualizemydata.in/privacy-policy/</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://visualizemydata.in/terms</loc>
+    <loc>https://visualizemydata.in/terms/</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://visualizemydata.in/disclaimer</loc>
+    <loc>https://visualizemydata.in/disclaimer/</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
