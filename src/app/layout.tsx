@@ -8,49 +8,53 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-const siteUrl = "https://datavisualizer.app";
+const siteUrl = "https://visualizemydata.in";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Free Data Visualizer Online | Excel, Google Sheets & PDF Charts",
-    template: "%s | DataVisualizer",
+    default: "Free Excel, CSV & PDF Data Visualizer Online (No Login)",
+    template: "%s | VisualizeMyData",
   },
   description:
-    "Upload Excel, Google Sheets, or PDF files and create instant charts online. Free, secure, and fast data visualization tool. No signup required.",
+    "Upload Excel, CSV, PDF or Google Sheets and instantly create beautiful charts online. 100% free, no signup required, files never leave your device.",
   keywords: [
-    "data visualizer",
+    "free excel data visualizer without login",
+    "convert excel file to graph online free",
+    "csv to interactive chart generator",
+    "visualize google sheets data instantly",
+    "pdf table to chart online free",
+    "private spreadsheet chart generator",
+    "no signup excel graph tool",
+    "data visualizer online free",
     "excel chart maker",
-    "google sheets visualizer",
-    "pdf data extractor",
     "csv chart generator",
-    "free online charts",
-    "data visualization tool",
+    "pdf data extractor",
   ],
-  authors: [{ name: "DataVisualizer" }],
-  creator: "DataVisualizer",
+  authors: [{ name: "VisualizeMyData" }],
+  creator: "VisualizeMyData",
   openGraph: {
     type: "website",
     locale: "en_US",
     url: siteUrl,
-    siteName: "DataVisualizer",
-    title: "Free Data Visualizer Online | Excel, Google Sheets & PDF Charts",
+    siteName: "VisualizeMyData",
+    title: "Free Excel, CSV & PDF Data Visualizer Online (No Login)",
     description:
-      "Create beautiful charts from Excel, CSV, Google Sheets, and PDF files instantly. Free, secure, browser-based.",
+      "Create beautiful charts from Excel, CSV, Google Sheets, and PDF files instantly. Free, secure, browser-based — no signup needed.",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "DataVisualizer – Free Online Chart Creator",
+        alt: "VisualizeMyData – Free Online Chart Creator",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Free Data Visualizer Online | Excel, Google Sheets & PDF Charts",
+    title: "Free Excel, CSV & PDF Data Visualizer Online (No Login)",
     description:
-      "Create beautiful charts from Excel, CSV, Google Sheets, and PDF files instantly.",
+      "Create charts from Excel, CSV, PDF or Google Sheets instantly. Free & private — files stay on your device.",
     images: ["/og-image.png"],
   },
   robots: {
@@ -64,17 +68,21 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  alternates: {
+    canonical: siteUrl,
+  },
 };
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  name: "DataVisualizer",
+  name: "VisualizeMyData",
   url: siteUrl,
   description:
-    "Free online data visualization tool. Upload Excel, CSV, Google Sheets, or PDF files and instantly generate interactive charts.",
+    "Free online data visualization tool. Upload Excel, CSV, Google Sheets, or PDF files and instantly generate interactive charts. No login required.",
   applicationCategory: "BusinessApplication",
   operatingSystem: "Any",
+  browserRequirements: "Requires JavaScript",
   offers: {
     "@type": "Offer",
     price: "0",
@@ -83,10 +91,12 @@ const jsonLd = {
   featureList: [
     "Excel file visualization",
     "CSV chart generation",
-    "PDF table extraction",
-    "Google Sheets integration",
-    "Chart download as PNG/PDF",
-    "Browser-based processing",
+    "PDF table extraction and visualization",
+    "Google Sheets integration via URL",
+    "Chart download as PNG and PDF",
+    "100% browser-based processing — no file uploads to server",
+    "Bar, line, area, and pie charts",
+    "Color palette customization",
   ],
 };
 
@@ -103,6 +113,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <link rel="canonical" href={siteUrl} />
+        <meta name="theme-color" content="#0f172a" />
       </head>
       <body className="antialiased">
         {children}

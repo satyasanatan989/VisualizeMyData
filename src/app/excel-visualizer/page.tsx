@@ -2,78 +2,138 @@ import type { Metadata } from 'next';
 import NavbarWrapper from '@/components/NavbarWrapper';
 import Footer from '@/components/Footer';
 import DashboardView from '../DashboardView';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
-    title: 'Excel Visualizer Online – Free Excel to Chart Converter',
-    description: 'Upload Excel files (.xlsx, .xls) and instantly create bar, line, area, and pie charts online. Free, no signup, browser-based Excel data visualizer.',
+    title: 'Free Excel Data Visualizer Online | Convert Spreadsheet to Chart',
+    description: 'Upload any Excel file and instantly convert it to bar, line, pie or area charts online. Free, no login required. Files never leave your device.',
+    alternates: { canonical: 'https://visualizemydata.in/excel-visualizer/' },
     openGraph: {
-        title: 'Excel Visualizer Online – Free Excel to Chart Converter',
-        description: 'Visualize Excel files instantly. No signup required.',
-        type: 'website',
+        title: 'Free Excel Data Visualizer Online | Convert Spreadsheet to Chart',
+        description: 'Upload any Excel file and instantly convert it to bar, line, pie or area charts online. Free, no login required.',
+        url: 'https://visualizemydata.in/excel-visualizer/',
     },
+};
+
+const faqItems = [
+    { q: 'Is this Excel visualizer free to use?', a: 'Yes, completely free. There are no hidden charges, no subscriptions, and no credit card required. Simply upload your Excel file and start visualizing.' },
+    { q: 'Do my Excel files get uploaded to a server?', a: 'No. All processing is done entirely in your browser using JavaScript. Your files never leave your device and are never stored on any server.' },
+    { q: 'What Excel formats are supported?', a: 'Both .xlsx (Excel 2007+) and .xls (older Excel format) files are supported. CSV files are also accepted on this tool.' },
+    { q: 'Can I create bar charts, pie charts and line charts from Excel?', a: 'Yes. After uploading your Excel file, you can choose from bar, line, area, and pie chart types. You can also switch between chart types instantly.' },
+    { q: 'Can I download my chart as a PNG or PDF?', a: 'Yes. Once your chart is generated, you can download it as a high-resolution PNG image or as a PDF document, perfect for reports and presentations.' },
+    { q: 'Do I need to create an account or sign up?', a: 'No account or sign-up is required. Open the tool, upload your Excel file, and your chart is ready in seconds.' },
+    { q: 'How many rows of Excel data can I visualize?', a: 'The tool handles thousands of rows efficiently. Performance depends on your device, but most standard Excel files visualize instantly.' },
+    { q: 'Can I use this Excel visualizer on my phone or tablet?', a: 'Yes. The tool is fully responsive and works on mobile browsers, tablets, and desktop computers without any installation.' },
+];
+
+const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map(({ q, a }) => ({
+        '@type': 'Question',
+        name: q,
+        acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
 };
 
 export default function ExcelVisualizerPage() {
     return (
         <div style={{ minHeight: '100vh', background: 'var(--bg-primary)' }}>
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
             <NavbarWrapper />
 
             {/* Hero */}
-            <section style={{ padding: '64px 0', background: 'linear-gradient(135deg, rgba(16,185,129,0.08), transparent)' }}>
-                <div className="container" style={{ textAlign: 'center' }}>
-                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '5px 14px', background: 'rgba(16,185,129,0.12)', borderRadius: 99, border: '1px solid rgba(16,185,129,0.25)', marginBottom: 20 }}>
-                        <span style={{ fontSize: '0.7rem', fontWeight: 700, color: '#34d399', textTransform: 'uppercase', letterSpacing: '0.08em' }}>📗 Excel Visualizer</span>
+            <section style={{ padding: '56px 0 32px', background: 'linear-gradient(135deg, rgba(16,185,129,0.08), transparent)' }}>
+                <div className="container" style={{ textAlign: 'center', maxWidth: 720 }}>
+                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '6px 14px', borderRadius: 20, background: 'rgba(16,185,129,0.12)', border: '1px solid rgba(16,185,129,0.2)', marginBottom: 20 }}>
+                        <span style={{ fontSize: 14, fontWeight: 700, color: '#10b981', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Excel Visualizer</span>
                     </div>
-                    <h1 style={{ fontSize: 'clamp(1.75rem, 4vw, 3rem)', fontWeight: 900, color: 'var(--text-primary)', marginBottom: 16 }}>
-                        Free Excel to Chart Converter Online
+                    <h1 style={{ fontSize: 'clamp(1.75rem,4vw,2.75rem)', fontWeight: 900, color: 'var(--text-primary)', marginBottom: 16, lineHeight: 1.2 }}>
+                        Free Excel Data Visualizer Online
                     </h1>
-                    <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', maxWidth: 560, margin: '0 auto 40px', lineHeight: 1.8 }}>
-                        Upload any <strong>.xlsx</strong> or <strong>.xls</strong> file and instantly transform your spreadsheet data into beautiful, interactive charts. No software installation required.
+                    <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', lineHeight: 1.8, marginBottom: 24 }}>
+                        Convert any Excel spreadsheet to beautiful, interactive charts in seconds. No login. No uploads to any server. Works entirely in your browser.
                     </p>
+                    {/* Trust badges */}
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center', marginBottom: 32 }}>
+                        {['🔒 100% Client-Side', '📁 Files Never Uploaded', '🚫 No Signup Required', '📱 Works on Mobile'].map(b => (
+                            <span key={b} style={{ padding: '5px 12px', borderRadius: 20, background: 'var(--bg-glass)', border: '1px solid var(--border-subtle)', fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 500 }}>{b}</span>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Tool */}
+            <section style={{ padding: '8px 0 48px' }}>
+                <div className="container">
                     <DashboardView />
                 </div>
             </section>
 
             {/* SEO Content */}
-            <section className="section">
-                <div className="container" style={{ maxWidth: 860 }}>
-                    <article className="prose">
-                        <h2>What is the Excel Visualizer Tool?</h2>
+            <section style={{ padding: '48px 0', borderTop: '1px solid var(--border-subtle)' }}>
+                <div className="container" style={{ maxWidth: 800 }}>
+                    <div className="prose">
+                        <h2>What Is the Free Excel Data Visualizer?</h2>
                         <p>
-                            The DataVisualizer Excel tool is a free, browser-based application that allows you to upload Microsoft Excel spreadsheets and instantly convert your tabular data into interactive charts. Whether you have sales data, survey results, financial figures, or any structured dataset, our Excel visualizer handles it automatically — no technical knowledge required.
+                            The <strong>free Excel data visualizer</strong> on VisualizeMyData is a browser-based tool that converts your Excel spreadsheet data into interactive charts instantly — with no signup, no installation, and no data ever leaving your device. Whether you have sales figures, survey results, student grades, or financial data in an Excel file, this tool transforms it into clear, professional visualizations in just a few clicks.
                         </p>
-                        <h2>How to Visualize Excel Data Online</h2>
                         <p>
-                            Using the Excel data visualizer is simple. Follow these three steps: First, drag and drop your <strong>.xlsx</strong> or <strong>.xls</strong> file into the upload zone above, or click to browse your computer. Second, our intelligent parser reads your spreadsheet, detects column types (numeric, categorical, date), and selects the most appropriate chart type. Third, explore the auto-generated charts — bar, line, area, or pie — and download them as PNG or PDF.
+                            Simply upload your <strong>.xlsx</strong> or <strong>.xls</strong> file, and the tool automatically detects your columns and numeric data. You then choose your chart type — bar chart, line chart, area chart, or pie chart — and your visualization is ready. You can switch between chart types, customize color palettes, and download the final chart as a <strong>PNG image or PDF document</strong>.
                         </p>
-                        <h2>Supported Excel Chart Types</h2>
-                        <p>The Excel visualizer supports four chart types that you can switch between at any time:</p>
+
+                        <h2>Who Is This Tool For?</h2>
+                        <p>
+                            This <strong>free Excel to graph converter</strong> is designed for everyone who works with data but does not want to spend hours in specialized software:
+                        </p>
                         <ul>
-                            <li><strong>Area Charts</strong> – Ideal for showing trends over time with volume context.</li>
-                            <li><strong>Bar Charts</strong> – Best for comparing discrete categories side by side.</li>
-                            <li><strong>Line Charts</strong> – Perfect for time-series data and trend analysis.</li>
-                            <li><strong>Pie / Donut Charts</strong> – Great for showing proportional breakdowns.</li>
+                            <li><strong>Students</strong> presenting research data for assignments and thesis projects.</li>
+                            <li><strong>Business analysts</strong> who need to quickly visualize Excel reports without exporting to other tools.</li>
+                            <li><strong>Teachers and educators</strong> creating visual aids from grade books and assessment data.</li>
+                            <li><strong>Small business owners</strong> tracking sales, inventory, or customer data in spreadsheets.</li>
+                            <li><strong>Researchers and scientists</strong> needing a fast, no-login spreadsheet chart generator.</li>
                         </ul>
-                        <h2>Is My Excel File Safe?</h2>
+
+                        <h2>Why Is Your Data Safe?</h2>
                         <p>
-                            Absolutely. All file processing occurs entirely within your web browser using JavaScript. Your Excel file is never uploaded to any server. Once you close the browser tab, your data is completely gone. We take your privacy seriously — no data is stored, logged, or shared.
+                            Unlike many online tools, VisualizeMyData processes your Excel files <strong>entirely within your browser</strong> using the <code>xlsx</code> JavaScript library. This means your file is never transmitted to any external server, never stored in a database, and is automatically cleared when you close or refresh the tab. This approach makes the tool ideal for <strong>confidential business data, personal financial records, and private research files</strong>.
                         </p>
-                        <h2>Who Uses the Excel Visualizer?</h2>
+
+                        <h2>How to Convert Excel to Chart — Step by Step</h2>
+                        <ol>
+                            <li>Click <strong>"Upload File"</strong> or drag your <code>.xlsx</code> / <code>.xls</code> file into the drop zone.</li>
+                            <li>The tool automatically reads your spreadsheet and detects numeric columns.</li>
+                            <li>Select your preferred <strong>chart type</strong> — bar, line, area, or pie.</li>
+                            <li>Choose a <strong>color palette</strong> to match your brand or presentation.</li>
+                            <li>Click <strong>"Download PNG"</strong> or <strong>"Download PDF"</strong> to export your chart.</li>
+                        </ol>
+
+                        <h2>Also Try These Related Tools</h2>
                         <p>
-                            This tool is used by business analysts, students, teachers, data scientists, product managers, and anyone who needs to quickly turn Excel data into a presentable chart. It is especially useful for creating slides, reports, and dashboards without needing to purchase expensive software like Tableau or Power BI.
+                            Need to visualize other data formats? VisualizeMyData supports multiple file types:
                         </p>
-                        <h2>Excel Visualizer vs. Excel's Built-in Charts</h2>
-                        <p>
-                            While Microsoft Excel does include charting features, our online visualizer is accessible from any device including smartphones and Chromebooks, requires no installation, and is completely free with no subscription. It also supports importing data from CSV, PDF, and Google Sheets in addition to Excel files, making it a versatile all-in-one tool.
-                        </p>
-                        <h2>Tips for Better Excel Visualizations</h2>
                         <ul>
-                            <li>Ensure the first row of your spreadsheet contains column headers.</li>
-                            <li>Keep numeric data in consistent formats (avoid mixing text and numbers in the same column).</li>
-                            <li>Clean up any merged cells before uploading for best results.</li>
-                            <li>Use the "Data Table" tab to verify your data was parsed correctly before analyzing charts.</li>
+                            <li><Link href="/csv-visualizer/">→ <strong>Free CSV to Chart Converter</strong></Link> — visualize raw CSV data files instantly</li>
+                            <li><Link href="/pdf-visualizer/">→ <strong>PDF Table Extractor &amp; Visualizer</strong></Link> — extract tables from PDFs and chart them</li>
+                            <li><Link href="/google-sheets-visualizer/">→ <strong>Google Sheets Visualizer</strong></Link> — paste a public Sheets URL and generate charts</li>
+                            <li><Link href="/">→ <strong>Back to Homepage</strong></Link> — try all formats in one place</li>
                         </ul>
-                    </article>
+                    </div>
+                </div>
+            </section>
+
+            {/* FAQ */}
+            <section style={{ padding: '48px 0', borderTop: '1px solid var(--border-subtle)', background: 'var(--bg-secondary)' }}>
+                <div className="container" style={{ maxWidth: 800 }}>
+                    <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: 32 }}>Frequently Asked Questions</h2>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                        {faqItems.map(({ q, a }) => (
+                            <div key={q} style={{ padding: '20px 24px', borderRadius: 14, background: 'var(--bg-primary)', border: '1px solid var(--border-subtle)' }}>
+                                <h3 style={{ fontSize: '0.9375rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 8 }}>{q}</h3>
+                                <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', lineHeight: 1.7, margin: 0 }}>{a}</p>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </section>
 
