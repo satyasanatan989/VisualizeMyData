@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://datavisualizer.app/sitemap.xml
+Sitemap: https://visualizemydata.in/sitemap.xml
 
 # Disallow admin or internal paths (none currently)
 Disallow: /api/
