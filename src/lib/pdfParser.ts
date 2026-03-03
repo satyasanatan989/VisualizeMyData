@@ -18,7 +18,7 @@ export async function parsePdfFile(file: File): Promise<PdfParseResult> {
     const pdfjsLib = await import('pdfjs-dist');
 
     // Set worker src
-    pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+    pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
 
     const arrayBuffer = await file.arrayBuffer();
     const pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;

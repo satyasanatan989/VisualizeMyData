@@ -20,7 +20,7 @@ export default function PdfPreview({ file, pageCount }: PdfPreviewProps) {
             setLoading(true);
             try {
                 const pdfjsLib = await import('pdfjs-dist');
-                pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+                pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
 
                 const arrayBuffer = await file.arrayBuffer();
                 const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
