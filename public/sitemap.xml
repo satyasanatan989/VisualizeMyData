@@ -31,6 +31,11 @@
 
   <!-- New Tools -->
   <url>
+    <loc>https://visualizemydata.in/multi-chart-generator/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
     <loc>https://visualizemydata.in/dashboard-generator/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
