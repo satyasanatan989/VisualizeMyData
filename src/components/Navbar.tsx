@@ -18,6 +18,11 @@ export default function Navbar({ darkMode, onToggleDark }: NavbarProps) {
         { label: 'CSV', href: '/csv-visualizer' },
         { label: 'PDF', href: '/pdf-visualizer' },
         { label: 'Google Sheets', href: '/google-sheets-visualizer' },
+        { label: 'Dashboard', href: '/dashboard-generator' },
+        { label: 'Report', href: '/data-report-generator' },
+        { label: 'Templates', href: '/templates' },
+        { label: 'Learn', href: '/learn' },
+        { label: 'Blog', href: '/blog' },
         { label: 'About', href: '/about' },
     ];
 

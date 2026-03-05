@@ -7,54 +7,235 @@
     <priority>1.0</priority>
   </url>
 
+  <!-- Core Tools -->
   <url>
     <loc>https://visualizemydata.in/excel-visualizer/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
-
   <url>
     <loc>https://visualizemydata.in/csv-visualizer/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
-
   <url>
     <loc>https://visualizemydata.in/pdf-visualizer/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
-
   <url>
     <loc>https://visualizemydata.in/google-sheets-visualizer/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
+  <!-- New Tools -->
+  <url>
+    <loc>https://visualizemydata.in/dashboard-generator/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/data-report-generator/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/templates/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Learn Hub -->
+  <url>
+    <loc>https://visualizemydata.in/learn/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/learn/what-is-data-visualization/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/learn/how-to-create-charts-from-excel/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/learn/best-data-visualization-techniques/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/learn/dashboard-design-best-practices/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/learn/common-chart-types/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- SEO Landing Pages -->
+  <url>
+    <loc>https://visualizemydata.in/excel-dashboard-generator/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/csv-dashboard-generator/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/google-sheets-dashboard/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/data-dashboard-builder/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Excel Programmatic SEO -->
+  <url>
+    <loc>https://visualizemydata.in/excel-to-bar-chart/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/excel-to-pie-chart/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/excel-to-line-chart/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/excel-to-scatter-plot/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/excel-chart-generator/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- CSV Programmatic SEO -->
+  <url>
+    <loc>https://visualizemydata.in/csv-to-bar-chart/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/csv-to-line-chart/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/csv-to-pie-chart/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/csv-chart-generator/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- PDF Programmatic SEO -->
+  <url>
+    <loc>https://visualizemydata.in/pdf-table-to-chart/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/pdf-data-visualization/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/pdf-to-bar-chart/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- General Tool SEO -->
+  <url>
+    <loc>https://visualizemydata.in/data-analysis-tool/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/data-visualization-tool/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/create-charts-online/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Blog -->
+  <url>
+    <loc>https://visualizemydata.in/blog/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/blog/how-to-visualize-excel-data/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/blog/csv-data-visualization-guide/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/blog/best-free-data-visualization-tools/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/blog/how-to-create-dashboard-from-excel/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/blog/convert-data-to-charts-online/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Informational pages -->
   <url>
     <loc>https://visualizemydata.in/about/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
   <url>
     <loc>https://visualizemydata.in/contact/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
-
   <url>
     <loc>https://visualizemydata.in/privacy-policy/</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
-
   <url>
     <loc>https://visualizemydata.in/terms/</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
-
   <url>
     <loc>https://visualizemydata.in/disclaimer/</loc>
     <changefreq>yearly</changefreq>

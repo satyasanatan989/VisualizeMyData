@@ -7,6 +7,13 @@ import DashboardView from './DashboardView';
 import Link from 'next/link';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
+const USE_CASES = [
+  { icon: '🎓', title: 'Students', desc: 'Analyze project data, build charts for presentations, and visualize study results — no Excel skills required.' },
+  { icon: '🔬', title: 'Researchers', desc: 'Visualize survey responses, experiment results, and datasets from CSV or Excel exports instantly.' },
+  { icon: '📈', title: 'Business Analysts', desc: 'Create KPI dashboards, sales charts, and exportable reports from any spreadsheet in seconds.' },
+  { icon: '👤', title: 'Everyone Else', desc: 'Turn any table of numbers into a clear, downloadable chart — no data expertise needed.' },
+];
+
 const FEATURES = [
   { icon: '📊', title: 'Smart Chart Generation', desc: 'AI-powered column detection automatically picks the best chart type for your data.' },
   { icon: '📄', title: 'PDF Table Extraction', desc: 'Upload PDFs and we\'ll extract tables automatically. No manual copy-paste needed.' },
@@ -64,13 +71,52 @@ export default function HomePage() {
     <div className={darkMode ? '' : 'light'} style={{ minHeight: '100vh', background: 'var(--bg-primary)' }}>
       <Navbar darkMode={darkMode} onToggleDark={() => setDarkMode(d => !d)} />
 
-      {/* Hero + Tool */}
-      <section style={{ padding: '60px 0 80px', position: 'relative', overflow: 'hidden' }}>
+      {/* ── HERO SECTION ── */}
+      <section style={{ padding: '80px 0 60px', position: 'relative', overflow: 'hidden' }}>
         {/* Ambient blobs */}
         <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden' }}>
           <div style={{ position: 'absolute', top: '-10%', left: '-5%', width: 800, height: 800, background: 'radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%)', borderRadius: '50%' }} />
           <div style={{ position: 'absolute', bottom: '-10%', right: '-5%', width: 600, height: 600, background: 'radial-gradient(circle, rgba(139,92,246,0.1) 0%, transparent 70%)', borderRadius: '50%' }} />
         </div>
+        <div className="container" style={{ position: 'relative', textAlign: 'center', maxWidth: 760, marginBottom: 60 }}>
+          {/* Badge */}
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '5px 14px', background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.25)', borderRadius: 99, marginBottom: 24 }}>
+            <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#6366f1', display: 'inline-block' }} />
+            <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.08em', color: '#a5b4fc', textTransform: 'uppercase' }}>Free · No Signup · 100% Browser-Based</span>
+          </div>
+          {/* Headline */}
+          <h1 style={{ fontSize: 'clamp(2.25rem, 6vw, 4rem)', fontWeight: 900, lineHeight: 1.1, marginBottom: 20, background: 'linear-gradient(135deg, #e2e8f0 30%, #a78bfa 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+            Visualize Your Data Instantly
+          </h1>
+          {/* Subtext */}
+          <p style={{ color: 'var(--text-secondary)', fontSize: 'clamp(1rem, 2.5vw, 1.15rem)', lineHeight: 1.75, maxWidth: 580, margin: '0 auto 36px' }}>
+            Upload Excel, CSV, PDF, or Google Sheets and instantly generate charts, dashboards, and data insights directly in your browser.
+          </p>
+          {/* CTA Buttons */}
+          <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 40 }}>
+            <button
+              onClick={() => document.getElementById('upload-zone')?.scrollIntoView({ behavior: 'smooth' })}
+              style={{ padding: '13px 28px', borderRadius: 10, fontSize: '0.95rem', fontWeight: 700, background: 'linear-gradient(135deg, #3b82f6, #6366f1)', color: '#fff', border: 'none', cursor: 'pointer', boxShadow: '0 4px 20px rgba(59,130,246,0.4)', transition: 'transform 0.15s, box-shadow 0.15s' }}
+              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 8px 30px rgba(59,130,246,0.5)'; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 4px 20px rgba(59,130,246,0.4)'; }}
+            >⬆ Upload Data</button>
+            <Link href="/dashboard-generator" style={{ padding: '13px 28px', borderRadius: 10, fontSize: '0.95rem', fontWeight: 700, background: 'rgba(139,92,246,0.15)', color: '#a78bfa', border: '1px solid rgba(139,92,246,0.3)', textDecoration: 'none', transition: 'all 0.15s', display: 'inline-block' }}
+              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(139,92,246,0.25)'; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(139,92,246,0.15)'; }}
+            >📊 Generate Dashboard</Link>
+            <Link href="/templates" style={{ padding: '13px 28px', borderRadius: 10, fontSize: '0.95rem', fontWeight: 700, background: 'rgba(16,185,129,0.12)', color: '#34d399', border: '1px solid rgba(16,185,129,0.25)', textDecoration: 'none', transition: 'all 0.15s', display: 'inline-block' }}
+              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(16,185,129,0.22)'; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(16,185,129,0.12)'; }}
+            >✨ Try Templates</Link>
+          </div>
+          {/* Trust indicators */}
+          <div style={{ display: 'flex', gap: 20, justifyContent: 'center', flexWrap: 'wrap' }}>
+            {['✓ 100% Browser Processing', '✓ No Login Required', '✓ Your Data Never Leaves Your Device'].map(t => (
+              <span key={t} style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 4 }}>{t}</span>
+            ))}
+          </div>
+        </div>
+        {/* Upload Tool */}
         <div className="container" style={{ position: 'relative' }}>
           <DashboardView />
         </div>
@@ -128,6 +174,31 @@ export default function HomePage() {
                   <h3 style={{ fontSize: '0.9375rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 6 }}>{f.title}</h3>
                   <p style={{ color: 'var(--text-secondary)', fontSize: '0.8375rem', lineHeight: 1.7, margin: 0 }}>{f.desc}</p>
                 </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── USE CASES SECTION ── */}
+      <section className="section">
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: 48 }}>
+            <span className="badge badge-blue" style={{ marginBottom: 14 }}>Use Cases</span>
+            <h2 style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: 800, color: 'var(--text-primary)' }}>
+              Who Is This Tool For?
+            </h2>
+            <p style={{ color: 'var(--text-secondary)', maxWidth: 480, margin: '12px auto 0', lineHeight: 1.7 }}>
+              Whether you&apos;re a student, researcher, or analyst — visualizing data has never been this easy.
+            </p>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 20 }}>
+            {USE_CASES.map((uc, i) => (
+              <div key={uc.title} className="card" style={{ padding: '28px 24px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+                <div style={{ position: 'absolute', top: -30, right: -30, width: 100, height: 100, borderRadius: '50%', background: i % 2 === 0 ? 'rgba(59,130,246,0.06)' : 'rgba(139,92,246,0.06)' }} />
+                <div style={{ fontSize: '2.5rem', marginBottom: 14 }}>{uc.icon}</div>
+                <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 10 }}>{uc.title}</h3>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', lineHeight: 1.7, margin: 0 }}>{uc.desc}</p>
               </div>
             ))}
           </div>
