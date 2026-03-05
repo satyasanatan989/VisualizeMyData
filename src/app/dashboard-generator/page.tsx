@@ -5,15 +5,23 @@ import Footer from '@/components/Footer';
 import NavbarWrapper from '@/components/NavbarWrapper';
 import FileUploadZone from '@/components/FileUploadZone';
 import DashboardGenerator from '@/components/dashboard/DashboardGenerator';
+import TemplateSelector from '@/components/dashboard/templates/TemplateSelector';
+import TemplateRenderer from '@/components/dashboard/templates/TemplateRenderer';
 import { ParsedData } from '@/lib/excelParser';
 import type { PdfParseResult } from '@/lib/pdfParser';
 
 export default function DashboardGeneratorPage() {
     const [parsedData, setParsedData] = useState<ParsedData | null>(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
 
     const handleDataParsed = (data: ParsedData, _isPdf?: boolean, _pdfResult?: PdfParseResult) => {
         setParsedData(data);
+    };
+
+    const handleReset = () => {
+        setParsedData(null);
+        setSelectedTemplate(null);
     };
 
     return (
@@ -54,10 +62,19 @@ export default function DashboardGeneratorPage() {
                         isLoading={isLoading}
                         setIsLoading={setIsLoading}
                     />
-                ) : (
+                ) : !selectedTemplate ? (
+                    <TemplateSelector onSelect={setSelectedTemplate} />
+                ) : selectedTemplate === 'default' ? (
                     <DashboardGenerator
                         parsedData={parsedData}
-                        onReset={() => setParsedData(null)}
+                        onReset={handleReset}
+                    />
+                ) : (
+                    <TemplateRenderer
+                        templateId={selectedTemplate}
+                        parsedData={parsedData}
+                        onReset={handleReset}
+                        onBack={() => setSelectedTemplate(null)}
                     />
                 )}
             </main>

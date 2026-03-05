@@ -15,14 +15,16 @@ import {
 
 interface MultiChartRendererProps {
     parsedData: ParsedData;
+    initialConfigs?: ChartConfig[];
+    hideToolbar?: boolean;
 }
 
 // Built-in color palette for multi-series charts
 const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#f43f5e', '#06b6d4'];
 
-export default function MultiChartRenderer({ parsedData }: MultiChartRendererProps) {
-    const [configs, setConfigs] = useState<ChartConfig[]>([]);
-    const [isAdding, setIsAdding] = useState(true); // Start with adding mode if empty
+export default function MultiChartRenderer({ parsedData, initialConfigs = [], hideToolbar = false }: MultiChartRendererProps) {
+    const [configs, setConfigs] = useState<ChartConfig[]>(initialConfigs);
+    const [isAdding, setIsAdding] = useState(initialConfigs.length === 0); // Start with adding mode if empty
 
     const data = parsedData.data;
 
@@ -223,14 +225,16 @@ export default function MultiChartRenderer({ parsedData }: MultiChartRendererPro
 
     return (
         <div>
-            <ChartToolbar
-                parsedData={parsedData}
-                isAdding={isAdding}
-                canExport={true}
-                onAddNewRequest={() => setIsAdding(true)}
-            />
+            {!hideToolbar && (
+                <ChartToolbar
+                    parsedData={parsedData}
+                    isAdding={isAdding}
+                    canExport={true}
+                    onAddNewRequest={() => setIsAdding(true)}
+                />
+            )}
 
-            {isAdding && (
+            {isAdding && !hideToolbar && (
                 <ChartSelector
                     columns={parsedData.columns}
                     onAddChart={handleAddChart}
@@ -243,7 +247,7 @@ export default function MultiChartRenderer({ parsedData }: MultiChartRendererPro
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))',
                 gap: 24,
-                marginTop: 32
+                marginTop: hideToolbar ? 0 : 32
             }}>
                 {configs.map((config) => (
                     <ChartContainer key={config.id} id={config.id} title={config.title} onRemove={handleRemoveChart}>
