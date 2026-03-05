@@ -175,18 +175,38 @@ export default function MultiChartRenderer({ parsedData, initialConfigs = [], hi
                     </ResponsiveContainer>
                 );
 
-            case 'pie':
+            case 'pie': {
+                // Pre-aggregate data for pie to avoid 1000s of tiny slices and massive legends
+                const aggregated: Record<string, number> = {};
+                data.forEach(d => {
+                    const key = String(d[xAxisKey]);
+                    const val = Number(d[yAxisKeys[0]]) || 0;
+                    aggregated[key] = (aggregated[key] || 0) + val;
+                });
+
+                let pieData = Object.entries(aggregated)
+                    .map(([name, value]) => ({ [xAxisKey]: name, [yAxisKeys[0]]: value }))
+                    .sort((a, b) => Number(b[yAxisKeys[0]]) - Number(a[yAxisKeys[0]]));
+
+                if (pieData.length > 15) {
+                    const top = pieData.slice(0, 14);
+                    const otherSum = pieData.slice(14).reduce((sum, item) => sum + Number(item[yAxisKeys[0]]), 0);
+                    top.push({ [xAxisKey]: 'Other', [yAxisKeys[0]]: otherSum });
+                    pieData = top;
+                }
+
                 return (
                     <ResponsiveContainer width="100%" height="100%">
                         <PieChart>
                             <Tooltip contentStyle={{ borderRadius: 8, border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
-                            <Legend wrapperStyle={{ fontSize: 12 }} />
-                            <Pie data={data} dataKey={yAxisKeys[0]} nameKey={xAxisKey} cx="50%" cy="50%" outerRadius={120} innerRadius={0}>
-                                {data.map((_, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)}
+                            <Legend wrapperStyle={{ fontSize: 11 }} />
+                            <Pie data={pieData} dataKey={yAxisKeys[0]} nameKey={xAxisKey} cx="50%" cy="50%" outerRadius={110} innerRadius={0}>
+                                {pieData.map((_, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)}
                             </Pie>
                         </PieChart>
                     </ResponsiveContainer>
                 );
+            }
 
             case 'radar':
                 return (

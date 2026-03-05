@@ -71,14 +71,14 @@ export const DASHBOARD_TEMPLATES: DashboardTemplate[] = [
         description: 'Deep dive into revenue, expenses, and net profit margins.',
         icon: '💰',
         metrics: [
-            { id: 'm1', label: 'Total Revenue', type: 'sum', targetColumnHint: ['revenue', 'income', 'sales'] },
-            { id: 'm2', label: 'Total Expenses', type: 'sum', targetColumnHint: ['expense', 'cost', 'spend', 'out'] },
-            { id: 'm3', label: 'Net Profit', type: 'sum', targetColumnHint: ['profit', 'net', 'margin', 'revenue'] } // Fallback to revenue if profit missing
+            { id: 'm1', label: 'Total Revenue', type: 'sum', targetColumnHint: ['revenue', 'income', 'sales', 'amount', 'total'] },
+            { id: 'm2', label: 'Total Expenses', type: 'sum', targetColumnHint: ['expense', 'cost', 'spend', 'out', 'amount', 'total'] },
+            { id: 'm3', label: 'Net Profit', type: 'sum', targetColumnHint: ['profit', 'net', 'margin', 'revenue', 'amount', 'total'] } // Fallback to revenue if profit missing
         ],
         charts: [
-            { id: 'c1', title: 'Revenue vs Expenses', type: 'line', xAxisHint: ['date', 'month', 'quarter'], yAxisHint: ['revenue', 'expense', 'income', 'cost'] },
-            { id: 'c2', title: 'Expense Breakdown', type: 'pie', xAxisHint: ['category', 'department', 'type'], yAxisHint: ['expense', 'cost', 'spend'] },
-            { id: 'c3', title: 'Monthly Profit', type: 'bar', xAxisHint: ['date', 'month', 'period'], yAxisHint: ['profit', 'net', 'margin'] }
+            { id: 'c1', title: 'Revenue vs Expenses', type: 'line', xAxisHint: ['date', 'month', 'quarter'], yAxisHint: ['revenue', 'expense', 'income', 'cost', 'amount', 'total'] },
+            { id: 'c2', title: 'Expense Breakdown', type: 'pie', xAxisHint: ['category', 'department', 'type'], yAxisHint: ['expense', 'cost', 'spend', 'amount', 'total'] },
+            { id: 'c3', title: 'Monthly Profit', type: 'bar', xAxisHint: ['date', 'month', 'period'], yAxisHint: ['profit', 'net', 'margin', 'revenue', 'amount', 'total'] }
         ]
     },
     {
