@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import DashboardView from './DashboardView';
+import StickyUploadButton from '@/components/StickyUploadButton';
 import Link from 'next/link';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
@@ -99,11 +100,11 @@ export default function HomePage() {
               style={{ padding: '13px 28px', borderRadius: 10, fontSize: '0.95rem', fontWeight: 700, background: 'linear-gradient(135deg, #3b82f6, #6366f1)', color: '#fff', border: 'none', cursor: 'pointer', boxShadow: '0 4px 20px rgba(59,130,246,0.4)', transition: 'transform 0.15s, box-shadow 0.15s' }}
               onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 8px 30px rgba(59,130,246,0.5)'; }}
               onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 4px 20px rgba(59,130,246,0.4)'; }}
-            >⬆ Upload Data</button>
+            >⚡ Upload File &amp; Create Charts</button>
             <Link href="/dashboard-generator" style={{ padding: '13px 28px', borderRadius: 10, fontSize: '0.95rem', fontWeight: 700, background: 'rgba(139,92,246,0.15)', color: '#a78bfa', border: '1px solid rgba(139,92,246,0.3)', textDecoration: 'none', transition: 'all 0.15s', display: 'inline-block' }}
               onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(139,92,246,0.25)'; }}
               onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(139,92,246,0.15)'; }}
-            >📊 Generate Dashboard</Link>
+            >📊 Create Instant Dashboard</Link>
             <Link href="/templates" style={{ padding: '13px 28px', borderRadius: 10, fontSize: '0.95rem', fontWeight: 700, background: 'rgba(16,185,129,0.12)', color: '#34d399', border: '1px solid rgba(16,185,129,0.25)', textDecoration: 'none', transition: 'all 0.15s', display: 'inline-block' }}
               onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(16,185,129,0.22)'; }}
               onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(16,185,129,0.12)'; }}
@@ -119,6 +120,28 @@ export default function HomePage() {
         {/* Upload Tool */}
         <div className="container" style={{ position: 'relative' }}>
           <DashboardView />
+        </div>
+      </section>
+
+      {/* Social Proof Counter Strip */}
+      <section style={{
+        padding: '28px 0',
+        background: 'linear-gradient(90deg, rgba(59,130,246,0.07), rgba(139,92,246,0.07))',
+        borderTop: '1px solid rgba(255,255,255,0.05)',
+        borderBottom: '1px solid rgba(255,255,255,0.05)',
+      }}>
+        <div className="container" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '16px 48px', textAlign: 'center' }}>
+          {[
+            { value: '2M+', label: 'Charts Generated', color: '#60a5fa' },
+            { value: '150+', label: 'Countries Using The Tool', color: '#a78bfa' },
+            { value: '50K+', label: 'Daily Data Uploads', color: '#34d399' },
+            { value: '100%', label: 'Free — No Signup', color: '#fb923c' },
+          ].map(stat => (
+            <div key={stat.label}>
+              <p style={{ fontSize: '1.9rem', fontWeight: 900, color: stat.color, margin: 0, lineHeight: 1.1, letterSpacing: '-0.02em' }}>{stat.value}</p>
+              <p style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)', margin: '4px 0 0', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{stat.label}</p>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -174,6 +197,55 @@ export default function HomePage() {
                   <h3 style={{ fontSize: '0.9375rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 6 }}>{f.title}</h3>
                   <p style={{ color: 'var(--text-secondary)', fontSize: '0.8375rem', lineHeight: 1.7, margin: 0 }}>{f.desc}</p>
                 </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Chart Types Showcase */}
+      <section className="section">
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: 40 }}>
+            <span className="badge badge-blue" style={{ marginBottom: 14 }}>Chart Types</span>
+            <h2 style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: 800, color: 'var(--text-primary)' }}>
+              Every Chart Type You Need
+            </h2>
+            <p style={{ color: 'var(--text-secondary)', maxWidth: 480, margin: '12px auto 0', lineHeight: 1.7 }}>
+              Auto-detected from your data — or choose manually. One upload, multiple chart options.
+            </p>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 16 }}>
+            {[
+              { emoji: '📊', name: 'Bar Chart', desc: 'Compare categories side-by-side', color: '#3b82f6', bg: 'rgba(59,130,246,0.08)' },
+              { emoji: '📈', name: 'Line Chart', desc: 'Track trends over time', color: '#10b981', bg: 'rgba(16,185,129,0.08)' },
+              { emoji: '🥧', name: 'Pie Chart', desc: 'Show proportional breakdowns', color: '#f43f5e', bg: 'rgba(244,63,94,0.08)' },
+              { emoji: '🔵', name: 'Scatter Plot', desc: 'Visualize correlations', color: '#8b5cf6', bg: 'rgba(139,92,246,0.08)' },
+              { emoji: '📉', name: 'Area Chart', desc: 'Highlight cumulative data', color: '#06b6d4', bg: 'rgba(6,182,212,0.08)' },
+              { emoji: '◼️', name: 'Histogram', desc: 'Frequency distribution view', color: '#f59e0b', bg: 'rgba(245,158,11,0.08)' },
+              { emoji: '📌', name: 'Dashboard', desc: 'KPI + multi-chart layouts', color: '#a78bfa', bg: 'rgba(167,139,250,0.08)' },
+            ].map(c => (
+              <div key={c.name} style={{
+                padding: '22px 18px',
+                borderRadius: 16,
+                background: c.bg,
+                border: `1px solid ${c.color}28`,
+                textAlign: 'center',
+                transition: 'transform 0.2s, box-shadow 0.2s',
+                cursor: 'default',
+              }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLDivElement).style.transform = 'translateY(-3px)';
+                  (e.currentTarget as HTMLDivElement).style.boxShadow = `0 8px 24px ${c.color}22`;
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLDivElement).style.transform = 'translateY(0)';
+                  (e.currentTarget as HTMLDivElement).style.boxShadow = 'none';
+                }}
+              >
+                <span style={{ fontSize: '2rem', display: 'block', marginBottom: 10 }}>{c.emoji}</span>
+                <p style={{ fontSize: '0.9rem', fontWeight: 700, color: c.color, margin: '0 0 5px' }}>{c.name}</p>
+                <p style={{ fontSize: '0.775rem', color: 'var(--text-muted)', margin: 0, lineHeight: 1.5 }}>{c.desc}</p>
               </div>
             ))}
           </div>
@@ -311,6 +383,7 @@ export default function HomePage() {
       </section>
 
       <Footer />
+      <StickyUploadButton />
     </div>
   );
 }
