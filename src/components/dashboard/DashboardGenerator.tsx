@@ -116,8 +116,16 @@ export default function DashboardGenerator({ parsedData, onReset }: DashboardGen
     const handleDownloadDashboardXlsx = useCallback(async () => {
         setDownloading('dashboard-xlsx');
         try {
+            const { default: html2canvas } = await import('html2canvas');
+            const el = document.getElementById('dashboard-export-area');
+            let imgData = '';
+            if (el) {
+                const canvas = await html2canvas(el, { backgroundColor: '#020817', scale: 1.5 });
+                imgData = canvas.toDataURL('image/png');
+            }
+
             const { exportDashboardXlsx } = await import('@/lib/xlsxDashboardExport');
-            exportDashboardXlsx(parsedData, report);
+            await exportDashboardXlsx(parsedData, report, imgData);
         } catch (e) { console.error(e); }
         finally { setDownloading(null); }
     }, [parsedData, report]);

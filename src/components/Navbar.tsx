@@ -93,50 +93,54 @@ export default function Navbar({ darkMode, onToggleDark }: NavbarProps) {
                             <ChevronDown size={13} style={{ transition: 'transform 0.2s', transform: toolsOpen ? 'rotate(180deg)' : 'rotate(0)' }} />
                         </button>
 
-                        {/* Dropdown panel */}
+                        {/* Dropdown panel wrapper to prevent mouseleave gap */}
                         <div style={{
                             position: 'absolute',
-                            top: 'calc(100% + 8px)',
+                            top: '100%',
                             left: 0,
                             minWidth: 210,
-                            background: 'rgba(10,18,36,0.97)',
-                            border: '1px solid rgba(255,255,255,0.1)',
-                            borderRadius: 14,
-                            padding: '8px',
-                            boxShadow: '0 12px 40px rgba(0,0,0,0.5)',
-                            backdropFilter: 'blur(20px)',
+                            paddingTop: '8px',
                             opacity: toolsOpen ? 1 : 0,
                             pointerEvents: toolsOpen ? 'auto' : 'none',
                             transform: toolsOpen ? 'translateY(0)' : 'translateY(-6px)',
                             transition: 'opacity 0.18s ease, transform 0.18s ease',
                         }}>
-                            {TOOL_LINKS.map(t => (
-                                <Link
-                                    key={t.href}
-                                    href={t.href}
-                                    onClick={() => setToolsOpen(false)}
-                                    style={{
-                                        display: 'block',
-                                        padding: '10px 14px',
-                                        borderRadius: 10,
-                                        fontSize: '0.85rem',
-                                        fontWeight: 500,
-                                        color: 'var(--text-secondary)',
-                                        textDecoration: 'none',
-                                        transition: 'background 0.15s, color 0.15s',
-                                    }}
-                                    onMouseEnter={e => {
-                                        (e.currentTarget as HTMLElement).style.background = 'rgba(59,130,246,0.12)';
-                                        (e.currentTarget as HTMLElement).style.color = '#93c5fd';
-                                    }}
-                                    onMouseLeave={e => {
-                                        (e.currentTarget as HTMLElement).style.background = 'transparent';
-                                        (e.currentTarget as HTMLElement).style.color = 'var(--text-secondary)';
-                                    }}
-                                >
-                                    {t.label}
-                                </Link>
-                            ))}
+                            <div style={{
+                                background: 'rgba(10,18,36,0.97)',
+                                border: '1px solid rgba(255,255,255,0.1)',
+                                borderRadius: 14,
+                                padding: '8px',
+                                boxShadow: '0 12px 40px rgba(0,0,0,0.5)',
+                                backdropFilter: 'blur(20px)',
+                            }}>
+                                {TOOL_LINKS.map(t => (
+                                    <Link
+                                        key={t.href}
+                                        href={t.href}
+                                        onClick={() => setToolsOpen(false)}
+                                        style={{
+                                            display: 'block',
+                                            padding: '10px 14px',
+                                            borderRadius: 10,
+                                            fontSize: '0.85rem',
+                                            fontWeight: 500,
+                                            color: 'var(--text-secondary)',
+                                            textDecoration: 'none',
+                                            transition: 'background 0.15s, color 0.15s',
+                                        }}
+                                        onMouseEnter={e => {
+                                            (e.currentTarget as HTMLElement).style.background = 'rgba(59,130,246,0.12)';
+                                            (e.currentTarget as HTMLElement).style.color = '#93c5fd';
+                                        }}
+                                        onMouseLeave={e => {
+                                            (e.currentTarget as HTMLElement).style.background = 'transparent';
+                                            (e.currentTarget as HTMLElement).style.color = 'var(--text-secondary)';
+                                        }}
+                                    >
+                                        {t.label}
+                                    </Link>
+                                ))}
+                            </div>
                         </div>
                     </div>
 

@@ -48,10 +48,8 @@ export default function DashboardTable({ parsedData, maxRows = 20 }: DashboardTa
                                     fontSize: '0.72rem',
                                     textTransform: 'uppercase',
                                     letterSpacing: '0.05em',
-                                    borderBottom: '1px solid var(--border-subtle)',
                                 }}>
                                     {col.key}
-                                    <span style={{ marginLeft: 4, opacity: 0.45, fontSize: '0.6rem' }}>{col.type}</span>
                                 </th>
                             ))}
                         </tr>
