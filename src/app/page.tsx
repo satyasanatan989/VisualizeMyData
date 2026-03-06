@@ -5,8 +5,52 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import DashboardView from './DashboardView';
 import StickyUploadButton from '@/components/StickyUploadButton';
+import ScrollReveal from '@/components/ScrollReveal';
 import Link from 'next/link';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import {
+  BarChart, Bar, LineChart, Line, AreaChart, Area,
+  PieChart, Pie, Cell,
+  XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid,
+} from 'recharts';
+
+// ── Sample data for live preview charts ──
+const PREVIEW_BAR = [
+  { month: 'Jan', value: 4200 }, { month: 'Feb', value: 5800 },
+  { month: 'Mar', value: 5100 }, { month: 'Apr', value: 7200 },
+  { month: 'May', value: 6800 }, { month: 'Jun', value: 9100 },
+];
+const PREVIEW_LINE = [
+  { month: 'Jan', users: 1200 }, { month: 'Feb', users: 1900 },
+  { month: 'Mar', users: 1700 }, { month: 'Apr', users: 2800 },
+  { month: 'May', users: 3200 }, { month: 'Jun', users: 4100 },
+];
+const PREVIEW_PIE = [
+  { name: 'Excel', value: 38 }, { name: 'CSV', value: 31 },
+  { name: 'PDF', value: 19 }, { name: 'Sheets', value: 12 },
+];
+const PIE_COLORS = ['#3b82f6', '#8b5cf6', '#f43f5e', '#10b981'];
+
+const DASH_AREA = [
+  { t: 'Q1', rev: 12000, cost: 7200 }, { t: 'Q2', rev: 18500, cost: 9800 },
+  { t: 'Q3', rev: 15200, cost: 8600 }, { t: 'Q4', rev: 24000, cost: 11200 },
+];
+const DASH_PIE = [
+  { name: 'Product A', value: 42 }, { name: 'Product B', value: 28 },
+  { name: 'Product C', value: 18 }, { name: 'Other', value: 12 },
+];
+
+const DEMO_ROWS = [
+  { Product: 'Widget Pro', Category: 'Electronics', Sales: 12450, Region: 'North America' },
+  { Product: 'DataPen X', Category: 'Software', Sales: 8900, Region: 'Europe' },
+  { Product: 'CloudSync', Category: 'SaaS', Sales: 21300, Region: 'Asia' },
+  { Product: 'Analytics+', Category: 'Software', Sales: 15600, Region: 'North America' },
+  { Product: 'PrintHub', Category: 'Hardware', Sales: 6780, Region: 'Europe' },
+];
+
+const tooltipCfg = {
+  contentStyle: { background: '#0f172a', border: '1px solid #334155', borderRadius: 8, fontSize: 11, color: '#fff' },
+};
 
 const USE_CASES = [
   { icon: '🎓', title: 'Students', desc: 'Analyze project data, build charts for presentations, and visualize study results — no Excel skills required.' },
@@ -117,6 +161,66 @@ export default function HomePage() {
             ))}
           </div>
         </div>
+
+        {/* ── Live Preview Chart Strip ── */}
+        <div className="container" style={{ position: 'relative', marginBottom: 40 }}>
+          <div className="gradient-border">
+            <div className="glass-card" style={{ padding: '20px 24px' }}>
+              {/* Header bar */}
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <span className="live-dot" />
+                  <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary)', letterSpacing: '0.04em' }}>LIVE DEMO — SAMPLE ANALYTICS</span>
+                </div>
+                <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', background: 'rgba(255,255,255,0.04)', padding: '3px 10px', borderRadius: 20, border: '1px solid var(--border-subtle)' }}>Sample Data</span>
+              </div>
+              {/* 3 mini charts */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16 }}>
+                {/* Bar */}
+                <div style={{ background: 'rgba(59,130,246,0.05)', borderRadius: 14, padding: '14px 16px', border: '1px solid rgba(59,130,246,0.1)' }}>
+                  <p style={{ fontSize: '0.72rem', fontWeight: 700, color: '#60a5fa', margin: '0 0 10px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Monthly Revenue</p>
+                  <ResponsiveContainer width="100%" height={120}>
+                    <BarChart data={PREVIEW_BAR} barCategoryGap="30%">
+                      <XAxis dataKey="month" tick={{ fill: '#475569', fontSize: 10 }} axisLine={false} tickLine={false} />
+                      <Tooltip {...tooltipCfg} cursor={{ fill: 'rgba(255,255,255,0.04)' }} />
+                      <Bar dataKey="value" radius={[4, 4, 0, 0]} fill="url(#barGrad)" />
+                      <defs>
+                        <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor="#3b82f6" />
+                          <stop offset="100%" stopColor="#6366f1" />
+                        </linearGradient>
+                      </defs>
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+                {/* Line */}
+                <div style={{ background: 'rgba(16,185,129,0.05)', borderRadius: 14, padding: '14px 16px', border: '1px solid rgba(16,185,129,0.1)' }}>
+                  <p style={{ fontSize: '0.72rem', fontWeight: 700, color: '#34d399', margin: '0 0 10px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>User Growth</p>
+                  <ResponsiveContainer width="100%" height={120}>
+                    <LineChart data={PREVIEW_LINE}>
+                      <XAxis dataKey="month" tick={{ fill: '#475569', fontSize: 10 }} axisLine={false} tickLine={false} />
+                      <Tooltip {...tooltipCfg} />
+                      <Line type="monotone" dataKey="users" stroke="#10b981" strokeWidth={2.5} dot={false} />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+                {/* Pie */}
+                <div style={{ background: 'rgba(139,92,246,0.05)', borderRadius: 14, padding: '14px 16px', border: '1px solid rgba(139,92,246,0.1)' }}>
+                  <p style={{ fontSize: '0.72rem', fontWeight: 700, color: '#a78bfa', margin: '0 0 10px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Upload Sources</p>
+                  <ResponsiveContainer width="100%" height={120}>
+                    <PieChart>
+                      <Pie data={PREVIEW_PIE} cx="50%" cy="50%" innerRadius={28} outerRadius={50} dataKey="value" paddingAngle={3} stroke="none">
+                        {PREVIEW_PIE.map((_, i) => <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />)}
+                      </Pie>
+                      <Tooltip {...tooltipCfg} />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Upload Tool */}
         <div className="container" style={{ position: 'relative' }}>
           <DashboardView />
@@ -151,31 +255,33 @@ export default function HomePage() {
       </div>
 
       {/* How It Works */}
-      <section className="section" style={{ background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-subtle)', borderBottom: '1px solid var(--border-subtle)' }}>
-        <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: 48 }}>
-            <span className="badge badge-blue" style={{ marginBottom: 14 }}>How It Works</span>
-            <h2 style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: 800, color: 'var(--text-primary)' }}>
-              From File to Chart in 3 Steps
-            </h2>
-            <p style={{ color: 'var(--text-secondary)', maxWidth: 500, margin: '12px auto 0', lineHeight: 1.7 }}>
-              No learning curve. Upload your data and get instant, beautiful visualizations.
-            </p>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 24 }}>
-            {HOW_IT_WORKS.map((step, i) => (
-              <div key={step.step} className="card" style={{ padding: 32, textAlign: 'center' }}>
-                <div style={{ fontSize: '2.5rem', marginBottom: 16 }}>{step.icon}</div>
-                <div style={{ fontSize: '0.7rem', fontWeight: 800, color: 'var(--accent-blue)', letterSpacing: '0.1em', marginBottom: 10, textTransform: 'uppercase' }}>
-                  Step {step.step}
+      <ScrollReveal>
+        <section className="section" style={{ background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-subtle)', borderBottom: '1px solid var(--border-subtle)' }}>
+          <div className="container">
+            <div style={{ textAlign: 'center', marginBottom: 48 }}>
+              <span className="badge badge-blue" style={{ marginBottom: 14 }}>How It Works</span>
+              <h2 style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: 800, color: 'var(--text-primary)' }}>
+                From File to Chart in 3 Steps
+              </h2>
+              <p style={{ color: 'var(--text-secondary)', maxWidth: 500, margin: '12px auto 0', lineHeight: 1.7 }}>
+                No learning curve. Upload your data and get instant, beautiful visualizations.
+              </p>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 24 }}>
+              {HOW_IT_WORKS.map((step, i) => (
+                <div key={step.step} className="card" style={{ padding: 32, textAlign: 'center' }}>
+                  <div style={{ fontSize: '2.5rem', marginBottom: 16 }}>{step.icon}</div>
+                  <div style={{ fontSize: '0.7rem', fontWeight: 800, color: 'var(--accent-blue)', letterSpacing: '0.1em', marginBottom: 10, textTransform: 'uppercase' }}>
+                    Step {step.step}
+                  </div>
+                  <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 10 }}>{step.title}</h3>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', lineHeight: 1.7, margin: 0 }}>{step.desc}</p>
                 </div>
-                <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 10 }}>{step.title}</h3>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', lineHeight: 1.7, margin: 0 }}>{step.desc}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </ScrollReveal>
 
       {/* Features */}
       <section className="section">

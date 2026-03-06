@@ -308,3 +308,86 @@ body {
   font-size: 0.75rem;
   letter-spacing: 0.05em;
 }
+
+/* ── Premium glassmorphism card ── */
+.glass-card {
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+.glass-card-hover {
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+}
+.glass-card-hover:hover {
+  border-color: rgba(59, 130, 246, 0.28);
+  box-shadow: 0 12px 50px rgba(59, 130, 246, 0.12), 0 4px 20px rgba(0,0,0,0.4);
+  transform: translateY(-3px);
+}
+
+/* ── Animated gradient border ── */
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.gradient-border {
+  position: relative;
+  padding: 1px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(59,130,246,0.4), rgba(139,92,246,0.4), rgba(16,185,129,0.3));
+  background-size: 200% 200%;
+  animation: gradientShift 5s ease infinite;
+}
+.gradient-border > * {
+  border-radius: 21px;
+}
+
+/* ── Hero glow accent ── */
+.hero-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+/* ── Data grid background pattern ── */
+.data-grid-bg {
+  background-image:
+    linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* ── KPI card shine effect ── */
+@keyframes shine {
+  from { transform: translateX(-100%) skewX(-15deg); }
+  to   { transform: translateX(300%) skewX(-15deg); }
+}
+.kpi-card-shine::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+  animation: shine 3s ease infinite;
+  border-radius: inherit;
+}
+
+/* ── Animated dot ── */
+@keyframes dotPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(1.4); }
+}
+.live-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  animation: dotPulse 2s ease-in-out infinite;
+  margin-right: 6px;
+}
