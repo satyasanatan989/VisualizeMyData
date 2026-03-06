@@ -28,6 +28,20 @@ export default function KpiCards({ parsedData, report }: KpiCardsProps) {
         })()
         : 0;
 
+    const firstNumericValues = firstNumericKey
+        ? parsedData.data.map(r => Number(r[firstNumericKey])).filter(n => !isNaN(n))
+        : [];
+    const firstNumericSum = firstNumericValues.reduce((a, b) => a + b, 0);
+
+    const allKeys = parsedData.columns.map(c => c.key);
+    const missingRows = parsedData.data.filter(row =>
+        allKeys.some(k => row[k] === null || row[k] === undefined || row[k] === '')
+    ).length;
+
+    const uniqueCategories = firstCatKey
+        ? new Set(parsedData.data.map(r => String(r[firstCatKey] ?? ''))).size
+        : 0;
+
     const kpis = [
         {
             label: 'Total Rows',
@@ -70,6 +84,27 @@ export default function KpiCards({ parsedData, report }: KpiCardsProps) {
             icon: '🏆',
             color: '#f59e0b',
             bg: 'rgba(245, 158, 11, 0.1)',
+        },
+        {
+            label: `Sum (${firstNumericKey || '—'})`,
+            value: firstNumericKey ? firstNumericSum.toLocaleString(undefined, { maximumFractionDigits: 0 }) : '—',
+            icon: '∑',
+            color: '#a78bfa',
+            bg: 'rgba(167, 139, 250, 0.1)',
+        },
+        {
+            label: 'Missing Rows',
+            value: missingRows.toLocaleString(),
+            icon: '⚠️',
+            color: missingRows > 0 ? '#fb923c' : '#10b981',
+            bg: missingRows > 0 ? 'rgba(251, 146, 60, 0.1)' : 'rgba(16, 185, 129, 0.1)',
+        },
+        {
+            label: `Unique (${firstCatKey || '—'})`,
+            value: firstCatKey ? uniqueCategories.toLocaleString() : '—',
+            icon: '🔢',
+            color: '#34d399',
+            bg: 'rgba(52, 211, 153, 0.1)',
         },
     ];
 

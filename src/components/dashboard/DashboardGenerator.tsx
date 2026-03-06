@@ -10,7 +10,7 @@ import KpiCards from './KpiCards';
 import DashboardFilters, { FilterState } from './DashboardFilters';
 import DashboardCharts from './DashboardCharts';
 import DashboardTable from './DashboardTable';
-import { RefreshCw, Download, FileDown, FileImage, FileText } from 'lucide-react';
+import { RefreshCw, Download, FileDown, FileImage, FileText, LayoutDashboard } from 'lucide-react';
 import * as xlsx from 'xlsx';
 
 interface DashboardGeneratorProps {
@@ -111,6 +111,15 @@ export default function DashboardGenerator({ parsedData, onReset }: DashboardGen
         finally { setDownloading(null); }
     }, [parsedData]);
 
+    const handleDownloadDashboardXlsx = useCallback(async () => {
+        setDownloading('dashboard-xlsx');
+        try {
+            const { exportDashboardXlsx } = await import('@/lib/xlsxDashboardExport');
+            exportDashboardXlsx(parsedData, report);
+        } catch (e) { console.error(e); }
+        finally { setDownloading(null); }
+    }, [parsedData, report]);
+
     const btnStyle = (active?: boolean): React.CSSProperties => ({
         display: 'flex', alignItems: 'center', gap: 6, padding: '7px 13px',
         borderRadius: 8, fontSize: '0.78rem', fontWeight: 600,
@@ -154,6 +163,14 @@ export default function DashboardGenerator({ parsedData, onReset }: DashboardGen
                     </button>
                     <button onClick={() => handleDownloadExcel('xlsm')} disabled={!!downloading} style={btnStyle()}>
                         <FileText size={13} /> {downloading === 'xlsm' ? '...' : 'XLSM'}
+                    </button>
+                    <button onClick={handleDownloadDashboardXlsx} disabled={!!downloading} style={{
+                        ...btnStyle(),
+                        background: downloading === 'dashboard-xlsx' ? 'rgba(139,92,246,0.25)' : 'rgba(139,92,246,0.1)',
+                        border: '1px solid rgba(139,92,246,0.3)',
+                        color: '#a78bfa',
+                    }}>
+                        <LayoutDashboard size={13} /> {downloading === 'dashboard-xlsx' ? '...' : '📊 Dashboard XLSX'}
                     </button>
                     <button onClick={onReset} style={btnStyle()}>
                         <RefreshCw size={13} /> New File
