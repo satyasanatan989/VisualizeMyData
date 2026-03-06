@@ -10,8 +10,9 @@ import KpiCards from './KpiCards';
 import DashboardFilters, { FilterState } from './DashboardFilters';
 import DashboardCharts from './DashboardCharts';
 import DashboardTable from './DashboardTable';
-import { RefreshCw, Download, FileDown, FileImage, FileText, LayoutDashboard } from 'lucide-react';
+import { RefreshCw, Download, FileDown, FileImage, FileText, LayoutDashboard, Globe } from 'lucide-react';
 import * as xlsx from 'xlsx';
+import PublishModal from '@/components/gallery/PublishModal';
 
 interface DashboardGeneratorProps {
     parsedData: ParsedData;
@@ -35,6 +36,7 @@ export default function DashboardGenerator({ parsedData, onReset }: DashboardGen
     }));
     const [downloading, setDownloading] = useState<string | null>(null);
     const [activeTab, setActiveTab] = useState<'dashboard' | 'table'>('dashboard');
+    const [showPublishModal, setShowPublishModal] = useState(false);
 
     const report = useMemo(() => generateInsights(parsedData), [parsedData]);
 
@@ -129,6 +131,32 @@ export default function DashboardGenerator({ parsedData, onReset }: DashboardGen
         cursor: 'pointer',
     });
 
+    const handlePublish = (title: string, tags: string[], thumbnailBase64: string) => {
+        const id = Date.now().toString();
+        const slug = `local-${id}`;
+
+        const exportPayload = {
+            slug,
+            title,
+            description: 'User-generated dashboard built with VisualizeMyData.',
+            seoTitle: `${title} | VisualizeMyData`,
+            seoDesc: 'A user-generated dashboard analyzing data visualizations.',
+            tags,
+            thumbnail: thumbnailBase64,
+            data: {
+                columns: parsedData.columns,
+                rows: filteredData.slice(0, 500) // cap to 500 lines for local storage limits
+            }
+        };
+
+        try {
+            localStorage.setItem(`local-dash-${id}`, JSON.stringify(exportPayload));
+            window.location.href = `/gallery/${slug}`;
+        } catch (e) {
+            alert('Failed to save to local storage (file might be too large).');
+        }
+    };
+
     const effectiveChartType = filters.selectedChartType || recommendedChart;
 
     return (
@@ -172,6 +200,13 @@ export default function DashboardGenerator({ parsedData, onReset }: DashboardGen
                     }}>
                         <LayoutDashboard size={13} /> {downloading === 'dashboard-xlsx' ? '...' : '📊 Dashboard XLSX'}
                     </button>
+                    <button onClick={() => setShowPublishModal(true)} style={{
+                        ...btnStyle(),
+                        background: 'linear-gradient(135deg, #10b981, #059669)',
+                        color: '#fff', border: 'none'
+                    }}>
+                        <Globe size={13} /> Publish Dashboard
+                    </button>
                     <button onClick={onReset} style={btnStyle()}>
                         <RefreshCw size={13} /> New File
                     </button>
@@ -213,6 +248,13 @@ export default function DashboardGenerator({ parsedData, onReset }: DashboardGen
                     <DashboardTable parsedData={{ ...parsedData, data: filteredData }} maxRows={20} />
                 )}
             </div>
+
+            {showPublishModal && (
+                <PublishModal
+                    onClose={() => setShowPublishModal(false)}
+                    onPublish={handlePublish}
+                />
+            )}
         </motion.div>
     );
 }

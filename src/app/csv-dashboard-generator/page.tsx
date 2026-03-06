@@ -99,6 +99,7 @@ export default function CsvDashboardGeneratorPage() {
                             <li><Link href="/google-sheets-dashboard">→ Google Sheets Dashboard</Link></li>
                             <li><Link href="/data-report-generator">→ Data Report Generator</Link></li>
                             <li><Link href="/csv-visualizer">→ CSV Chart Generator</Link></li>
+                            <li><Link href="/gallery" style={{ fontWeight: 600, color: '#10b981' }}>→ View Dashboard Gallery Examples</Link></li>
                         </ul>
                     </div>
                 </div>

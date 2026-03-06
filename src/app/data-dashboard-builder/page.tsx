@@ -94,10 +94,10 @@ export default function DataDashboardBuilderPage() {
 
                         <h2>Related Tools</h2>
                         <ul>
-                            <li><Link href="/excel-dashboard-generator">→ Excel Dashboard Generator</Link></li>
                             <li><Link href="/csv-dashboard-generator">→ CSV Dashboard Generator</Link></li>
                             <li><Link href="/data-report-generator">→ Data Report Generator</Link></li>
                             <li><Link href="/excel-visualizer">→ Excel Chart Generator</Link></li>
+                            <li><Link href="/gallery" style={{ fontWeight: 600, color: '#10b981' }}>→ View Dashboard Gallery Examples</Link></li>
                         </ul>
                     </div>
                 </div>
