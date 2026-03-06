@@ -234,6 +234,48 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ── POPULAR TOOLS ── */}
+      <section className="section" style={{ background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-subtle)', borderBottom: '1px solid var(--border-subtle)' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: 40 }}>
+            <span className="badge badge-blue" style={{ marginBottom: 14 }}>Popular Tools</span>
+            <h2 style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: 800, color: 'var(--text-primary)' }}>
+              Popular Data Visualization Tools
+            </h2>
+            <p style={{ color: 'var(--text-secondary)', maxWidth: 480, margin: '12px auto 0', lineHeight: 1.7 }}>
+              Browse our most-used tools for every file format and use case.
+            </p>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 16 }}>
+            {[
+              { icon: '📗', label: 'Excel Chart Generator', href: '/excel-chart-generator', color: '#10b981', desc: 'Convert Excel spreadsheets to bar, line & pie charts' },
+              { icon: '📋', label: 'CSV Chart Generator', href: '/csv-chart-generator', color: '#3b82f6', desc: 'Generate charts from any CSV file instantly' },
+              { icon: '📕', label: 'PDF Data Visualizer', href: '/pdf-data-visualizer', color: '#f43f5e', desc: 'Extract PDF table data and visualize as charts' },
+              { icon: '🔗', label: 'Google Sheets Charts', href: '/google-sheets-chart-generator', color: '#8b5cf6', desc: 'Paste a Sheets link and generate instant charts' },
+              { icon: '🌐', label: 'Online Chart Maker', href: '/online-chart-maker', color: '#6366f1', desc: 'Free chart maker for any data format' },
+              { icon: '📊', label: 'Dashboard Generator', href: '/dashboard-generator', color: '#a78bfa', desc: 'Auto-generate full KPI dashboards from your data' },
+              { icon: '📈', label: 'Excel Graph Maker', href: '/excel-graph-maker', color: '#10b981', desc: 'Create professional graphs from Excel files' },
+              { icon: '📉', label: 'CSV Data Visualizer', href: '/csv-data-visualizer', color: '#3b82f6', desc: 'Visualize CSV data as interactive charts' },
+              { icon: '🆓', label: 'Free Viz Tool', href: '/free-data-visualization-tool', color: '#06b6d4', desc: 'The best free data visualization tool online' },
+              { icon: '📑', label: 'Spreadsheet to Chart', href: '/spreadsheet-to-chart', color: '#0ea5e9', desc: 'Convert any spreadsheet to a chart online' },
+              { icon: '🗂️', label: 'PDF Chart Generator', href: '/pdf-chart-generator', color: '#f43f5e', desc: 'Convert PDF table data to bar & line charts' },
+              { icon: '✨', label: 'Dashboard Templates', href: '/templates', color: '#34d399', desc: 'Ready-made dashboard templates for any use case' },
+            ].map(tool => (
+              <Link key={tool.href} href={tool.href} style={{ textDecoration: 'none' }}>
+                <div className="card" style={{ padding: '20px 22px', height: '100%', transition: 'border-color 0.2s, transform 0.2s', cursor: 'pointer' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
+                    <span style={{ fontSize: '1.4rem' }}>{tool.icon}</span>
+                    <span style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--text-primary)' }}>{tool.label}</span>
+                  </div>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.78rem', lineHeight: 1.6, margin: 0 }}>{tool.desc}</p>
+                  <span style={{ display: 'block', marginTop: 10, fontSize: '0.78rem', fontWeight: 600, color: tool.color }}>Try Free →</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section className="section">
         <div className="container" style={{ maxWidth: 780 }}>

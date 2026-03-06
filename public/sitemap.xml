@@ -247,4 +247,111 @@
     <priority>0.3</priority>
   </url>
 
+  <!-- Google Sheets SEO Pages -->
+  <url>
+    <loc>https://visualizemydata.in/google-sheets-chart-generator/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/google-sheets-dashboard-generator/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/google-sheets-data-visualizer/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/google-sheets-graph-maker/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Excel SEO Pages -->
+  <url>
+    <loc>https://visualizemydata.in/excel-data-visualizer/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/excel-graph-maker/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- CSV SEO Pages -->
+  <url>
+    <loc>https://visualizemydata.in/csv-data-visualizer/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/csv-graph-maker/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- PDF SEO Pages -->
+  <url>
+    <loc>https://visualizemydata.in/pdf-chart-generator/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/pdf-graph-maker/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/pdf-dashboard-generator/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/pdf-data-visualizer/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- General SEO Pages -->
+  <url>
+    <loc>https://visualizemydata.in/online-chart-maker/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/free-data-visualization-tool/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/spreadsheet-to-chart/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/data-to-chart-online/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- New Blog Articles -->
+  <url>
+    <loc>https://visualizemydata.in/blog/csv-to-chart-guide/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/blog/pdf-data-visualization-guide/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://visualizemydata.in/blog/create-dashboard-from-csv/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>

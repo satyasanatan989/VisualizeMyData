@@ -62,6 +62,33 @@ const posts = [
         category: 'Charts',
         color: '#f43f5e',
     },
+    {
+        slug: 'csv-to-chart-guide',
+        title: 'CSV to Chart Guide: Convert CSV Files to Charts Free Online',
+        excerpt: 'A complete guide to converting CSV files to bar, line, and pie charts online. Learn how to visualize CSV data in under 60 seconds with no coding required.',
+        date: 'March 2025',
+        readTime: '7 min read',
+        category: 'CSV',
+        color: '#3b82f6',
+    },
+    {
+        slug: 'pdf-data-visualization-guide',
+        title: 'PDF Data Visualization Guide: Extract Tables and Create Charts',
+        excerpt: 'Learn how to extract table data from PDF documents and visualize it as interactive charts online. Free PDF data visualization guide — no software required.',
+        date: 'March 2025',
+        readTime: '7 min read',
+        category: 'PDF',
+        color: '#f43f5e',
+    },
+    {
+        slug: 'create-dashboard-from-csv',
+        title: 'How to Create a Dashboard from CSV Data Online (Free Method)',
+        excerpt: 'Step-by-step guide to building an interactive dashboard from a CSV file for free online. No software or coding skills needed — just upload and explore.',
+        date: 'March 2025',
+        readTime: '8 min read',
+        category: 'Dashboard',
+        color: '#f59e0b',
+    },
 ];
 
 export default function BlogIndexPage() {

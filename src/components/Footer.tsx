@@ -55,15 +55,38 @@ export default function Footer() {
 
                     {/* Tools */}
                     <div>
-                        <h4 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: 14, fontSize: '0.875rem' }}>Tools</h4>
+                        <h4 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: 14, fontSize: '0.875rem' }}>Core Tools</h4>
                         <nav style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                             {[
                                 { label: 'Excel Visualizer', href: '/excel-visualizer' },
                                 { label: 'CSV Visualizer', href: '/csv-visualizer' },
                                 { label: 'PDF Visualizer', href: '/pdf-visualizer' },
                                 { label: 'Google Sheets', href: '/google-sheets-visualizer' },
+                                { label: 'Dashboard Generator', href: '/dashboard-generator' },
+                                { label: 'Data Report', href: '/data-report-generator' },
+                                { label: 'Templates', href: '/templates' },
                             ].map(l => (
                                 <Link key={l.href} href={l.href} style={{ color: 'var(--text-muted)', textDecoration: 'none', fontSize: '0.8125rem', transition: 'color 0.2s' }}>
+                                    {l.label}
+                                </Link>
+                            ))}
+                        </nav>
+                    </div>
+
+                    {/* SEO Tools */}
+                    <div>
+                        <h4 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: 14, fontSize: '0.875rem' }}>SEO Tools</h4>
+                        <nav style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                            {[
+                                { label: 'Excel Chart Generator', href: '/excel-chart-generator' },
+                                { label: 'CSV Chart Generator', href: '/csv-chart-generator' },
+                                { label: 'PDF Chart Generator', href: '/pdf-chart-generator' },
+                                { label: 'Google Sheets Charts', href: '/google-sheets-chart-generator' },
+                                { label: 'Online Chart Maker', href: '/online-chart-maker' },
+                                { label: 'Free Viz Tool', href: '/free-data-visualization-tool' },
+                                { label: 'Spreadsheet to Chart', href: '/spreadsheet-to-chart' },
+                            ].map(l => (
+                                <Link key={l.href} href={l.href} style={{ color: 'var(--text-muted)', textDecoration: 'none', fontSize: '0.8125rem' }}>
                                     {l.label}
                                 </Link>
                             ))}
