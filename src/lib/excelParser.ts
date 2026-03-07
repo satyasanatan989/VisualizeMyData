@@ -126,8 +126,13 @@ function analyzeColumns(data: Record<string, any>[]): ColumnInfo[] {
                     typeDataCount.number++;
                 } else if (typeof val === 'boolean') {
                     typeDataCount.boolean++;
-                } else if (val instanceof Date || !isNaN(Date.parse(String(val)))) {
-                    if (typeof val === 'string' && isNaN(Number(val))) {
+                } else if (val instanceof Date) {
+                    typeDataCount.date++;
+                } else if (typeof val === 'string') {
+                    const cleanStr = val.replace(/[$,\s]/g, '');
+                    if (cleanStr !== '' && !isNaN(Number(cleanStr))) {
+                        typeDataCount.number++;
+                    } else if (!isNaN(Date.parse(val))) {
                         typeDataCount.date++;
                     } else {
                         typeDataCount.string++;
@@ -152,7 +157,16 @@ function analyzeColumns(data: Record<string, any>[]): ColumnInfo[] {
 
         let min, max;
         if (inferredType === 'number') {
-            const numbers = data.map(r => Number(r[key])).filter(n => !isNaN(n));
+            const numbers = data.map(r => {
+                const rawVal = r[key];
+                if (typeof rawVal === 'number') return rawVal;
+                if (typeof rawVal === 'string') {
+                    const cleanVal = rawVal.replace(/[$,\s]/g, '');
+                    return cleanVal !== '' ? Number(cleanVal) : NaN;
+                }
+                return NaN;
+            }).filter(n => !isNaN(n));
+
             if (numbers.length > 0) {
                 min = Math.min(...numbers);
                 max = Math.max(...numbers);

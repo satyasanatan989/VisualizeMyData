@@ -62,8 +62,13 @@ export async function exportNativeExcelDashboard(
             const aggregated: Record<string, number> = {};
             for (const row of parsedData.data) {
                 const cat = String(row[catCol.key] || 'Unknown');
-                const val = Number(row[numCol.key]) || 0;
-                aggregated[cat] = (aggregated[cat] || 0) + val;
+                const rawVal = row[numCol.key];
+                let cleanVal = rawVal;
+                if (typeof rawVal === 'string') {
+                    cleanVal = rawVal.replace(/[$,\s]/g, '');
+                }
+                const val = cleanVal !== '' && cleanVal !== undefined && cleanVal !== null ? Number(cleanVal) : 0;
+                aggregated[cat] = (aggregated[cat] || 0) + (isNaN(val) ? 0 : val);
             }
 
             // Limit to top 100 for Excel charts to not break templates

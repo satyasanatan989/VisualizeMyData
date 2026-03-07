@@ -63,7 +63,16 @@ export function generateInsights(parsedData: ParsedData): InsightReport {
 
     // --- Numeric column insights ---
     for (const col of numericColumns) {
-        const values = data.map(r => Number(r[col])).filter(n => !isNaN(n));
+        const values = data.map(r => {
+            const rawVal = r[col];
+            if (typeof rawVal === 'number') return rawVal;
+            if (typeof rawVal === 'string') {
+                const cleanVal = rawVal.replace(/[$,\s]/g, '');
+                return cleanVal !== '' ? Number(cleanVal) : NaN;
+            }
+            return NaN;
+        }).filter(n => !isNaN(n));
+
         if (values.length === 0) continue;
 
         const stats = computeStats(values);
