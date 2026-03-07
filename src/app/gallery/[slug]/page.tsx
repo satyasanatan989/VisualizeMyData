@@ -10,8 +10,9 @@ export async function generateStaticParams() {
 }
 
 // Dynamic metadata per dashboard
-export async function generateMetadata({ params }: { params: { slug: string } }) {
-    const dash = getPublicDashboard(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+    const { slug } = await params;
+    const dash = getPublicDashboard(slug);
     if (!dash) {
         return {
             title: 'User Dashboard | VisualizeMyData',
@@ -29,6 +30,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     };
 }
 
-export default function DashboardSlugPage({ params }: { params: { slug: string } }) {
-    return <PublicDashboardViewer slug={params.slug} />;
+export default async function DashboardSlugPage({ params }: { params: Promise<{ slug: string }> }) {
+    const { slug } = await params;
+    return <PublicDashboardViewer slug={slug} />;
 }

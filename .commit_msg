@@ -1,6 +1,0 @@
-feat: dashboard excel visual export and table cleanup
-
-- Removed data type labels from DashboardTable column headers for cleaner look
-- Replaced SheetJS (xlsx) with exceljs for the Dashboard XLSX export
-- Added html2canvas snapshot of the dashboard UI injected directly into the exported Excel file
-- Maintains existing sheets (Raw Data, Analytics Summary, Column Info) in native Excel format
