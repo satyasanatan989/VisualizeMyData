@@ -13,6 +13,7 @@ import DashboardTable from './DashboardTable';
 import { RefreshCw, Download, FileDown, FileImage, FileText, LayoutDashboard, Globe } from 'lucide-react';
 import * as xlsx from 'xlsx';
 import PublishModal from '@/components/gallery/PublishModal';
+import { exportNativeExcelDashboard } from '@/lib/nativeExcelExport';
 
 interface DashboardGeneratorProps {
     parsedData: ParsedData;
@@ -130,6 +131,12 @@ export default function DashboardGenerator({ parsedData, onReset }: DashboardGen
         finally { setDownloading(null); }
     }, [parsedData, report]);
 
+    const handleDownloadNativeExcel = useCallback(async () => {
+        setDownloading('native-excel');
+        await exportNativeExcelDashboard(parsedData, report, filters.selectedChartType);
+        setDownloading(null);
+    }, [parsedData, report, filters.selectedChartType]);
+
     const btnStyle = (active?: boolean): React.CSSProperties => ({
         display: 'flex', alignItems: 'center', gap: 6, padding: '7px 13px',
         borderRadius: 8, fontSize: '0.78rem', fontWeight: 600,
@@ -206,7 +213,15 @@ export default function DashboardGenerator({ parsedData, onReset }: DashboardGen
                         border: '1px solid rgba(139,92,246,0.3)',
                         color: '#a78bfa',
                     }}>
-                        <LayoutDashboard size={13} /> {downloading === 'dashboard-xlsx' ? '...' : '📊 Dashboard XLSX'}
+                        <LayoutDashboard size={13} /> {downloading === 'dashboard-xlsx' ? '...' : '📊 Snapshot XLSX'}
+                    </button>
+                    <button onClick={handleDownloadNativeExcel} disabled={!!downloading} style={{
+                        ...btnStyle(),
+                        background: downloading === 'native-excel' ? 'rgba(16,185,129,0.25)' : 'rgba(16,185,129,0.1)',
+                        border: '1px solid rgba(16,185,129,0.3)',
+                        color: '#34d399',
+                    }}>
+                        <LayoutDashboard size={13} /> {downloading === 'native-excel' ? '...' : '📈 Native Excel Dashboard'}
                     </button>
                     <button onClick={() => setShowPublishModal(true)} style={{
                         ...btnStyle(),

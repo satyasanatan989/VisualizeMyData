@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next';
+import { GALLERY_DASHBOARDS } from '@/lib/galleryRegistry';
 
 // Required for Next.js `output: "export"` to statically render the sitemap
 export const dynamic = 'force-static';
@@ -138,6 +139,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
         })),
     ];
 
+    // Gallery Pages — 0.8 priority
+    const galleryEntries: MetadataRoute.Sitemap = [
+        {
+            url: `${BASE_URL}/gallery`,
+            lastModified: now,
+            changeFrequency: 'weekly',
+            priority: 0.85,
+        },
+        ...GALLERY_DASHBOARDS.map((dash) => ({
+            url: `${BASE_URL}/gallery/${dash.slug}`,
+            lastModified: now,
+            changeFrequency: 'monthly' as const,
+            priority: 0.8,
+        }))
+    ];
+
     // Info pages — low priority
     const infoEntries: MetadataRoute.Sitemap = infoPages.map((path) => ({
         url: `${BASE_URL}${path}`,
@@ -146,5 +163,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: path === '/about' || path === '/contact' ? 0.6 : 0.3,
     }));
 
-    return [...coreEntries, ...seoEntries, ...contentEntries, ...infoEntries];
+    return [...coreEntries, ...seoEntries, ...contentEntries, ...galleryEntries, ...infoEntries];
 }

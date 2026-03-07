@@ -51,12 +51,15 @@ export default function PublicDashboardViewer({ slug }: { slug: string }) {
         );
     }
 
-    // Format `data` to match the expected `ParsedData` signature of `Dashboard`
+    // Format `data` to match the expected `ParsedData` signature of `DashboardGenerator`
+    const { analyzeColumnsFromData } = require('@/lib/excelParser');
+    const columns = analyzeColumnsFromData(dashboard.data.rows);
+
     const parsedDataWrapper = {
-        headers: dashboard.data.columns,
-        rows: dashboard.data.rows,
         fileName: `${dashboard.title}.csv`,
-        sheets: { 'Sheet1': dashboard.data.rows }
+        data: dashboard.data.rows,
+        columns: columns,
+        rowCount: dashboard.data.rows.length,
     };
 
     return (
