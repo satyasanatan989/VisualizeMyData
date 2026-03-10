@@ -37,13 +37,24 @@ export function parseExcelFile(file: File): Promise<ParsedData> {
                     throw new Error("Spreadsheet is empty or invalid format.");
                 }
 
-                const columns = analyzeColumns(rawJson);
+                // Remove "__EMPTY" columns from the dataset
+                const cleanedJson = rawJson.map(row => {
+                    const newRow: Record<string, any> = {};
+                    for (const key in row) {
+                        if (!key.startsWith('__EMPTY')) {
+                            newRow[key] = row[key];
+                        }
+                    }
+                    return newRow;
+                });
+
+                const columns = analyzeColumns(cleanedJson);
 
                 resolve({
                     fileName: file.name,
-                    data: rawJson,
+                    data: cleanedJson,
                     columns,
-                    rowCount: rawJson.length
+                    rowCount: cleanedJson.length
                 });
             } catch (err) {
                 reject(err);
@@ -86,13 +97,24 @@ export async function parseGoogleSheet(url: string): Promise<ParsedData> {
 
     if (rawJson.length === 0) throw new Error("Google Sheet appears to be empty.");
 
-    const columns = analyzeColumns(rawJson);
+    // Remove "__EMPTY" columns from the dataset
+    const cleanedJson = rawJson.map(row => {
+        const newRow: Record<string, any> = {};
+        for (const key in row) {
+            if (!key.startsWith('__EMPTY')) {
+                newRow[key] = row[key];
+            }
+        }
+        return newRow;
+    });
+
+    const columns = analyzeColumns(cleanedJson);
 
     return {
         fileName: 'Google Sheet',
-        data: rawJson,
+        data: cleanedJson,
         columns,
-        rowCount: rawJson.length,
+        rowCount: cleanedJson.length,
     };
 }
 
