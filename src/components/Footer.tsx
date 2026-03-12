@@ -131,7 +131,7 @@ export default function Footer() {
                     justifyContent: 'space-between', alignItems: 'center', gap: 12,
                 }}>
                     <p style={{ color: 'var(--text-muted)', fontSize: '0.8125rem' }}>
-                        © {year} VisualizeMyData. All rights reserved. Registered Business Entity.
+                        © {year} VisualizeMyData. All rights reserved.
                     </p>
                     <p style={{ color: 'var(--text-muted)', fontSize: '0.8125rem' }}>
                         Your files are private and automatically deleted. No data is stored.

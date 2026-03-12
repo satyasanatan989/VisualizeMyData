@@ -71,8 +71,8 @@ export default function AboutPage() {
 
                     <div style={{ marginTop: 60, paddingTop: 30, borderTop: '1px solid var(--border-subtle)', textAlign: 'center' }}>
                         <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
-                            <strong style={{ color: 'var(--text-primary)' }}>Legal Information</strong><br/>
-                            DataVisualizer is operated by <strong>VisualizeMyData</strong>, our officially registered business entity. 
+                            <strong style={{ color: 'var(--text-primary)' }}>Information</strong><br/>
+                            DataVisualizer is a free tool provided and operated by <strong>VisualizeMyData</strong>. 
                         </p>
                     </div>
                 </div>
