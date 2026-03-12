@@ -84,7 +84,7 @@ export default function ContactPage() {
 
                     <div style={{ marginTop: 32, padding: '20px 24px', borderRadius: 14, background: 'var(--bg-glass)', border: '1px solid var(--border-subtle)', textAlign: 'center' }}>
                         <p style={{ color: 'var(--text-primary)', fontSize: '0.95rem', fontWeight: 500, marginBottom: 8 }}>
-                            Prefer to email us directly? Reach out at <a href="mailto:hello@visualizemydata.in" style={{ color: '#60a5fa', textDecoration: 'none' }}>hello@visualizemydata.in</a>
+                            Prefer to email us directly? Reach out at <a href="mailto:satyasanatan989@gmail.com" style={{ color: '#60a5fa', textDecoration: 'none' }}>satyasanatan989@gmail.com</a>
                         </p>
                         <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>
                             For general inquiries, you can also visit our <a href="/about" style={{ color: '#60a5fa' }}>About page</a> or review our <a href="/privacy-policy" style={{ color: '#60a5fa' }}>Privacy Policy</a>.
