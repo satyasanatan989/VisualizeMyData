@@ -99,7 +99,7 @@ export default function PublicDashboardViewer({ slug }: { slug: string }) {
                 </div>
             </div>
 
-            <div className="container" style={{ marginTop: 24, paddingBottom: 60 }}>
+            <div className="container" style={{ marginTop: 24, paddingBottom: 100 }}>
                 {/* 
                   Passing the formatted data to the existing Dashboard component.
                   We pass a flag or rely on its standard behavior. Since we mimic a CSV upload, it works out of the box.
@@ -108,6 +108,41 @@ export default function PublicDashboardViewer({ slug }: { slug: string }) {
                     parsedData={parsedDataWrapper as any}
                     onReset={() => { window.location.href = '/' }}
                 />
+            </div>
+
+            {/* Persistent PLG CTA */}
+            <div style={{
+                position: 'fixed',
+                bottom: 0,
+                left: 0,
+                right: 0,
+                background: 'linear-gradient(90deg, #1e3a8a, #3b82f6)',
+                padding: '16px 20px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+                gap: 16,
+                zIndex: 1000,
+                boxShadow: '0 -4px 25px rgba(0,0,0,0.2)',
+                borderTop: '1px solid rgba(255,255,255,0.1)'
+            }}>
+                <span style={{ color: 'white', fontWeight: 600, fontSize: '0.95rem', textAlign: 'center' }}>
+                    Create your own dashboard for free in 3 seconds. No login.
+                </span>
+                <Link href="/" style={{
+                    background: 'white',
+                    color: '#1e3a8a',
+                    padding: '8px 20px',
+                    borderRadius: 30,
+                    fontWeight: 800,
+                    fontSize: '0.85rem',
+                    textDecoration: 'none',
+                    boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+                    transition: 'transform 0.2s'
+                }}>
+                    Start Now →
+                </Link>
             </div>
 
             <Footer />
