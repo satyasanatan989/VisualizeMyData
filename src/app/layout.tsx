@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
+import { Toaster } from 'sonner';
+import PageTransition from "@/components/PageTransition";
 import "./globals.css";
 
 const inter = Inter({
@@ -117,7 +119,10 @@ export default function RootLayout({
         <meta name="theme-color" content="#0f172a" />
       </head>
       <body className="antialiased">
-        {children}
+        <Toaster position="top-center" richColors theme="dark" closeButton duration={3000} />
+        <PageTransition>
+          {children}
+        </PageTransition>
         {/* Google Analytics 4 */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-K9YT82L55H"

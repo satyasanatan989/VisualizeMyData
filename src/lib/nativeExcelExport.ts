@@ -3,6 +3,8 @@ import type { ParsedData } from './excelParser';
 import type { InsightReport } from './dataInsightEngine';
 import { getChartRecommendation } from './dataInsightEngine';
 
+import { toast } from 'sonner';
+
 /**
  * Native Excel Dashboard Exporter using xlsx-populate
  * Reads a pre-generated Excel template containing native charts
@@ -114,6 +116,6 @@ export async function exportNativeExcelDashboard(
 
     } catch (err) {
         console.error("Failed to generate native Excel dashboard:", err);
-        alert("Failed to export Excel Dashboard. Please check console for details.");
+        toast.error("Failed to export Excel Dashboard. Please check console for details.");
     }
 }

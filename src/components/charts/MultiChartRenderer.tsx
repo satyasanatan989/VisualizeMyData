@@ -6,6 +6,7 @@ import ChartToolbar from './ChartToolbar';
 import ChartSelector from './ChartSelector';
 import ChartContainer from './ChartContainer';
 import { ChartType, ChartConfig } from './types';
+import { toast } from 'sonner';
 import {
     ResponsiveContainer,
     BarChart, Bar, LineChart, Line, PieChart, Pie, AreaChart, Area,
@@ -31,7 +32,7 @@ export default function MultiChartRenderer({ parsedData, initialConfigs = [], hi
     const handleAddChart = (config: ChartConfig) => {
         // Only allow up to 6 charts
         if (configs.length >= 6) {
-            alert("Maximum of 6 charts allowed to maintain performance.");
+            toast.error("Maximum of 6 charts allowed to maintain performance.");
             setIsAdding(false);
             return;
         }

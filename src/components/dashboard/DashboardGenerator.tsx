@@ -14,6 +14,7 @@ import { RefreshCw, Download, FileDown, FileImage, FileText, LayoutDashboard, Gl
 import * as xlsx from 'xlsx';
 import PublishModal from '@/components/gallery/PublishModal';
 import { exportNativeExcelDashboard } from '@/lib/nativeExcelExport';
+import { toast } from 'sonner';
 
 interface DashboardGeneratorProps {
     parsedData: ParsedData;
@@ -168,7 +169,7 @@ export default function DashboardGenerator({ parsedData, onReset }: DashboardGen
             localStorage.setItem(`local-dash-${id}`, JSON.stringify(exportPayload));
             window.location.href = `/gallery/${slug}`;
         } catch (e) {
-            alert('Failed to save to local storage (file might be too large).');
+            toast.error('Failed to save to local storage (file might be too large).');
         }
     };
 

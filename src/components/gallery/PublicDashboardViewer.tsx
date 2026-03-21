@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 import DashboardGenerator from '@/components/dashboard/DashboardGenerator';
 import { GalleryDashboard, getPublicDashboard } from '@/lib/galleryRegistry';
 import Link from 'next/link';
+import { toast } from 'sonner';
 
 export default function PublicDashboardViewer({ slug }: { slug: string }) {
     const [dashboard, setDashboard] = useState<GalleryDashboard | null>(null);
@@ -89,7 +90,7 @@ export default function PublicDashboardViewer({ slug }: { slug: string }) {
                         <button
                             onClick={() => {
                                 navigator.clipboard.writeText(window.location.href);
-                                alert('Link copied to clipboard!');
+                                toast.success('Link copied to clipboard!');
                             }}
                             className="btn-secondary" style={{ padding: '8px 16px', fontSize: '0.85rem' }}
                         >

@@ -391,3 +391,28 @@ body {
   animation: dotPulse 2s ease-in-out infinite;
   margin-right: 6px;
 }
+
+/* ── Premium button micro-interactions ── */
+button {
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.15s ease;
+  will-change: transform;
+}
+button:active {
+  transform: scale(0.96) !important;
+}
+
+/* ── Hero Background Animations ── */
+@keyframes float {
+  0% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-30px) scale(1.05); }
+  100% { transform: translateY(0px) scale(1); }
+}
+.ambient-blob {
+  animation: float 12s ease-in-out infinite;
+  will-change: transform;
+}
+.ambient-blob-delayed {
+  animation: float 15s ease-in-out infinite;
+  animation-delay: -5s;
+  will-change: transform;
+}
