@@ -4,6 +4,7 @@ import React from 'react';
 import { Plus, Download, FileText, Table } from 'lucide-react';
 import { ParsedData } from '@/lib/excelParser';
 import * as xlsx from 'xlsx';
+import { exportNativeExcelDashboard } from '@/lib/nativeExcelExport';
 
 interface ChartToolbarProps {
     onAddNewRequest: () => void;
@@ -61,11 +62,23 @@ export default function ChartToolbar({ onAddNewRequest, isAdding, canExport, par
                 {canExport && (
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, paddingRight: 16, borderRight: '1px solid var(--border-subtle)' }}>
                         <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-muted)' }}>Export Data:</span>
-                        <button onClick={handleExportXLSX} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 14px', borderRadius: 8, border: '1px solid var(--border-subtle)', background: 'var(--bg-secondary)', color: 'var(--text-primary)', fontSize: '0.85rem', fontWeight: 600, cursor: 'pointer' }}>
+                        <button onClick={handleExportXLSX} title="Export Raw Data to XLSX" style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 14px', borderRadius: 8, border: '1px solid var(--border-subtle)', background: 'var(--bg-secondary)', color: 'var(--text-primary)', fontSize: '0.85rem', fontWeight: 600, cursor: 'pointer' }}>
                             <Table size={14} /> XLSX
                         </button>
-                        <button onClick={handleExportCSV} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 14px', borderRadius: 8, border: '1px solid var(--border-subtle)', background: 'var(--bg-secondary)', color: 'var(--text-primary)', fontSize: '0.85rem', fontWeight: 600, cursor: 'pointer' }}>
+                        <button onClick={handleExportCSV} title="Export Raw Data to CSV" style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 14px', borderRadius: 8, border: '1px solid var(--border-subtle)', background: 'var(--bg-secondary)', color: 'var(--text-primary)', fontSize: '0.85rem', fontWeight: 600, cursor: 'pointer' }}>
                             <FileText size={14} /> CSV
+                        </button>
+                        <button 
+                            onClick={() => exportNativeExcelDashboard(parsedData)} 
+                            title="Export to an editable Native Excel Dashboard"
+                            style={{ 
+                                display: 'flex', alignItems: 'center', gap: 6, padding: '8px 14px', 
+                                borderRadius: 8, border: '1px solid rgba(16,185,129,0.3)', 
+                                background: 'rgba(16,185,129,0.1)', color: '#34d399', 
+                                fontSize: '0.85rem', fontWeight: 600, cursor: 'pointer' 
+                            }}
+                        >
+                            <Download size={14} /> Dashboard (Native)
                         </button>
                     </div>
                 )}

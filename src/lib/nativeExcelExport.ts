@@ -10,7 +10,6 @@ import { getChartRecommendation } from './dataInsightEngine';
  */
 export async function exportNativeExcelDashboard(
     parsedData: ParsedData,
-    report: InsightReport,
     selectedChartType?: string
 ) {
     try {

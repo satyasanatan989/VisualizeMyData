@@ -133,9 +133,9 @@ export default function DashboardGenerator({ parsedData, onReset }: DashboardGen
 
     const handleDownloadNativeExcel = useCallback(async () => {
         setDownloading('native-excel');
-        await exportNativeExcelDashboard(parsedData, report, filters.selectedChartType);
+        await exportNativeExcelDashboard(parsedData, filters.selectedChartType);
         setDownloading(null);
-    }, [parsedData, report, filters.selectedChartType]);
+    }, [parsedData, filters.selectedChartType]);
 
     const btnStyle = (active?: boolean): React.CSSProperties => ({
         display: 'flex', alignItems: 'center', gap: 6, padding: '7px 13px',
