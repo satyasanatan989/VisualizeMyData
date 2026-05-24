@@ -16,9 +16,10 @@ interface DashboardChartsProps {
     parsedData: ParsedData;
     filteredData: Record<string, any>[];
     chartType: ChartType;
+    colors?: string[];
 }
 
-const COLORS = ['#3b82f6', '#8b5cf6', '#10b981', '#f43f5e', '#f59e0b', '#06b6d4', '#ec4899', '#84cc16'];
+const DEFAULT_COLORS = ['#3b82f6', '#8b5cf6', '#10b981', '#f43f5e', '#f59e0b', '#06b6d4', '#ec4899', '#84cc16'];
 
 const tooltipStyle = {
     contentStyle: { backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: 10, color: '#fff', fontSize: 12 },
@@ -47,7 +48,8 @@ function ChartCard({ title, height = 340, delay = 0, children }: { title: string
     );
 }
 
-export default function DashboardCharts({ parsedData, filteredData, chartType }: DashboardChartsProps) {
+export default function DashboardCharts({ parsedData, filteredData, chartType, colors }: DashboardChartsProps) {
+    const COLORS = colors || DEFAULT_COLORS;
     const { columns } = parsedData;
     const numericCols = columns.filter(c => c.type === 'number');
     const categoricalCols = columns.filter(c => c.isCategorical || c.type === 'string');

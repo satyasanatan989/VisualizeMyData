@@ -61,84 +61,100 @@ export function generateInsights(parsedData: ParsedData): InsightReport {
 
     const keyStats: Record<string, { min: number; max: number; avg: number; median: number }> = {};
 
+    // Determine a label column to associate with numeric highs/lows (e.g., "Month", "Category", etc.)
+    const labelKey = dateColumns[0] || categoricalColumns[0] || (columns[0]?.key !== numericColumns[0] ? columns[0]?.key : undefined);
+
     // --- Numeric column insights ---
     for (const col of numericColumns) {
-        const values = data.map(r => {
+        // Parse values and keep track of their original row references
+        const rowsWithValues = data.map((r, index) => {
             const rawVal = r[col];
-            if (typeof rawVal === 'number') return rawVal;
-            if (typeof rawVal === 'string') {
+            let numVal = NaN;
+            if (typeof rawVal === 'number') {
+                numVal = rawVal;
+            } else if (typeof rawVal === 'string') {
                 const cleanVal = rawVal.replace(/[$,\s]/g, '');
-                return cleanVal !== '' ? Number(cleanVal) : NaN;
+                numVal = cleanVal !== '' ? Number(cleanVal) : NaN;
             }
-            return NaN;
-        }).filter(n => !isNaN(n));
+            return { val: numVal, row: r, index };
+        }).filter(item => !isNaN(item.val));
 
+        const values = rowsWithValues.map(item => item.val);
         if (values.length === 0) continue;
 
         const stats = computeStats(values);
         keyStats[col] = stats;
 
-        // Trend detection
-        const trend = detectTrend(values);
-        if (trend === 'increasing') {
-            insights.push({
-                type: 'trend',
-                severity: 'success',
-                title: `📈 ${col} is trending upward`,
-                description: `"${col}" shows an increasing trend over the dataset — values rose from ~${stats.min.toFixed(1)} to ~${stats.max.toFixed(1)}.`,
-                icon: '📈',
-            });
-        } else if (trend === 'decreasing') {
-            insights.push({
-                type: 'trend',
-                severity: 'warning',
-                title: `📉 ${col} is declining`,
-                description: `"${col}" shows a declining trend across the dataset. The average is ${stats.avg.toFixed(2)}.`,
-                icon: '📉',
-            });
-        }
-
-        // Distribution insight
-        const range = stats.max - stats.min;
+        // 1. Highest Value Insight
+        const maxItem = rowsWithValues.reduce((max, item) => item.val > max.val ? item : max, rowsWithValues[0]);
+        const maxLabel = labelKey ? String(maxItem.row[labelKey] ?? `Row ${maxItem.index + 1}`) : `Row ${maxItem.index + 1}`;
         insights.push({
-            type: 'distribution',
-            severity: 'info',
-            title: `📊 Distribution of ${col}`,
-            description: `Most values in "${col}" cluster between ${stats.min.toFixed(1)} and ${stats.max.toFixed(1)}, with a median of ${stats.median.toFixed(1)} and an average of ${stats.avg.toFixed(1)}.`,
-            icon: '📊',
+            type: 'outlier',
+            severity: 'success',
+            title: `🏆 Highest ${col} Detected`,
+            description: `The highest value for "${col}" is ${maxItem.val.toLocaleString()}, recorded at ${maxLabel}.`,
+            icon: '🏆',
         });
 
-        // Outlier detection
-        const { count: outlierCount } = detectOutliers(values);
+        // 2. Lowest Value Insight
+        const minItem = rowsWithValues.reduce((min, item) => item.val < min.val ? item : min, rowsWithValues[0]);
+        const minLabel = labelKey ? String(minItem.row[labelKey] ?? `Row ${minItem.index + 1}`) : `Row ${minItem.index + 1}`;
+        insights.push({
+            type: 'outlier',
+            severity: 'info',
+            title: `📉 Lowest ${col} Detected`,
+            description: `The lowest value for "${col}" is ${minItem.val.toLocaleString()}, recorded at ${minLabel}.`,
+            icon: '📉',
+        });
+
+        // 3. Average Value Insight
+        insights.push({
+            type: 'summary',
+            severity: 'info',
+            title: `📐 Average of ${col}`,
+            description: `The overall average of "${col}" is ${stats.avg.toLocaleString(undefined, { maximumFractionDigits: 2 })}, with a median value of ${stats.median.toLocaleString(undefined, { maximumFractionDigits: 2 })}.`,
+            icon: '📐',
+        });
+
+        // 4. Growth Trends (comparing first and last entries)
+        if (rowsWithValues.length >= 2) {
+            const firstVal = rowsWithValues[0].val;
+            const lastVal = rowsWithValues[rowsWithValues.length - 1].val;
+            const diff = lastVal - firstVal;
+            const growthPct = firstVal !== 0 ? (diff / Math.abs(firstVal)) * 100 : 0;
+            const firstLabel = labelKey ? String(rowsWithValues[0].row[labelKey] ?? 'start') : 'start';
+            const lastLabel = labelKey ? String(rowsWithValues[rowsWithValues.length - 1].row[labelKey] ?? 'end') : 'end';
+
+            if (Math.abs(growthPct) > 1) {
+                insights.push({
+                    type: 'trend',
+                    severity: growthPct > 0 ? 'success' : 'warning',
+                    title: `${growthPct > 0 ? '📈' : '📉'} Growth Trend for ${col}`,
+                    description: `"${col}" changed by ${growthPct > 0 ? '+' : ''}${growthPct.toFixed(1)}% from ${firstLabel} (${firstVal.toLocaleString()}) to ${lastLabel} (${lastVal.toLocaleString()}).`,
+                    icon: growthPct > 0 ? '📈' : '📉',
+                });
+            }
+        }
+
+        // 5. Outliers (Anomalies)
+        const { count: outlierCount, threshold } = detectOutliers(values);
         if (outlierCount > 0) {
             insights.push({
                 type: 'outlier',
                 severity: 'warning',
-                title: `⚠️ Outliers detected in ${col}`,
-                description: `Found ${outlierCount} outlier${outlierCount > 1 ? 's' : ''} in "${col}" that deviate significantly from the average of ${stats.avg.toFixed(2)}.`,
+                title: `⚠️ Anomalies in ${col}`,
+                description: `Detected ${outlierCount} anomalous data point(s) in "${col}" deviating significantly from the statistical mean.`,
                 icon: '⚠️',
-            });
-        }
-
-        // High variance insight
-        const coeffOfVariation = range / (stats.avg || 1);
-        if (coeffOfVariation > 1) {
-            insights.push({
-                type: 'summary',
-                severity: 'info',
-                title: `📐 High variability in ${col}`,
-                description: `"${col}" has high variability (range of ${range.toFixed(1)}), suggesting diverse data points or multiple segments.`,
-                icon: '📐',
             });
         }
     }
 
     // --- Categorical column insights ---
-    for (const col of categoricalColumns.slice(0, 3)) {
+    for (const col of categoricalColumns.slice(0, 2)) {
         const counts: Record<string, number> = {};
         data.forEach(row => {
             const v = String(row[col] ?? '');
-            if (v) counts[v] = (counts[v] || 0) + 1;
+            if (v && v.trim() !== '') counts[v] = (counts[v] || 0) + 1;
         });
 
         const entries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
@@ -150,39 +166,10 @@ export function generateInsights(parsedData: ParsedData): InsightReport {
         insights.push({
             type: 'category',
             severity: 'success',
-            title: `🏆 Top category in ${col}`,
-            description: `"${topCat}" is the dominant category in "${col}", accounting for ${topPct}% of all records (${topCount} out of ${rowCount}).`,
+            title: `🏆 Top Category: ${topCat}`,
+            description: `"${topCat}" is the most frequent value in "${col}", representing ${topPct}% of all entries (${topCount}/${rowCount}).`,
             icon: '🏆',
         });
-
-        if (entries.length > 1) {
-            const [secondCat, secondCount] = entries[1];
-            const ratio = (topCount / (secondCount || 1)).toFixed(1);
-            insights.push({
-                type: 'category',
-                severity: 'info',
-                title: `📋 ${col} has ${entries.length} unique values`,
-                description: `"${col}" contains ${entries.length} categories. "${topCat}" leads with ${topCount} entries, ${ratio}× more than "${secondCat}" (${secondCount}).`,
-                icon: '📋',
-            });
-        }
-    }
-
-    // --- Date column insights ---
-    if (dateColumns.length > 0) {
-        const dateCol = dateColumns[0];
-        const dates = data.map(r => new Date(r[dateCol])).filter(d => !isNaN(d.getTime())).sort((a, b) => a.getTime() - b.getTime());
-        if (dates.length > 1) {
-            const earliest = dates[0].toLocaleDateString();
-            const latest = dates[dates.length - 1].toLocaleDateString();
-            insights.push({
-                type: 'summary',
-                severity: 'info',
-                title: `📅 Date range detected`,
-                description: `The dataset spans from ${earliest} to ${latest} in the "${dateCol}" column, covering ${dates.length} time-stamped records.`,
-                icon: '📅',
-            });
-        }
     }
 
     // --- Overall dataset summary ---
@@ -194,12 +181,13 @@ export function generateInsights(parsedData: ParsedData): InsightReport {
         icon: '🗂️',
     });
 
-    const summaryText = numericColumns.length > 0
-        ? `Dataset with ${rowCount} rows. Key metric "${numericColumns[0]}" ranges from ${keyStats[numericColumns[0]]?.min?.toFixed(1) ?? 'N/A'} to ${keyStats[numericColumns[0]]?.max?.toFixed(1) ?? 'N/A'}.`
-        : `Dataset with ${rowCount} rows and ${columns.length} columns detected.`;
+    const firstNumCol = numericColumns[0];
+    const summaryText = firstNumCol && keyStats[firstNumCol]
+        ? `Dataset with ${rowCount} rows. Key metric "${firstNumCol}" averages ${keyStats[firstNumCol].avg.toFixed(1)}, ranging from ${keyStats[firstNumCol].min.toFixed(1)} to ${keyStats[firstNumCol].max.toFixed(1)}.`
+        : `Dataset with ${rowCount} rows and ${columns.length} columns loaded successfully.`;
 
     return {
-        insights: insights.slice(0, 10), // Cap at 10 insights
+        insights: insights.slice(0, 12), // Cap at 12 insights
         summary: summaryText,
         numericColumns,
         categoricalColumns,

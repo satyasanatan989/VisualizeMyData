@@ -14,6 +14,10 @@ const TOOL_LINKS = [
     { label: '📋 CSV Visualizer', href: '/csv-visualizer' },
     { label: '📕 PDF Visualizer', href: '/pdf-visualizer' },
     { label: '🔗 Google Sheets', href: '/google-sheets-visualizer' },
+    { label: '🧹 Data Cleaner', href: '/data-cleaning-tool' },
+    { label: '📊 Survey Visualizer', href: '/survey-visualizer' },
+    { label: '💡 Formula Generator', href: '/excel-formula-generator' },
+    { label: '✨ Dashboard Templates', href: '/dashboard-templates' },
 ];
 
 const NAV_LINKS = [
@@ -57,9 +61,9 @@ export default function Navbar({ darkMode, onToggleDark }: NavbarProps) {
                 <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
                     <div style={{
                         width: 34, height: 34, borderRadius: 10,
-                        background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)',
+                        background: 'linear-gradient(135deg, #ba9eff, #8455ef)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        boxShadow: '0 0 20px rgba(59,130,246,0.4)',
+                        boxShadow: '0 0 20px rgba(186,158,255,0.4)',
                     }}>
                         <BarChart2 size={18} color="white" />
                     </div>
@@ -129,8 +133,8 @@ export default function Navbar({ darkMode, onToggleDark }: NavbarProps) {
                                             transition: 'background 0.15s, color 0.15s',
                                         }}
                                         onMouseEnter={e => {
-                                            (e.currentTarget as HTMLElement).style.background = 'rgba(59,130,246,0.12)';
-                                            (e.currentTarget as HTMLElement).style.color = '#93c5fd';
+                                            (e.currentTarget as HTMLElement).style.background = 'rgba(186,158,255,0.12)';
+                                            (e.currentTarget as HTMLElement).style.color = '#cdcdff';
                                         }}
                                         onMouseLeave={e => {
                                             (e.currentTarget as HTMLElement).style.background = 'transparent';
@@ -178,9 +182,9 @@ export default function Navbar({ darkMode, onToggleDark }: NavbarProps) {
                         onClick={() => document.getElementById('upload-zone')?.scrollIntoView({ behavior: 'smooth' })}
                         style={{
                             padding: '8px 18px', borderRadius: 8, fontSize: '0.875rem', fontWeight: 600,
-                            background: 'linear-gradient(135deg, #3b82f6, #6366f1)',
-                            color: 'white', border: 'none', cursor: 'pointer',
-                            boxShadow: '0 4px 15px rgba(59,130,246,0.3)',
+                            background: 'var(--accent-primary)',
+                            color: '#fff', border: 'none', cursor: 'pointer',
+                            boxShadow: '0 4px 15px rgba(186,158,255,0.3)',
                         }}
                     >
                         Try Free

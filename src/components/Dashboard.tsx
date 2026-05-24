@@ -14,6 +14,7 @@ import {
 import { ArrowLeft, Download, BarChart3, LineChart as LineIcon, PieChart as PieIcon, Table2, FileImage, FileDown, RefreshCw } from 'lucide-react';
 import { downloadChartAsPng, downloadChartAsPdf } from '@/lib/chartDownloader';
 import PdfPreview from './PdfPreview';
+import DashboardTable from './dashboard/DashboardTable';
 
 interface DashboardProps {
     parsedData: ParsedData;
@@ -28,6 +29,10 @@ const PALETTES = {
     purple: ['#8b5cf6', '#a78bfa', '#c4b5fd', '#6366f1', '#818cf8'],
     sunset: ['#f43f5e', '#fb923c', '#facc15', '#4ade80', '#34d399'],
     forest: ['#10b981', '#059669', '#34d399', '#6ee7b7', '#a7f3d0'],
+    pastel: ['#ffb3ba', '#ffdfba', '#ffffba', '#baffc9', '#bae1ff', '#e8c4ff'],
+    neon: ['#39ff14', '#ff007f', '#00e5ff', '#fff01f', '#8a2be2', '#ff4500'],
+    corporate: ['#1e3a8a', '#3b82f6', '#475569', '#64748b', '#94a3b8', '#cbd5e1'],
+    dark: ['#ba9eff', '#8455ef', '#9093ff', '#40ceed', '#3b82f6', '#0ea5e9'],
 };
 
 type PaletteName = keyof typeof PALETTES;
@@ -311,44 +316,8 @@ export default function Dashboard({ parsedData, isPdf, pdfFile, pdfResult, onRes
                 </div>
             ) : (
                 /* Data Table */
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                    style={{ borderRadius: 16, border: '1px solid var(--border-subtle)', overflow: 'auto' }}>
-                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.8rem' }}>
-                        <thead>
-                            <tr>
-                                {columns.map(col => (
-                                    <th key={col.key} style={{
-                                        padding: '12px 16px', textAlign: 'left', whiteSpace: 'nowrap',
-                                        background: 'var(--bg-secondary)', color: 'var(--text-secondary)',
-                                        fontWeight: 700, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em',
-                                        borderBottom: '1px solid var(--border-subtle)',
-                                    }}>
-                                        {col.key}
-                                        <span style={{ marginLeft: 4, opacity: 0.5, fontSize: '0.65rem' }}>{col.type}</span>
-                                    </th>
-                                ))}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {data.slice(0, 100).map((row, i) => (
-                                <tr key={i} style={{ background: i % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.01)' }}>
-                                    {columns.map(col => (
-                                        <td key={col.key} style={{
-                                            padding: '10px 16px', color: 'var(--text-secondary)',
-                                            borderBottom: '1px solid rgba(255,255,255,0.03)', whiteSpace: 'nowrap',
-                                        }}>
-                                            {row[col.key] !== undefined ? String(row[col.key]) : '–'}
-                                        </td>
-                                    ))}
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                    {data.length > 100 && (
-                        <div style={{ padding: '12px 16px', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.8rem', borderTop: '1px solid var(--border-subtle)' }}>
-                            Showing first 100 of {data.length.toLocaleString()} rows
-                        </div>
-                    )}
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                    <DashboardTable parsedData={parsedData} />
                 </motion.div>
             )}
         </motion.div>

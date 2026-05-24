@@ -10,6 +10,8 @@ import KpiCards from './KpiCards';
 import DashboardFilters, { FilterState } from './DashboardFilters';
 import DashboardCharts from './DashboardCharts';
 import DashboardTable from './DashboardTable';
+import ColorPaletteGenerator from './ColorPaletteGenerator';
+import DataStoryGenerator from './DataStoryGenerator';
 import { RefreshCw, Download, FileDown, FileImage, FileText, LayoutDashboard, Globe } from 'lucide-react';
 import * as xlsx from 'xlsx';
 import PublishModal from '@/components/gallery/PublishModal';
@@ -37,7 +39,10 @@ export default function DashboardGenerator({ parsedData, onReset }: DashboardGen
         selectedChartType: getChartRecommendation(parsedData.columns),
     }));
     const [downloading, setDownloading] = useState<string | null>(null);
-    const [activeTab, setActiveTab] = useState<'dashboard' | 'table'>('dashboard');
+    const [activeTab, setActiveTab] = useState<'dashboard' | 'story' | 'table'>('dashboard');
+    const [customColors, setCustomColors] = useState<string[]>([
+        '#ba9eff', '#8455ef', '#9093ff', '#40ceed', '#3b82f6', '#0ea5e9'
+    ]);
     const [showPublishModal, setShowPublishModal] = useState(false);
 
     const report = useMemo(() => generateInsights(parsedData), [parsedData]);
@@ -246,9 +251,12 @@ export default function DashboardGenerator({ parsedData, onReset }: DashboardGen
             {/* Filters */}
             <DashboardFilters parsedData={parsedData} filters={filters} onFilterChange={setFilters} />
 
+            {/* Color Palette Generator */}
+            <ColorPaletteGenerator currentPalette={customColors} onPaletteChange={setCustomColors} />
+
             {/* Tab bar */}
             <div style={{ display: 'flex', gap: 6, marginBottom: 16 }}>
-                {[{ key: 'dashboard', label: '📊 Charts' }, { key: 'table', label: '📋 Data Table' }].map(t => (
+                {[{ key: 'dashboard', label: '📊 Charts' }, { key: 'story', label: '📖 Data Story' }, { key: 'table', label: '📋 Data Table' }].map(t => (
                     <button key={t.key} onClick={() => setActiveTab(t.key as any)} style={{
                         padding: '7px 18px', borderRadius: 8, fontSize: '0.8rem', fontWeight: 600,
                         background: activeTab === t.key ? 'linear-gradient(135deg, #3b82f6, #6366f1)' : 'var(--bg-glass)',
@@ -267,9 +275,12 @@ export default function DashboardGenerator({ parsedData, onReset }: DashboardGen
                         parsedData={parsedData}
                         filteredData={filteredData}
                         chartType={effectiveChartType}
+                        colors={customColors}
                     />
+                ) : activeTab === 'story' ? (
+                    <DataStoryGenerator parsedData={parsedData} report={report} />
                 ) : (
-                    <DashboardTable parsedData={{ ...parsedData, data: filteredData }} maxRows={20} />
+                    <DashboardTable parsedData={{ ...parsedData, data: filteredData }} />
                 )}
             </div>
 

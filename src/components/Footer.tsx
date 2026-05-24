@@ -7,13 +7,13 @@ export default function Footer() {
     const year = new Date().getFullYear();
     return (
         <footer style={{
-            background: 'var(--bg-secondary)',
+            background: 'var(--surface-base)',
             borderTop: '1px solid var(--border-subtle)',
             marginTop: 80,
         }}>
             {/* Trust bar */}
             <div style={{
-                background: 'linear-gradient(90deg, rgba(59,130,246,0.08), rgba(139,92,246,0.08))',
+                background: 'var(--surface-low)',
                 borderBottom: '1px solid var(--border-subtle)',
                 padding: '20px 0',
             }}>
@@ -41,7 +41,7 @@ export default function Footer() {
                         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
                             <div style={{
                                 width: 30, height: 30, borderRadius: 8,
-                                background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)',
+                                background: 'linear-gradient(135deg, #ba9eff, #8455ef)',
                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                             }}>
                                 <BarChart2 size={16} color="white" />
@@ -55,7 +55,7 @@ export default function Footer() {
 
                     {/* Tools */}
                     <div>
-                        <h4 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: 14, fontSize: '0.875rem' }}>Core Tools</h4>
+                        <h4 style={{ fontFamily: 'var(--font-manrope)', color: 'var(--text-primary)', fontWeight: 700, marginBottom: 14, fontSize: '0.875rem' }}>Core Tools</h4>
                         <nav style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                             {[
                                 { label: 'Excel Visualizer', href: '/excel-visualizer' },
@@ -75,7 +75,7 @@ export default function Footer() {
 
                     {/* SEO Tools */}
                     <div>
-                        <h4 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: 14, fontSize: '0.875rem' }}>SEO Tools</h4>
+                        <h4 style={{ fontFamily: 'var(--font-manrope)', color: 'var(--text-primary)', fontWeight: 700, marginBottom: 14, fontSize: '0.875rem' }}>SEO Tools</h4>
                         <nav style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                             {[
                                 { label: 'Excel Chart Generator', href: '/excel-chart-generator' },
@@ -95,7 +95,7 @@ export default function Footer() {
 
                     {/* Company */}
                     <div>
-                        <h4 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: 14, fontSize: '0.875rem' }}>Company</h4>
+                        <h4 style={{ fontFamily: 'var(--font-manrope)', color: 'var(--text-primary)', fontWeight: 700, marginBottom: 14, fontSize: '0.875rem' }}>Company</h4>
                         <nav style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                             {[
                                 { label: 'About Us', href: '/about' },
@@ -110,7 +110,7 @@ export default function Footer() {
 
                     {/* Legal */}
                     <div>
-                        <h4 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: 14, fontSize: '0.875rem' }}>Legal</h4>
+                        <h4 style={{ fontFamily: 'var(--font-manrope)', color: 'var(--text-primary)', fontWeight: 700, marginBottom: 14, fontSize: '0.875rem' }}>Legal</h4>
                         <nav style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                             {[
                                 { label: 'Privacy Policy', href: '/privacy-policy' },

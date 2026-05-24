@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Manrope } from "next/font/google";
 import Script from "next/script";
 import { Toaster } from 'sonner';
 import PageTransition from "@/components/PageTransition";
@@ -9,6 +9,12 @@ const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-inter",
+});
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-manrope",
 });
 
 const siteUrl = "https://visualizemydata.in";
@@ -109,14 +115,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${inter.variable} ${manrope.variable}`}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <link rel="canonical" href={siteUrl} />
-        <meta name="theme-color" content="#0f172a" />
+        <meta name="theme-color" content="#0c0e12" />
       </head>
       <body className="antialiased">
         <Toaster position="top-center" richColors theme="dark" closeButton duration={3000} />

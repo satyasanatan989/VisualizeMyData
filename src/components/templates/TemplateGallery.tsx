@@ -172,6 +172,21 @@ const TEMPLATES: TemplateDataset[] = [
             { name: 'HR', value: 12 }, { name: 'Finance', value: 15 },
         ],
     },
+    {
+        id: 'attendance-dashboard',
+        title: 'Student Attendance Dashboard',
+        description: 'Monitor classroom and course attendance rates, track absences, and identify attendance drops.',
+        category: 'Education',
+        accentColor: '#a78bfa',
+        accentBg: 'rgba(167,139,250,0.07)',
+        chartType: 'bar',
+        csvContent: `Class,Present,Absent\nGrade 1,28,2\nGrade 2,27,3\nGrade 3,29,1\nGrade 4,26,4\nGrade 5,30,0\nGrade 6,25,5`,
+        previewData: [
+            { name: 'Grade 1', value: 28 }, { name: 'Grade 2', value: 27 },
+            { name: 'Grade 3', value: 29 }, { name: 'Grade 4', value: 26 },
+            { name: 'Grade 5', value: 30 },
+        ],
+    },
 ];
 
 export default function TemplateGallery() {

@@ -6,6 +6,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { UploadCloud, FileType2, Search, Link2, FileText, Sheet, X } from 'lucide-react';
 import { parseExcelFile, parseGoogleSheet, ParsedData } from '@/lib/excelParser';
 import { parsePdfFile, PdfParseResult } from '@/lib/pdfParser';
+import { csvStringToParsedData } from '@/components/templates/TemplateLoader';
+import { toast } from 'sonner';
 
 interface FileUploadZoneProps {
     onDataParsed: (data: ParsedData, isPdf?: boolean, pdfResult?: PdfParseResult) => void;
@@ -74,6 +76,37 @@ export default function FileUploadZone({ onDataParsed, isLoading, setIsLoading }
         }
     };
 
+    const handleLoadSample = (type: string) => {
+        setIsLoading(true);
+        setError(null);
+        setTimeout(() => {
+            try {
+                let csv = '';
+                let name = '';
+                if (type === 'sales') {
+                    csv = `Month,Sales,Target,Profit\nJan,4200,4000,1200\nFeb,5800,4500,1800\nMar,5100,5000,1500\nApr,7200,5500,2200\nMay,6800,6000,1900\nJun,9100,6500,2800`;
+                    name = 'Monthly_Sales_Sample.csv';
+                } else if (type === 'student') {
+                    csv = `Student,Math,Science,English,Attendance\nAlex,85,90,78,95\nBen,92,88,85,98\nChloe,78,82,90,92\nDan,65,70,72,85\nEmily,95,94,96,100\nFred,88,85,80,94`;
+                    name = 'Student_Grades_Sample.csv';
+                } else if (type === 'survey') {
+                    csv = `Response,Count,Percentage\nStrongly Agree,120,40\nAgree,150,50\nNeutral,20,6.7\nDisagree,8,2.7\nStrongly Disagree,2,0.6`;
+                    name = 'Survey_Feedback_Sample.csv';
+                } else {
+                    csv = `Quarter,Revenue,Expenses,Net Income\nQ1,120000,85000,35000\nQ2,145000,92000,53000\nQ3,138000,89000,49000\nQ4,185000,105000,80000`;
+                    name = 'Quarterly_Finance_Sample.csv';
+                }
+                const parsed = csvStringToParsedData(csv, name);
+                onDataParsed(parsed, false);
+                toast.success('Loaded sample dataset!');
+            } catch (err: any) {
+                setError('Failed to load sample dataset.');
+            } finally {
+                setIsLoading(false);
+            }
+        }, 300);
+    };
+
     return (
         <div id="upload-zone" style={{ width: '100%', maxWidth: 680, margin: '0 auto' }}>
             {/* Headline */}
@@ -84,14 +117,15 @@ export default function FileUploadZone({ onDataParsed, isLoading, setIsLoading }
                 style={{ textAlign: 'center', marginBottom: 36 }}
             >
                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '4px 14px', background: 'rgba(99,102,241,0.12)', borderRadius: 99, border: '1px solid rgba(99,102,241,0.25)', marginBottom: 20 }}>
-                    <span style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.08em', color: '#a5b4fc', textTransform: 'uppercase' }}>Free Online Tool</span>
+                    <span style={{ fontFamily: 'var(--font-manrope)', fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.08em', color: '#cdcdff', textTransform: 'uppercase' }}>Free Online Tool</span>
                 </div>
                 <h1 style={{
+                    fontFamily: 'var(--font-manrope)',
                     fontSize: 'clamp(2rem, 5vw, 3.5rem)',
                     fontWeight: 900,
                     lineHeight: 1.1,
                     marginBottom: 16,
-                    background: 'linear-gradient(135deg, #e2e8f0, #a78bfa)',
+                    background: 'linear-gradient(135deg, #f8f9fe, #ba9eff)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text',
@@ -124,9 +158,9 @@ export default function FileUploadZone({ onDataParsed, isLoading, setIsLoading }
                         <button key={t} onClick={() => setTab(t)} style={{
                             flex: 1, padding: '9px 0', borderRadius: 8, border: 'none', cursor: 'pointer', fontWeight: 600,
                             fontSize: '0.875rem', transition: 'all 0.2s',
-                            background: tab === t ? 'linear-gradient(135deg, #3b82f6, #6366f1)' : 'transparent',
+                            background: tab === t ? 'var(--accent-primary)' : 'transparent',
                             color: tab === t ? '#fff' : 'var(--text-secondary)',
-                            boxShadow: tab === t ? '0 4px 12px rgba(59,130,246,0.3)' : 'none',
+                            boxShadow: tab === t ? '0 4px 12px rgba(186,158,255,0.3)' : 'none',
                         }}>
                             {t === 'upload' ? '📁  Upload File' : '🔗  Google Sheets Link'}
                         </button>
@@ -150,31 +184,31 @@ export default function FileUploadZone({ onDataParsed, isLoading, setIsLoading }
                                 {/* Glow */}
                                 <div style={{
                                     position: 'absolute', inset: 0, pointerEvents: 'none',
-                                    background: 'radial-gradient(ellipse at 50% -20%, rgba(99,102,241,0.12) 0%, transparent 70%)',
+                                    background: 'radial-gradient(ellipse at 50% -20%, rgba(186,158,255,0.12) 0%, transparent 70%)',
                                 }} />
 
                                 {isLoading ? (
                                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16 }}>
                                         <div style={{ position: 'relative', width: 60, height: 60 }}>
                                             <div style={{ position: 'absolute', inset: 0, border: '3px solid rgba(255,255,255,0.1)', borderRadius: '50%' }} />
-                                            <div style={{ position: 'absolute', inset: 0, border: '3px solid transparent', borderTopColor: '#3b82f6', borderRightColor: '#6366f1', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
-                                            <Search size={22} color="#3b82f6" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)' }} />
+                                            <div style={{ position: 'absolute', inset: 0, border: '3px solid transparent', borderTopColor: '#ba9eff', borderRightColor: '#8455ef', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+                                            <Search size={22} color="#ba9eff" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)' }} />
                                         </div>
-                                        <p style={{ color: 'var(--text-primary)', fontWeight: 600 }}>Analyzing your data…</p>
+                                        <p style={{ fontFamily: 'var(--font-manrope)', color: 'var(--text-primary)', fontWeight: 600 }}>Analyzing your data…</p>
                                         <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>Detecting columns, types, and patterns</p>
                                     </div>
                                 ) : (
                                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
                                         <div style={{
                                             width: 64, height: 64, borderRadius: 16,
-                                            background: 'linear-gradient(135deg, rgba(59,130,246,0.2), rgba(139,92,246,0.2))',
-                                            border: '1px solid rgba(99,102,241,0.3)',
+                                            background: 'linear-gradient(135deg, rgba(186,158,255,0.2), rgba(132,85,239,0.2))',
+                                            border: '1px solid rgba(186,158,255,0.3)',
                                             display: 'flex', alignItems: 'center', justifyContent: 'center',
                                             marginBottom: 4,
                                         }}>
-                                            <UploadCloud size={28} color="#818cf8" />
+                                            <UploadCloud size={28} color="#ba9eff" />
                                         </div>
-                                        <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
+                                        <h2 style={{ fontFamily: 'var(--font-manrope)', fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
                                             {isDragActive ? 'Drop your file here' : 'Drag & Drop your file'}
                                         </h2>
                                         <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', margin: 0 }}>
@@ -196,6 +230,38 @@ export default function FileUploadZone({ onDataParsed, isLoading, setIsLoading }
                                         </div>
                                     </div>
                                 )}
+                            </div>
+
+                            {/* Try Sample Dataset Section */}
+                            <div style={{
+                                marginTop: 20, paddingTop: 16, borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+                                display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'center'
+                            }}>
+                                <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                                    💡 Don&apos;t have data? Try a sample dataset:
+                                </span>
+                                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'center' }}>
+                                    {[
+                                        { type: 'sales', label: '📊 Sales' },
+                                        { type: 'student', label: '🎓 Student Grades' },
+                                        { type: 'survey', label: '📋 Survey Feedback' },
+                                        { type: 'finance', label: '💵 Finance' }
+                                    ].map(sample => (
+                                        <button 
+                                            key={sample.type}
+                                            onClick={() => handleLoadSample(sample.type)}
+                                            style={{
+                                                padding: '6px 14px', borderRadius: 8, fontSize: '0.78rem', fontWeight: 600,
+                                                background: 'rgba(186, 158, 255, 0.06)', border: '1px solid rgba(186, 158, 255, 0.15)',
+                                                color: '#cdcdff', cursor: 'pointer', transition: 'all 0.2s',
+                                            }}
+                                            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(186, 158, 255, 0.12)'; }}
+                                            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(186, 158, 255, 0.06)'; }}
+                                        >
+                                            {sample.label}
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
                         </motion.div>
                     ) : (
@@ -223,8 +289,8 @@ export default function FileUploadZone({ onDataParsed, isLoading, setIsLoading }
                                         />
                                         <button onClick={handleSheetLoad} disabled={isLoading} style={{
                                             padding: '12px 20px', borderRadius: 10, fontWeight: 600, fontSize: '0.875rem',
-                                            background: 'linear-gradient(135deg, #3b82f6, #6366f1)',
-                                            color: 'white', border: 'none', cursor: 'pointer',
+                                            background: 'var(--accent-primary)',
+                                            color: '#fff', border: 'none', cursor: 'pointer',
                                             opacity: isLoading ? 0.6 : 1,
                                         }}>
                                             {isLoading ? '...' : 'Load'}
