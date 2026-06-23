@@ -7,6 +7,7 @@ import DashboardView from './DashboardView';
 import StickyUploadButton from '@/components/StickyUploadButton';
 import ScrollReveal from '@/components/ScrollReveal';
 import Link from 'next/link';
+import QuickToolsSection from '@/components/tools/QuickToolsSection';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { GALLERY_DASHBOARDS } from '@/lib/galleryRegistry';
 import {
@@ -221,6 +222,9 @@ export default function HomePage() {
           <DashboardView />
         </div>
       </section>
+
+      {/* ⚡ Quick Tools Section */}
+      <QuickToolsSection />
 
       {/* Social Proof Counter Strip */}
       <section style={{

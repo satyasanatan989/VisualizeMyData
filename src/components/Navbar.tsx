@@ -18,6 +18,7 @@ const TOOL_LINKS = [
     { label: '📊 Survey Visualizer', href: '/survey-visualizer' },
     { label: '💡 Formula Generator', href: '/excel-formula-generator' },
     { label: '✨ Dashboard Templates', href: '/dashboard-templates' },
+    { label: '⚡ Quick Utilities', href: '/tools' },
 ];
 
 const NAV_LINKS = [
@@ -25,6 +26,7 @@ const NAV_LINKS = [
     { label: 'Dashboard', href: '/dashboard-generator' },
     { label: 'Report', href: '/data-report-generator' },
     { label: 'Templates', href: '/templates' },
+    { label: 'Utilities', href: '/tools' },
     { label: 'Learn', href: '/learn' },
     { label: 'Blog', href: '/blog' },
     { label: 'About', href: '/about' },
