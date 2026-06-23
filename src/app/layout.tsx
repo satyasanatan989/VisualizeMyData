@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Manrope } from "next/font/google";
 import Script from "next/script";
 import { Toaster } from 'sonner';
@@ -19,7 +19,14 @@ const manrope = Manrope({
 
 const siteUrl = "https://visualizemydata.in";
 
+export const viewport: Viewport = {
+  themeColor: "#0c0e12",
+};
+
 export const metadata: Metadata = {
+  other: {
+    "google-adsense-account": "ca-pub-9327674045083855",
+  },
   metadataBase: new URL(siteUrl),
   title: {
     default: "Free Excel, CSV & PDF Data Visualizer Online (No Login)",
@@ -116,21 +123,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${manrope.variable}`}>
-      <head>
+      <body className="antialiased">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <link rel="canonical" href={siteUrl} />
-        <meta name="theme-color" content="#0c0e12" />
-        <Script
+        <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9327674045083855"
           crossOrigin="anonymous"
-          strategy="afterInteractive"
         />
-      </head>
-      <body className="antialiased">
         <Toaster position="top-center" richColors theme="dark" closeButton duration={3000} />
         <PageTransition>
           {children}
