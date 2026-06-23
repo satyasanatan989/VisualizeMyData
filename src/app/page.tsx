@@ -7,7 +7,12 @@ import DashboardView from './DashboardView';
 import StickyUploadButton from '@/components/StickyUploadButton';
 import ScrollReveal from '@/components/ScrollReveal';
 import Link from 'next/link';
-import QuickToolsSection from '@/components/tools/QuickToolsSection';
+import { QUICK_TOOLS } from '@/lib/toolsRegistry';
+import { 
+  Search, Image as ImageIcon, FileText, Layout, Code, Calculator, Hash, 
+  Sparkles, ShieldCheck, Cpu, Zap, Settings, Lock, Server, Check, ArrowRight,
+  Eye, RefreshCw, Files, Scissors, Key, Binary, Globe, Activity, Percent, Calendar
+} from 'lucide-react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { GALLERY_DASHBOARDS } from '@/lib/galleryRegistry';
 import {
@@ -111,120 +116,485 @@ function FAQItem({ q, a }: { q: string; a: string }) {
   );
 }
 
+const DATA_TOOLS_LIST = [
+  { slug: 'excel-visualizer', name: 'Excel Data Visualizer', description: 'Upload Excel files (.xlsx/.xls) to instantly build interactive dashboards and charts.', category: 'Data Tools', icon: 'FileText', badge: 'POPULAR' as const, href: '/excel-visualizer' },
+  { slug: 'csv-visualizer', name: 'CSV Data Visualizer', description: 'Convert CSV files to charts, clean data, and export dashboards offline.', category: 'Data Tools', icon: 'FileText', badge: 'POPULAR' as const, href: '/csv-visualizer' },
+  { slug: 'pdf-visualizer', name: 'PDF Table Extractor & Visualizer', description: 'Extract tabular data from PDF files and convert them to interactive graphs.', category: 'Data Tools', icon: 'FileText', badge: 'POPULAR' as const, href: '/pdf-visualizer' },
+  { slug: 'google-sheets-visualizer', name: 'Google Sheets Live Visualizer', description: 'Paste a public Google Sheets link to sync and plot data dynamically.', category: 'Data Tools', icon: 'Globe', badge: 'FREE' as const, href: '/google-sheets-visualizer' },
+  { slug: 'multi-chart-generator', name: 'Multi-Chart Dashboard Generator', description: 'Plot multiple metrics on various charts in a side-by-side dashboard.', category: 'Data Tools', icon: 'Layout', badge: 'NEW' as const, href: '/multi-chart-generator' },
+  { slug: 'dashboard-generator', name: 'Interactive Dashboard Builder', description: 'Auto-detect columns, categorize data, and build comprehensive analytical reports.', category: 'Data Tools', icon: 'Layout', badge: 'POPULAR' as const, href: '/dashboard-generator' }
+];
+
+const HOMEPAGE_CATEGORIES = [
+  { id: 'All', name: 'All Tools', icon: '⚡' },
+  { id: 'Image Tools', name: 'Image Tools', icon: '🎨' },
+  { id: 'PDF Tools', name: 'PDF Tools', icon: '📕' },
+  { id: 'Data Tools', name: 'Data Tools', icon: '📊' },
+  { id: 'Developer Tools', name: 'Developer Tools', icon: '💻' },
+  { id: 'Text Tools', name: 'Text Tools', icon: '📝' },
+  { id: 'Calculators', name: 'Calculators', icon: '🧮' }
+];
+
+const TOOL_ICON_MAP: Record<string, any> = {
+  'Image': ImageIcon,
+  'FileImage': ImageIcon,
+  'Maximize': ImageIcon,
+  'Crop': ImageIcon,
+  'RotateCw': ImageIcon,
+  'FileText': FileText,
+  'Eye': Eye,
+  'Files': Files,
+  'Scissors': Scissors,
+  'FileSpreadsheet': FileText,
+  'Hash': Hash,
+  'ListFilter': Hash,
+  'Key': Key,
+  'Code': Code,
+  'FolderTree': Code,
+  'Binary': Binary,
+  'Globe': Globe,
+  'QrCode': Code,
+  'Barcode': Code,
+  'Calendar': Calendar,
+  'Activity': Activity,
+  'Percent': Percent,
+  'RefreshCw': RefreshCw,
+  'Layout': Layout
+};
+
+const getCategoryColor = (category: string) => {
+  switch (category) {
+    case 'Image Tools': return '#ec4899';
+    case 'PDF Tools': return '#ef4444';
+    case 'Data Tools': return '#ba9eff';
+    case 'Developer Tools': return '#10b981';
+    case 'Text Tools': return '#f59e0b';
+    case 'Utility Tools': return '#3b82f6';
+    default: return '#3b82f6';
+  }
+};
+
+const trustBadgeStyle: React.CSSProperties = {
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: 6,
+  fontSize: '0.78rem',
+  fontWeight: 600,
+  color: 'var(--text-muted)',
+  background: 'rgba(255, 255, 255, 0.02)',
+  border: '1px solid var(--border-subtle)',
+  padding: '6px 12px',
+  borderRadius: 8
+};
+
 export default function HomePage() {
   const [darkMode, setDarkMode] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeCategory, setActiveCategory] = useState('All');
+
+  // Combine all tools (29 quick + 6 core data tools)
+  const allCombinedTools = React.useMemo(() => {
+    return [
+      ...QUICK_TOOLS.map(t => ({ ...t, href: `/tools/${t.slug}` })),
+      ...DATA_TOOLS_LIST
+    ];
+  }, []);
+
+  // Filter tools based on query and selected category
+  const filteredTools = React.useMemo(() => {
+    return allCombinedTools.filter(t => {
+      const matchesSearch = t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            t.description.toLowerCase().includes(searchQuery.toLowerCase());
+      
+      if (activeCategory === 'All') return matchesSearch;
+      
+      let categoryMatches = false;
+      if (activeCategory === 'Image Tools') categoryMatches = t.category === 'Image Tools';
+      else if (activeCategory === 'PDF Tools') categoryMatches = t.category === 'PDF Tools';
+      else if (activeCategory === 'Data Tools') categoryMatches = t.category === 'Data Tools';
+      else if (activeCategory === 'Developer Tools') categoryMatches = t.category === 'Developer Tools';
+      else if (activeCategory === 'Text Tools') categoryMatches = t.category === 'Text Tools';
+      else if (activeCategory === 'Calculators') categoryMatches = t.category === 'Utility Tools';
+      
+      return categoryMatches && matchesSearch;
+    });
+  }, [searchQuery, activeCategory, allCombinedTools]);
+
+  // Filter popular tools (featured ones)
+  const popularTools = React.useMemo(() => {
+    return allCombinedTools.filter(t => t.badge === 'POPULAR' || t.slug === 'image-compressor' || t.slug === 'pdf-merger' || t.slug === 'excel-visualizer');
+  }, [allCombinedTools]);
+
+  // Helper to count items per category
+  const getToolCountForCategory = (catId: string) => {
+    if (catId === 'All') return allCombinedTools.length;
+    return allCombinedTools.filter(t => {
+      if (catId === 'Image Tools') return t.category === 'Image Tools';
+      if (catId === 'PDF Tools') return t.category === 'PDF Tools';
+      if (catId === 'Data Tools') return t.category === 'Data Tools';
+      if (catId === 'Developer Tools') return t.category === 'Developer Tools';
+      if (catId === 'Text Tools') return t.category === 'Text Tools';
+      if (catId === 'Calculators') return t.category === 'Utility Tools';
+      return false;
+    }).length;
+  };
 
   return (
     <div className={darkMode ? '' : 'light'} style={{ minHeight: '100vh', background: 'var(--bg-primary)' }}>
       <Navbar darkMode={darkMode} onToggleDark={() => setDarkMode(d => !d)} />
 
       {/* ── HERO SECTION ── */}
-      <section style={{ padding: '80px 0 60px', position: 'relative', overflow: 'hidden' }}>
+      <section style={{ padding: '80px 0 30px', position: 'relative', overflow: 'hidden' }}>
         {/* Ambient blobs */}
         <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden' }}>
-          <div className="ambient-blob" style={{ position: 'absolute', top: '-10%', left: '-5%', width: 800, height: 800, background: 'radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%)', borderRadius: '50%' }} />
-          <div className="ambient-blob-delayed" style={{ position: 'absolute', bottom: '-10%', right: '-5%', width: 600, height: 600, background: 'radial-gradient(circle, rgba(139,92,246,0.1) 0%, transparent 70%)', borderRadius: '50%' }} />
+          <div className="ambient-blob" style={{ position: 'absolute', top: '-10%', left: '-5%', width: 800, height: 800, background: 'radial-gradient(circle, rgba(132,85,239,0.12) 0%, transparent 70%)', borderRadius: '50%' }} />
+          <div className="ambient-blob-delayed" style={{ position: 'absolute', bottom: '-10%', right: '-5%', width: 600, height: 600, background: 'radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 70%)', borderRadius: '50%' }} />
         </div>
-        <div className="container" style={{ position: 'relative', textAlign: 'center', maxWidth: 760, marginBottom: 60 }}>
+        
+        <div className="container" style={{ position: 'relative', textAlign: 'center', maxWidth: 840, margin: '0 auto' }}>
           {/* Badge */}
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '6px 16px', background: 'rgba(186,158,255,0.08)', border: '1px solid rgba(186,158,255,0.25)', borderRadius: 99, marginBottom: 24, backdropFilter: 'blur(8px)' }}>
-            <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#ba9eff', display: 'inline-block', boxShadow: '0 0 10px #ba9eff' }} />
-            <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.08em', color: '#cdcdff', textTransform: 'uppercase' }}>Free · No Signup · 100% Browser-Based</span>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '6px 16px', background: 'rgba(186,158,255,0.06)', border: '1px solid rgba(186,158,255,0.2)', borderRadius: 99, marginBottom: 24, backdropFilter: 'blur(8px)' }}>
+            <Zap size={12} color="#ba9eff" className="pulse-icon" />
+            <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.08em', color: '#cdcdff', textTransform: 'uppercase' }}>Smart Tools for Everyday Tasks</span>
           </div>
+          
           {/* Headline */}
-          <h1 style={{ fontFamily: 'var(--font-manrope)', fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 800, letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: 20, background: 'linear-gradient(135deg, #f8f9fe 30%, #ba9eff 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-            Visualize Your Data Instantly
+          <h1 style={{ fontFamily: 'var(--font-manrope)', fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 800, letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: 16, background: 'linear-gradient(135deg, #f8f9fe 30%, #ba9eff 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+            ToolVista
           </h1>
+          
           {/* Subtext */}
-          <p style={{ color: 'var(--text-secondary)', fontSize: 'clamp(1rem, 2.5vw, 1.15rem)', lineHeight: 1.75, maxWidth: 580, margin: '0 auto 36px' }}>
-            Upload Excel, CSV, PDF, or Google Sheets and instantly generate charts, dashboards, and data insights directly in your browser.
+          <p style={{ color: 'var(--text-secondary)', fontSize: 'clamp(0.95rem, 2.5vw, 1.1rem)', lineHeight: 1.6, maxWidth: 580, margin: '0 auto 32px' }}>
+            Free, fast, and 100% client-side web tools. Complete your image, PDF, text, and coding tasks directly in your browser with absolute privacy.
           </p>
-          {/* CTA Buttons */}
-          <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 44 }}>
-            <button
-              onClick={() => document.getElementById('upload-zone')?.scrollIntoView({ behavior: 'smooth' })}
-              className="btn-primary"
-            >⚡ Upload File &amp; Create Charts</button>
-            <Link href="/dashboard-generator" className="btn-secondary"
-            >📊 Create Instant Dashboard</Link>
-            <Link href="/templates" className="btn-secondary" style={{ borderColor: 'rgba(64,206,237,0.3)', color: '#53ddfc' }}
-            >✨ Try Templates</Link>
+
+          {/* Search bar */}
+          <div style={{ maxWidth: 600, margin: '0 auto 24px', position: 'relative' }}>
+            <div style={{
+              display: 'flex', alignItems: 'center', background: 'rgba(15, 23, 42, 0.45)',
+              border: '1px solid var(--border-subtle)', borderRadius: 16, padding: '6px 16px',
+              boxShadow: '0 8px 32px rgba(0,0,0,0.25)', backdropFilter: 'blur(8px)',
+              transition: 'border-color 0.2s, box-shadow 0.2s'
+            }} className="search-bar-container">
+              <Search size={18} color="var(--text-muted)" style={{ marginRight: 12, flexShrink: 0 }} />
+              <input
+                type="text"
+                placeholder="Search tools... (e.g. compress, pdf merger, json, word counter)"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                style={{
+                  width: '100%', background: 'none', border: 'none', color: '#fff',
+                  outline: 'none', fontSize: '0.93rem', height: 44,
+                  fontFamily: 'var(--font-inter)'
+                }}
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  style={{
+                    background: 'rgba(255,255,255,0.06)', border: 'none', color: 'var(--text-muted)',
+                    width: 20, height: 20, borderRadius: '50%', cursor: 'pointer',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.7rem'
+                  }}
+                >
+                  ✕
+                </button>
+              )}
+            </div>
           </div>
-          {/* Trust indicators */}
-          <div style={{ display: 'flex', gap: 20, justifyContent: 'center', flexWrap: 'wrap' }}>
-            {['✓ 100% Browser Processing', '✓ No Login Required', '✓ Your Data Never Leaves Your Device'].map(t => (
-              <span key={t} style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 4 }}>{t}</span>
-            ))}
+
+          {/* Trust badges */}
+          <div style={{ display: 'flex', gap: 18, justifyContent: 'center', flexWrap: 'wrap', opacity: 0.85 }}>
+            <span style={trustBadgeStyle}><Lock size={12} color="#10b981" /> Files stay on your device</span>
+            <span style={trustBadgeStyle}><ShieldCheck size={12} color="#10b981" /> No registration required</span>
+            <span style={trustBadgeStyle}><Cpu size={12} color="#ba9eff" /> 100% browser-based</span>
           </div>
         </div>
+      </section>
 
-        {/* ── Live Preview Chart Strip ── */}
-        <div className="container" style={{ position: 'relative', marginBottom: 40 }}>
-          <div className="gradient-border">
-            <div className="glass-card" style={{ padding: '20px 24px' }}>
-              {/* Header bar */}
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <span className="live-dot" />
-                  <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary)', letterSpacing: '0.04em' }}>LIVE DEMO — SAMPLE ANALYTICS</span>
-                </div>
-                <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', background: 'rgba(255,255,255,0.04)', padding: '3px 10px', borderRadius: 20, border: '1px solid var(--border-subtle)' }}>Sample Data</span>
+      {/* ── MAIN DIRECTORY GRID ── */}
+      <section style={{ padding: '0 0 60px', position: 'relative' }}>
+        <div className="container">
+          
+          {/* Popular Tools Section */}
+          {!searchQuery && activeCategory === 'All' && (
+            <div style={{ marginBottom: 44 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 18 }}>
+                <Sparkles size={16} color="#ba9eff" />
+                <h2 style={{ fontFamily: 'var(--font-manrope)', fontSize: '1.25rem', fontWeight: 800, margin: 0, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
+                  Popular Tools
+                </h2>
               </div>
-              {/* 3 mini charts */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16 }}>
-                {/* Bar */}
-                <div style={{ background: 'rgba(186,158,255,0.05)', borderRadius: 14, padding: '14px 16px', border: '1px solid rgba(186,158,255,0.15)' }}>
-                  <p style={{ fontFamily: 'var(--font-manrope)', fontSize: '0.72rem', fontWeight: 700, color: '#ba9eff', margin: '0 0 10px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Monthly Revenue</p>
-                  <ResponsiveContainer width="100%" height={120}>
-                    <BarChart data={PREVIEW_BAR} barCategoryGap="30%">
-                      <XAxis dataKey="month" tick={{ fill: '#73757a', fontSize: 10 }} axisLine={false} tickLine={false} />
-                      <Tooltip {...tooltipCfg} cursor={{ fill: 'rgba(255,255,255,0.04)' }} />
-                      <Bar dataKey="value" radius={[4, 4, 0, 0]} fill="url(#barGrad)" />
-                      <defs>
-                        <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="#ba9eff" />
-                          <stop offset="100%" stopColor="#8455ef" />
-                        </linearGradient>
-                      </defs>
-                    </BarChart>
-                  </ResponsiveContainer>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+                gap: 16
+              }}>
+                {popularTools.slice(0, 4).map(tool => {
+                  const IconComponent = TOOL_ICON_MAP[tool.icon] || Settings;
+                  return (
+                    <Link key={tool.slug} href={tool.href} style={{ textDecoration: 'none' }}>
+                      <div style={{
+                        padding: '16px 20px', borderRadius: 14,
+                        border: '1px solid rgba(132, 85, 239, 0.25)',
+                        background: 'rgba(132, 85, 239, 0.04)',
+                        display: 'flex', alignItems: 'center', gap: 14,
+                        transition: 'all 0.2s', cursor: 'pointer'
+                      }} className="popular-tool-card">
+                        <div style={{
+                          width: 34, height: 34, borderRadius: 8,
+                          background: 'rgba(132, 85, 239, 0.1)',
+                          display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0
+                        }}>
+                          <IconComponent size={16} color="#ba9eff" />
+                        </div>
+                        <div>
+                          <h4 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 2px' }}>{tool.name}</h4>
+                          <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>{tool.category}</span>
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Categories Tab Row */}
+          <div style={{
+            display: 'flex', gap: 10, overflowX: 'auto', paddingBottom: 12,
+            marginBottom: 32, borderBottom: '1px solid var(--border-subtle)',
+            scrollbarWidth: 'none', msOverflowStyle: 'none'
+          }} className="category-scroll-container">
+            {HOMEPAGE_CATEGORIES.map(cat => {
+              const isActive = activeCategory === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setActiveCategory(cat.id)}
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: 8,
+                    padding: '10px 18px', borderRadius: 12, border: '1px solid',
+                    borderColor: isActive ? 'var(--accent-primary)' : 'var(--border-subtle)',
+                    background: isActive ? 'rgba(132, 85, 239, 0.12)' : 'rgba(23, 26, 30, 0.35)',
+                    color: isActive ? '#fff' : 'var(--text-secondary)',
+                    fontWeight: isActive ? 600 : 500, fontSize: '0.85rem',
+                    cursor: 'pointer', whiteSpace: 'nowrap', transition: 'all 0.2s',
+                    boxShadow: isActive ? '0 0 16px rgba(132,85,239,0.15)' : 'none'
+                  }}
+                >
+                  <span>{cat.icon}</span>
+                  <span>{cat.name}</span>
+                  <span style={{
+                    fontSize: '0.7rem', padding: '1px 6px', borderRadius: 6,
+                    background: isActive ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.04)',
+                    color: 'var(--text-muted)'
+                  }}>
+                    {getToolCountForCategory(cat.id)}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Tools Grid */}
+          {filteredTools.length > 0 ? (
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
+              gap: 20
+            }}>
+              {filteredTools.map(tool => {
+                const IconComponent = TOOL_ICON_MAP[tool.icon] || Settings;
+                return (
+                  <Link key={tool.slug} href={tool.href} style={{ textDecoration: 'none' }}>
+                    <div 
+                      className="glass-card glass-card-hover toolvista-card" 
+                      style={{ 
+                        padding: 22, height: '100%', display: 'flex', flexDirection: 'column',
+                        justifyContent: 'space-between', border: '1px solid var(--border-subtle)',
+                        borderRadius: 18, background: 'rgba(23, 26, 30, 0.35)',
+                        transition: 'all 0.25s ease'
+                      }}
+                    >
+                      <div>
+                        {/* Card Header: Icon & Badge */}
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
+                          <div style={{
+                            width: 38, height: 38, borderRadius: 10,
+                            background: getCategoryColor(tool.category) + '12',
+                            border: '1px solid ' + getCategoryColor(tool.category) + '22',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center'
+                          }}>
+                            <IconComponent size={18} color={getCategoryColor(tool.category)} />
+                          </div>
+                          {tool.badge && (
+                            <span style={{
+                              fontSize: '0.62rem', fontWeight: 800, color: '#000',
+                              background: tool.badge === 'NEW' ? '#10b981' : (tool.badge === 'POPULAR' ? 'linear-gradient(135deg, #ba9eff, #8455ef)' : 'rgba(255,255,255,0.2)'),
+                              padding: '2px 6px', borderRadius: 4, textTransform: 'uppercase'
+                            }}>
+                              {tool.badge}
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Title */}
+                        <h3 style={{
+                          fontFamily: 'var(--font-manrope)', fontSize: '0.92rem',
+                          fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 6px'
+                        }}>
+                          {tool.name}
+                        </h3>
+
+                        {/* Description */}
+                        <p style={{
+                          color: 'var(--text-secondary)', fontSize: '0.78rem',
+                          lineHeight: 1.5, margin: 0, overflow: 'hidden',
+                          textOverflow: 'ellipsis', display: '-webkit-box',
+                          WebkitLineClamp: 2, WebkitBoxOrient: 'vertical'
+                        }}>
+                          {tool.description}
+                        </p>
+                      </div>
+
+                      {/* Footer link */}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 14, fontSize: '0.78rem', fontWeight: 600, color: 'var(--accent-primary)' }}>
+                        <span>Open Tool</span>
+                        <ArrowRight size={12} className="arrow-icon" style={{ transition: 'transform 0.2s' }} />
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          ) : (
+            <div style={{
+              textAlign: 'center', padding: '60px 20px', borderRadius: 20,
+              background: 'rgba(23, 26, 30, 0.2)', border: '1px solid var(--border-subtle)'
+            }}>
+              <Server size={32} color="var(--text-muted)" style={{ marginBottom: 12 }} />
+              <p style={{ color: 'var(--text-secondary)', margin: 0, fontSize: '0.9rem' }}>
+                No tools found matching &ldquo;{searchQuery}&rdquo;. Try another search term.
+              </p>
+            </div>
+          )}
+
+          {/* Related Suggestions Ribbon */}
+          {activeCategory !== 'All' && (
+            <div style={{
+              marginTop: 40, padding: '20px 24px', borderRadius: 16,
+              background: 'rgba(255,255,255,0.01)', border: '1px solid var(--border-subtle)',
+              display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 16
+            }}>
+              <div>
+                <h4 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 4px' }}>Looking for other utilities?</h4>
+                <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', margin: 0 }}>Check out similar categories or browse our comprehensive utility list.</p>
+              </div>
+              <div style={{ display: 'flex', gap: 10 }}>
+                {HOMEPAGE_CATEGORIES.filter(c => c.id !== 'All' && c.id !== activeCategory).slice(0, 3).map(cat => (
+                  <button
+                    key={cat.id}
+                    onClick={() => setActiveCategory(cat.id)}
+                    style={{
+                      background: 'rgba(255,255,255,0.04)', border: '1px solid var(--border-subtle)',
+                      borderRadius: 8, padding: '6px 12px', color: 'var(--text-secondary)',
+                      fontSize: '0.75rem', cursor: 'pointer', transition: 'all 0.2s'
+                    }}
+                    className="popular-tool-card"
+                  >
+                    {cat.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ── FEATURED DATA VISUALIZATION SECTION ── */}
+      <section style={{
+        padding: '60px 0',
+        background: 'rgba(2, 8, 23, 0.25)',
+        borderTop: '1px solid var(--border-subtle)',
+        borderBottom: '1px solid var(--border-subtle)',
+        position: 'relative'
+      }} id="data-visualizer-suite">
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: 40 }}>
+            <span className="badge" style={{ marginBottom: 12, background: 'rgba(64,206,237,0.08)', color: '#40ceed', border: '1px solid rgba(64,206,237,0.2)' }}>Featured Suite</span>
+            <h2 style={{ fontFamily: 'var(--font-manrope)', fontSize: 'clamp(1.75rem, 4vw, 2.25rem)', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.02em', margin: '0 0 12px' }}>
+              Flagship Data &amp; Spreadsheet Visualizer
+            </h2>
+            <p style={{ color: 'var(--text-secondary)', maxWidth: 540, margin: '0 auto 24px', fontSize: '0.88rem', lineHeight: 1.6 }}>
+              Upload Excel, CSV, PDF, or Google Sheets below to analyze trends, generate beautiful charts, and build dynamic multi-chart dashboards directly in-browser.
+            </p>
+          </div>
+
+          {/* ── Live Preview Chart Strip ── */}
+          <div style={{ position: 'relative', marginBottom: 40 }}>
+            <div className="gradient-border">
+              <div className="glass-card" style={{ padding: '20px 24px' }}>
+                {/* Header bar */}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <span className="live-dot" />
+                    <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-secondary)', letterSpacing: '0.04em' }}>LIVE DEMO — SAMPLE ANALYTICS</span>
+                  </div>
+                  <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', background: 'rgba(255,255,255,0.04)', padding: '3px 10px', borderRadius: 20, border: '1px solid var(--border-subtle)' }}>Sample Data</span>
                 </div>
-                {/* Line */}
-                <div style={{ background: 'rgba(64,206,237,0.05)', borderRadius: 14, padding: '14px 16px', border: '1px solid rgba(64,206,237,0.15)' }}>
-                  <p style={{ fontFamily: 'var(--font-manrope)', fontSize: '0.72rem', fontWeight: 700, color: '#40ceed', margin: '0 0 10px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>User Growth</p>
-                  <ResponsiveContainer width="100%" height={120}>
-                    <LineChart data={PREVIEW_LINE}>
-                      <XAxis dataKey="month" tick={{ fill: '#73757a', fontSize: 10 }} axisLine={false} tickLine={false} />
-                      <Tooltip {...tooltipCfg} />
-                      <Line type="monotone" dataKey="users" stroke="#40ceed" strokeWidth={2.5} dot={false} />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </div>
-                {/* Pie */}
-                <div style={{ background: 'rgba(144,147,255,0.05)', borderRadius: 14, padding: '14px 16px', border: '1px solid rgba(144,147,255,0.15)' }}>
-                  <p style={{ fontFamily: 'var(--font-manrope)', fontSize: '0.72rem', fontWeight: 700, color: '#9093ff', margin: '0 0 10px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Upload Sources</p>
-                  <ResponsiveContainer width="100%" height={120}>
-                    <PieChart>
-                      <Pie data={PREVIEW_PIE} cx="50%" cy="50%" innerRadius={28} outerRadius={50} dataKey="value" paddingAngle={3} stroke="none">
-                        {PREVIEW_PIE.map((_, i) => <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />)}
-                      </Pie>
-                      <Tooltip {...tooltipCfg} />
-                    </PieChart>
-                  </ResponsiveContainer>
+                {/* 3 mini charts */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16 }}>
+                  {/* Bar */}
+                  <div style={{ background: 'rgba(186,158,255,0.05)', borderRadius: 14, padding: '14px 16px', border: '1px solid rgba(186,158,255,0.15)' }}>
+                    <p style={{ fontFamily: 'var(--font-manrope)', fontSize: '0.72rem', fontWeight: 700, color: '#ba9eff', margin: '0 0 10px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Monthly Revenue</p>
+                    <ResponsiveContainer width="100%" height={120}>
+                      <BarChart data={PREVIEW_BAR} barCategoryGap="30%">
+                        <XAxis dataKey="month" tick={{ fill: '#73757a', fontSize: 10 }} axisLine={false} tickLine={false} />
+                        <Tooltip {...tooltipCfg} cursor={{ fill: 'rgba(255,255,255,0.04)' }} />
+                        <Bar dataKey="value" radius={[4, 4, 0, 0]} fill="url(#barGrad)" />
+                        <defs>
+                          <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#ba9eff" />
+                            <stop offset="100%" stopColor="#8455ef" />
+                          </linearGradient>
+                        </defs>
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                  {/* Line */}
+                  <div style={{ background: 'rgba(64,206,237,0.05)', borderRadius: 14, padding: '14px 16px', border: '1px solid rgba(64,206,237,0.15)' }}>
+                    <p style={{ fontFamily: 'var(--font-manrope)', fontSize: '0.72rem', fontWeight: 700, color: '#40ceed', margin: '0 0 10px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>User Growth</p>
+                    <ResponsiveContainer width="100%" height={120}>
+                      <LineChart data={PREVIEW_LINE}>
+                        <XAxis dataKey="month" tick={{ fill: '#73757a', fontSize: 10 }} axisLine={false} tickLine={false} />
+                        <Tooltip {...tooltipCfg} />
+                        <Line type="monotone" dataKey="users" stroke="#40ceed" strokeWidth={2.5} dot={false} />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
+                  {/* Pie */}
+                  <div style={{ background: 'rgba(144,147,255,0.05)', borderRadius: 14, padding: '14px 16px', border: '1px solid rgba(144,147,255,0.15)' }}>
+                    <p style={{ fontFamily: 'var(--font-manrope)', fontSize: '0.72rem', fontWeight: 700, color: '#9093ff', margin: '0 0 10px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Upload Sources</p>
+                    <ResponsiveContainer width="100%" height={120}>
+                      <PieChart>
+                        <Pie data={PREVIEW_PIE} cx="50%" cy="50%" innerRadius={28} outerRadius={50} dataKey="value" paddingAngle={3} stroke="none">
+                          {PREVIEW_PIE.map((_, i) => <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />)}
+                        </Pie>
+                        <Tooltip {...tooltipCfg} />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Upload Tool */}
-        <div className="container" style={{ position: 'relative' }}>
-          <DashboardView />
+          <div style={{ position: 'relative' }}>
+            <DashboardView />
+          </div>
         </div>
       </section>
-
-      {/* ⚡ Quick Tools Section */}
-      <QuickToolsSection />
 
       {/* Social Proof Counter Strip */}
       <section style={{
