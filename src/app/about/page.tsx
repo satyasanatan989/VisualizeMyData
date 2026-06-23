@@ -4,8 +4,17 @@ import Footer from '@/components/Footer';
 import { BarChart2, Shield, Zap, Globe } from 'lucide-react';
 
 export const metadata: Metadata = {
-    title: 'About Us – DataVisualizer | Free Online Data Visualization Tool',
-    description: 'Learn about DataVisualizer — a free, browser-based tool to visualize Excel, CSV, PDF, and Google Sheets data. Built for privacy and speed.',
+    title: 'About Us | VisualizeMyData',
+    description: 'Learn about VisualizeMyData (ToolVista) — a free, browser-based tool to visualize Excel, CSV, PDF, and Google Sheets data alongside 29+ helper utilities. Built for privacy and speed.',
+    alternates: {
+        canonical: 'https://visualizemydata.in/about',
+    },
+    openGraph: {
+        title: 'About Us | VisualizeMyData',
+        description: 'Learn about VisualizeMyData (ToolVista) — a free, browser-based data visualizer and utility catalog built for privacy and speed.',
+        url: 'https://visualizemydata.in/about',
+        type: 'website',
+    },
 };
 
 const VALUES = [

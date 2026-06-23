@@ -3,8 +3,17 @@ import NavbarWrapper from '@/components/NavbarWrapper';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-    title: 'Terms & Conditions – DataVisualizer',
-    description: 'Terms and conditions for using DataVisualizer. Free browser-based data visualization tool.',
+    title: 'Terms & Conditions | VisualizeMyData',
+    description: 'Terms and conditions for using VisualizeMyData (ToolVista). Free, browser-based data visualization and utility tools.',
+    alternates: {
+        canonical: 'https://visualizemydata.in/terms',
+    },
+    openGraph: {
+        title: 'Terms & Conditions | VisualizeMyData',
+        description: 'Terms and conditions for using VisualizeMyData (ToolVista).',
+        url: 'https://visualizemydata.in/terms',
+        type: 'website',
+    },
 };
 
 export default function TermsPage() {

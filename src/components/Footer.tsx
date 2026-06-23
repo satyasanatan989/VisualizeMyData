@@ -46,10 +46,10 @@ export default function Footer() {
                             }}>
                                 <BarChart2 size={16} color="white" />
                             </div>
-                            <span style={{ fontWeight: 800, color: 'var(--text-primary)', fontSize: '1rem' }}>DataVisualizer</span>
+                            <span style={{ fontWeight: 800, color: 'var(--text-primary)', fontSize: '1rem' }}>ToolVista</span>
                         </div>
                         <p style={{ color: 'var(--text-muted)', fontSize: '0.8125rem', lineHeight: 1.7 }}>
-                            Free online tool to visualize Excel, CSV, Google Sheets & PDF data instantly without signup.
+                            Free online tools to convert images, format developer code, split PDFs, and visualize Excel/CSV data instantly without signup.
                         </p>
                     </div>
 

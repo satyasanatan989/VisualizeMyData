@@ -3,8 +3,17 @@ import NavbarWrapper from '@/components/NavbarWrapper';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-    title: 'Disclaimer – DataVisualizer',
-    description: 'DataVisualizer disclaimer. Chart outputs are for informational purposes. Always verify data with original source files.',
+    title: 'Disclaimer | VisualizeMyData',
+    description: 'Disclaimer policy for using VisualizeMyData (ToolVista) file utilities. Understand tool output limitations.',
+    alternates: {
+        canonical: 'https://visualizemydata.in/disclaimer',
+    },
+    openGraph: {
+        title: 'Disclaimer | VisualizeMyData',
+        description: 'Disclaimer policy for using VisualizeMyData (ToolVista) file utilities.',
+        url: 'https://visualizemydata.in/disclaimer',
+        type: 'website',
+    },
 };
 
 export default function DisclaimerPage() {

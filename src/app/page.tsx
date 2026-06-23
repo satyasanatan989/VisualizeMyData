@@ -132,7 +132,7 @@ const HOMEPAGE_CATEGORIES = [
   { id: 'Data Tools', name: 'Data Tools', icon: '📊' },
   { id: 'Developer Tools', name: 'Developer Tools', icon: '💻' },
   { id: 'Text Tools', name: 'Text Tools', icon: '📝' },
-  { id: 'Calculators', name: 'Calculators', icon: '🧮' }
+  { id: 'Utility Tools', name: 'Utility Tools', icon: '🧮' }
 ];
 
 const TOOL_ICON_MAP: Record<string, any> = {
@@ -214,7 +214,7 @@ export default function HomePage() {
       else if (activeCategory === 'Data Tools') categoryMatches = t.category === 'Data Tools';
       else if (activeCategory === 'Developer Tools') categoryMatches = t.category === 'Developer Tools';
       else if (activeCategory === 'Text Tools') categoryMatches = t.category === 'Text Tools';
-      else if (activeCategory === 'Calculators') categoryMatches = t.category === 'Utility Tools';
+      else if (activeCategory === 'Utility Tools') categoryMatches = t.category === 'Utility Tools';
       
       return categoryMatches && matchesSearch;
     });
@@ -234,7 +234,7 @@ export default function HomePage() {
       if (catId === 'Data Tools') return t.category === 'Data Tools';
       if (catId === 'Developer Tools') return t.category === 'Developer Tools';
       if (catId === 'Text Tools') return t.category === 'Text Tools';
-      if (catId === 'Calculators') return t.category === 'Utility Tools';
+      if (catId === 'Utility Tools') return t.category === 'Utility Tools';
       return false;
     }).length;
   };
@@ -304,10 +304,11 @@ export default function HomePage() {
           </div>
 
           {/* Trust badges */}
-          <div style={{ display: 'flex', gap: 18, justifyContent: 'center', flexWrap: 'wrap', opacity: 0.85 }}>
-            <span style={trustBadgeStyle}><Lock size={12} color="#10b981" /> Files stay on your device</span>
-            <span style={trustBadgeStyle}><ShieldCheck size={12} color="#10b981" /> No registration required</span>
-            <span style={trustBadgeStyle}><Cpu size={12} color="#ba9eff" /> 100% browser-based</span>
+          <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap', opacity: 0.9 }}>
+            <span style={trustBadgeStyle}><Lock size={12} color="#10b981" /> Files never leave your device</span>
+            <span style={trustBadgeStyle}><ShieldCheck size={12} color="#10b981" /> No login required</span>
+            <span style={trustBadgeStyle}><Cpu size={12} color="#ba9eff" /> Fast processing</span>
+            <span style={trustBadgeStyle}><Zap size={12} color="#ba9eff" /> Privacy-first</span>
           </div>
         </div>
       </section>

@@ -3,8 +3,17 @@ import NavbarWrapper from '@/components/NavbarWrapper';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-    title: 'Privacy Policy – DataVisualizer',
-    description: 'DataVisualizer privacy policy. Learn how we protect your data — no file storage, no data sharing, browser-only processing.',
+    title: 'Privacy Policy | VisualizeMyData',
+    description: 'Privacy Policy for VisualizeMyData (ToolVista). Learn how we protect your privacy through 100% browser-based local file processing.',
+    alternates: {
+        canonical: 'https://visualizemydata.in/privacy-policy',
+    },
+    openGraph: {
+        title: 'Privacy Policy | VisualizeMyData',
+        description: 'Privacy Policy for VisualizeMyData (ToolVista). Learn how we protect your privacy.',
+        url: 'https://visualizemydata.in/privacy-policy',
+        type: 'website',
+    },
 };
 
 export default function PrivacyPolicyPage() {
@@ -61,30 +70,38 @@ export default function PrivacyPolicyPage() {
 
                     <h2>5. Cookies</h2>
                     <p>
-                        DataVisualizer uses minimal cookies necessary for site functionality, such as remembering your dark/light mode preference. We do not use advertising cookies or tracking cookies. If we display Google AdSense advertisements in the future, they may set their own cookies under Google's privacy policy.
+                        We use cookies to enhance your experience, remember preferences (such as light or dark mode), and compile aggregate traffic data. Cookies are small text files stored on your device. You can control or disable cookies through your browser settings at any time.
                     </p>
 
-                    <h2>6. Third-Party Services</h2>
+                    <h2>6. Google Analytics</h2>
                     <p>
-                        Our website may be hosted on third-party infrastructure (such as Vercel). These providers have their own privacy policies governing the standard web request logs they process. We encourage you to review their policies.
+                        We use Google Analytics (specifically Google Analytics 4) to monitor website traffic, analyze user behavior, and improve our services. Google Analytics utilizes cookies to collect standard web log information and visitor behavior in an anonymous form. Crucially, **no files, raw data, or spreadsheet contents** you process in our tools are ever shared with or tracked by Google Analytics.
                     </p>
 
-                    <h2>7. Children's Privacy</h2>
+                    <h2>7. Google AdSense & Third-Party Advertising</h2>
                     <p>
-                        DataVisualizer is not directed toward children under the age of 13. We do not knowingly collect personal information from children. If you believe a child has provided personal information, please contact us.
+                        We partner with third-party advertising companies, including Google AdSense, to serve ads when you visit our website. These companies may use cookies, web beacons, and other tracking technologies (such as Google's DART cookie) to serve personalized ads based on your visits to this and other sites on the internet.
+                    </p>
+                    <p>
+                        You can opt out of personalized advertising by visiting Google's <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer">Ads Settings</a>. Alternatively, you can opt out of a third-party vendor's use of cookies for personalized advertising by visiting the <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer">About Ads Choices</a> portal.
                     </p>
 
-                    <h2>8. Your Rights</h2>
+                    <h2>8. Browser-Based Processing & Data Privacy</h2>
+                    <p>
+                        To reiterate, all file modifications, conversions, and visual charting tools run purely client-side. Our **browser-based processing** model ensures that your files never hit any server. We perform **no permanent storage** or caching of your uploads, which guarantees total user privacy.
+                    </p>
+
+                    <h2>9. Third-Party Services & Hosting</h2>
+                    <p>
+                        Our hosting infrastructure (Vercel) may collect standard web server logs (such as user-agents and IP addresses) for security and performance diagnostics. These logs do not contain any personal data or file content. We encourage you to review Vercel's privacy policy for details.
+                    </p>
+
+                    <h2>10. Your Rights</h2>
                     <p>
                         Since we do not store personal data or file content, there is no data to access, correct, or delete. If you have concerns about any information collected through standard web logs, you may contact us and we will address your request within 30 days.
                     </p>
 
-                    <h2>9. Changes to This Policy</h2>
-                    <p>
-                        We may update this Privacy Policy occasionally to reflect changes in our practices or legal requirements. We will update the "Last updated" date at the top of this page. Continued use of the service after changes constitutes acceptance of the updated policy.
-                    </p>
-
-                    <h2>10. Contact Us</h2>
+                    <h2>11. Contact Us</h2>
                     <p>
                         If you have questions about this Privacy Policy, please contact us at: <a href="/contact">our contact page</a>.
                     </p>

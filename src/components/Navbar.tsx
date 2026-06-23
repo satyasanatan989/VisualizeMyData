@@ -29,12 +29,20 @@ const NAV_LINKS = [
     { label: 'Utilities', href: '/tools' },
     { label: 'Learn', href: '/learn' },
     { label: 'Blog', href: '/blog' },
-    { label: 'About', href: '/about' },
+];
+
+const COMPANY_LINKS = [
+    { label: 'About Us', href: '/about' },
+    { label: 'Contact Us', href: '/contact' },
+    { label: 'Privacy Policy', href: '/privacy-policy' },
+    { label: 'Terms & Conditions', href: '/terms' },
+    { label: 'Disclaimer', href: '/disclaimer' },
 ];
 
 export default function Navbar({ darkMode, onToggleDark }: NavbarProps) {
     const [mobileOpen, setMobileOpen] = useState(false);
     const [toolsOpen, setToolsOpen] = useState(false);
+    const [companyOpen, setCompanyOpen] = useState(false);
 
     const linkStyle: React.CSSProperties = {
         padding: '6px 12px',
@@ -70,7 +78,7 @@ export default function Navbar({ darkMode, onToggleDark }: NavbarProps) {
                         <BarChart2 size={18} color="white" />
                     </div>
                     <span style={{ fontWeight: 800, fontSize: '1.1rem', color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
-                        DataVisualizer
+                        ToolVista
                     </span>
                 </Link>
 
@@ -165,6 +173,78 @@ export default function Navbar({ darkMode, onToggleDark }: NavbarProps) {
                             {l.label}
                         </Link>
                     ))}
+
+                    {/* Company dropdown */}
+                    <div
+                        style={{ position: 'relative' }}
+                        onMouseEnter={() => setCompanyOpen(true)}
+                        onMouseLeave={() => setCompanyOpen(false)}
+                    >
+                        <button
+                            style={{
+                                ...linkStyle,
+                                background: companyOpen ? 'rgba(255,255,255,0.06)' : 'transparent',
+                                color: companyOpen ? 'var(--text-primary)' : 'var(--text-secondary)',
+                                border: 'none',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 4,
+                            }}
+                        >
+                            Company
+                            <ChevronDown size={13} style={{ transition: 'transform 0.2s', transform: companyOpen ? 'rotate(180deg)' : 'rotate(0)' }} />
+                        </button>
+
+                        <div style={{
+                            position: 'absolute',
+                            top: '100%',
+                            left: 0,
+                            minWidth: 180,
+                            paddingTop: '8px',
+                            opacity: companyOpen ? 1 : 0,
+                            pointerEvents: companyOpen ? 'auto' : 'none',
+                            transform: companyOpen ? 'translateY(0)' : 'translateY(-6px)',
+                            transition: 'opacity 0.18s ease, transform 0.18s ease',
+                        }}>
+                            <div style={{
+                                background: 'rgba(10,18,36,0.97)',
+                                border: '1px solid rgba(255,255,255,0.1)',
+                                borderRadius: 14,
+                                padding: '8px',
+                                boxShadow: '0 12px 40px rgba(0,0,0,0.5)',
+                                backdropFilter: 'blur(20px)',
+                            }}>
+                                {COMPANY_LINKS.map(c => (
+                                    <Link
+                                        key={c.href}
+                                        href={c.href}
+                                        onClick={() => setCompanyOpen(false)}
+                                        style={{
+                                            display: 'block',
+                                            padding: '10px 14px',
+                                            borderRadius: 10,
+                                            fontSize: '0.85rem',
+                                            fontWeight: 500,
+                                            color: 'var(--text-secondary)',
+                                            textDecoration: 'none',
+                                            transition: 'background 0.15s, color 0.15s',
+                                        }}
+                                        onMouseEnter={e => {
+                                            (e.currentTarget as HTMLElement).style.background = 'rgba(186,158,255,0.12)';
+                                            (e.currentTarget as HTMLElement).style.color = '#cdcdff';
+                                        }}
+                                        onMouseLeave={e => {
+                                            (e.currentTarget as HTMLElement).style.background = 'transparent';
+                                            (e.currentTarget as HTMLElement).style.color = 'var(--text-secondary)';
+                                        }}
+                                    >
+                                        {c.label}
+                                    </Link>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Actions */}
@@ -208,20 +288,33 @@ export default function Navbar({ darkMode, onToggleDark }: NavbarProps) {
                     borderTop: '1px solid rgba(255,255,255,0.06)',
                     padding: '12px 24px 16px',
                     display: 'flex', flexDirection: 'column', gap: 4,
+                    maxHeight: '80vh',
+                    overflowY: 'auto'
                 }}>
                     <p style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.07em', margin: '8px 0 4px 12px' }}>Tools</p>
                     {TOOL_LINKS.map(l => (
                         <Link key={l.href} href={l.href} onClick={() => setMobileOpen(false)} style={{
-                            padding: '10px 12px', borderRadius: 8, fontSize: '0.9rem', fontWeight: 500,
+                            padding: '8px 12px', borderRadius: 8, fontSize: '0.85rem', fontWeight: 500,
                             color: 'var(--text-secondary)', textDecoration: 'none',
                         }}>
                             {l.label}
                         </Link>
                     ))}
                     <hr style={{ border: 'none', borderTop: '1px solid rgba(255,255,255,0.06)', margin: '6px 0' }} />
+                    <p style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.07em', margin: '4px 0 4px 12px' }}>Pages</p>
                     {NAV_LINKS.map(l => (
                         <Link key={l.href} href={l.href} onClick={() => setMobileOpen(false)} style={{
-                            padding: '10px 12px', borderRadius: 8, fontSize: '0.9rem', fontWeight: 500,
+                            padding: '8px 12px', borderRadius: 8, fontSize: '0.85rem', fontWeight: 500,
+                            color: 'var(--text-secondary)', textDecoration: 'none',
+                        }}>
+                            {l.label}
+                        </Link>
+                    ))}
+                    <hr style={{ border: 'none', borderTop: '1px solid rgba(255,255,255,0.06)', margin: '6px 0' }} />
+                    <p style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.07em', margin: '4px 0 4px 12px' }}>Company</p>
+                    {COMPANY_LINKS.map(l => (
+                        <Link key={l.href} href={l.href} onClick={() => setMobileOpen(false)} style={{
+                            padding: '8px 12px', borderRadius: 8, fontSize: '0.85rem', fontWeight: 500,
                             color: 'var(--text-secondary)', textDecoration: 'none',
                         }}>
                             {l.label}
