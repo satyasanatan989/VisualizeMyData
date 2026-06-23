@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { GALLERY_DASHBOARDS } from '@/lib/galleryRegistry';
+import { QUICK_TOOLS } from '@/lib/toolsRegistry';
 
 // Required for Next.js `output: "export"` to statically render the sitemap
 export const dynamic = 'force-static';
@@ -163,5 +164,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: path === '/about' || path === '/contact' ? 0.6 : 0.3,
     }));
 
-    return [...coreEntries, ...seoEntries, ...contentEntries, ...galleryEntries, ...infoEntries];
+    // Quick tools entries
+    const quickToolsEntries: MetadataRoute.Sitemap = [
+        {
+            url: `${BASE_URL}/tools`,
+            lastModified: now,
+            changeFrequency: 'weekly',
+            priority: 0.85,
+        },
+        ...QUICK_TOOLS.map((t) => ({
+            url: `${BASE_URL}/tools/${t.slug}`,
+            lastModified: now,
+            changeFrequency: 'monthly' as const,
+            priority: 0.8,
+        }))
+    ];
+
+    return [...coreEntries, ...seoEntries, ...contentEntries, ...galleryEntries, ...quickToolsEntries, ...infoEntries];
 }

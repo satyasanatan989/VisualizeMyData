@@ -7,6 +7,7 @@ import {
     Image as ImageIcon, FileText, ListFilter, Code, QrCode, ChevronRight 
 } from 'lucide-react';
 import { ToolDef, getRelatedTools, QUICK_TOOLS, CATEGORIES } from '@/lib/toolsRegistry';
+import { SEO_TOOLS_CONTENT } from '@/lib/seoToolsContent';
 
 interface ToolWrapperProps {
     tool: ToolDef;
@@ -23,6 +24,7 @@ const ICON_MAP: Record<string, any> = {
 
 export default function ToolWrapper({ tool, children }: ToolWrapperProps) {
     const [recentlyUsed, setRecentlyUsed] = useState<ToolDef[]>([]);
+    const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
     
     // Track Recently Used Tools in localStorage
     useEffect(() => {
@@ -43,6 +45,7 @@ export default function ToolWrapper({ tool, children }: ToolWrapperProps) {
 
     const related = getRelatedTools(tool, 3);
     const CategoryIcon = tool.category === 'Image Tools' ? ImageIcon : FileText;
+    const seoData = SEO_TOOLS_CONTENT[tool.slug];
 
     return (
         <div style={{ minHeight: '100vh', background: 'var(--bg-primary)', color: 'var(--text-primary)', paddingBottom: 80 }}>
@@ -103,6 +106,123 @@ export default function ToolWrapper({ tool, children }: ToolWrapperProps) {
                                 <strong>Privacy Secured:</strong> This utility runs 100% inside your browser. No files, logs, or values are uploaded to any server. Your information stays safe on your device.
                             </p>
                         </div>
+
+                        {/* Rich SEO Content Section */}
+                        {seoData && (
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 24, marginTop: 12 }}>
+                                
+                                {/* About Section */}
+                                <div style={seoSectionStyle}>
+                                    <h2 style={seoSectionTitleStyle}>About {tool.name}</h2>
+                                    <p style={seoParagraphStyle}>{seoData.introduction}</p>
+                                </div>
+
+                                {/* How It Works Section */}
+                                <div style={seoSectionStyle}>
+                                    <h2 style={seoSectionTitleStyle}>How it Works</h2>
+                                    <p style={seoParagraphStyle}>{seoData.howItWorks}</p>
+                                </div>
+
+                                {/* Features & Specs Grid */}
+                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }} className="features-grid">
+                                    <div style={seoInnerCardStyle}>
+                                        <h3 style={seoSubTitleStyle}>Key Features</h3>
+                                        <ul style={{ paddingLeft: 18, margin: 0, color: 'var(--text-secondary)', fontSize: '0.82rem', lineHeight: 1.7 }}>
+                                            {seoData.features.map((feat, idx) => (
+                                                <li key={idx} style={{ marginBottom: 6 }}>{feat}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                    
+                                    <div style={seoInnerCardStyle}>
+                                        <h3 style={seoSubTitleStyle}>Technical Details</h3>
+                                        <p style={{ ...seoParagraphStyle, fontSize: '0.82rem' }}>{seoData.technicalDetails}</p>
+                                    </div>
+                                </div>
+
+                                {/* Use Cases */}
+                                <div style={seoSectionStyle}>
+                                    <h2 style={seoSectionTitleStyle}>Common Use Cases</h2>
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                                        {seoData.useCases.map((useCase, idx) => (
+                                            <div key={idx} style={{ display: 'flex', gap: 8, alignItems: 'flex-start', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+                                                <span style={{ color: 'var(--accent-primary)', fontWeight: 'bold' }}>•</span>
+                                                <span style={{ lineHeight: 1.4 }}>{useCase}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* FAQ Section */}
+                                {seoData.faqs && seoData.faqs.length > 0 && (
+                                    <div style={seoSectionStyle}>
+                                        <h2 style={seoSectionTitleStyle}>Frequently Asked Questions</h2>
+                                        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                                            {seoData.faqs.map((faq, idx) => {
+                                                const isOpen = openFaqIndex === idx;
+                                                return (
+                                                    <div 
+                                                        key={idx} 
+                                                        style={{ 
+                                                            background: 'rgba(23, 26, 30, 0.4)', 
+                                                            border: '1px solid var(--border-subtle)', 
+                                                            borderRadius: 12, 
+                                                            overflow: 'hidden',
+                                                            transition: 'all 0.3s ease'
+                                                        }}
+                                                    >
+                                                        <button 
+                                                            onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
+                                                            style={{ 
+                                                                width: '100%', 
+                                                                padding: '14px 18px', 
+                                                                background: 'none', 
+                                                                border: 'none', 
+                                                                display: 'flex', 
+                                                                justifyContent: 'space-between', 
+                                                                alignItems: 'center', 
+                                                                cursor: 'pointer',
+                                                                textAlign: 'left',
+                                                                color: isOpen ? 'var(--accent-primary)' : 'var(--text-primary)',
+                                                                fontSize: '0.85rem',
+                                                                fontWeight: 600,
+                                                                transition: 'color 0.2s'
+                                                            }}
+                                                        >
+                                                            <span>{faq.question}</span>
+                                                            <span style={{ 
+                                                                transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)', 
+                                                                transition: 'transform 0.2s',
+                                                                fontSize: '1.1rem',
+                                                                fontWeight: 300,
+                                                                color: 'var(--text-muted)'
+                                                            }}>+</span>
+                                                        </button>
+                                                        <div 
+                                                            style={{ 
+                                                                maxHeight: isOpen ? '250px' : '0px', 
+                                                                overflow: 'hidden', 
+                                                                transition: 'max-height 0.3s cubic-bezier(0, 1, 0, 1)' 
+                                                            }}
+                                                        >
+                                                            <p style={{ 
+                                                                margin: 0, 
+                                                                padding: '0 18px 14px', 
+                                                                fontSize: '0.82rem', 
+                                                                color: 'var(--text-secondary)', 
+                                                                lineHeight: 1.5 
+                                                            }}>
+                                                                {faq.answer}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        )}
                     </div>
 
                     {/* Right: Sidebar */}
@@ -177,6 +297,12 @@ export default function ToolWrapper({ tool, children }: ToolWrapperProps) {
                         margin-top: 16px;
                     }
                 }
+                @media (max-width: 600px) {
+                    .features-grid {
+                        grid-template-columns: 1fr !important;
+                        gap: 16px !important;
+                    }
+                }
             `}</style>
         </div>
     );
@@ -224,4 +350,43 @@ const sidebarLinkStyle: React.CSSProperties = {
     fontSize: '0.78rem',
     fontWeight: 500,
     transition: 'all 0.2s',
+};
+
+// ── Shared SEO Content Styles ──
+
+const seoSectionStyle: React.CSSProperties = {
+    background: 'rgba(10, 18, 36, 0.15)',
+    border: '1px solid var(--border-subtle)',
+    borderRadius: 16,
+    padding: 24,
+};
+
+const seoSectionTitleStyle: React.CSSProperties = {
+    fontSize: '1.15rem',
+    fontWeight: 800,
+    margin: '0 0 16px',
+    color: 'var(--text-primary)',
+    fontFamily: 'var(--font-manrope)',
+    letterSpacing: '-0.02em',
+};
+
+const seoSubTitleStyle: React.CSSProperties = {
+    fontSize: '1.05rem',
+    fontWeight: 700,
+    margin: '0 0 12px',
+    color: 'var(--text-primary)',
+};
+
+const seoParagraphStyle: React.CSSProperties = {
+    fontSize: '0.88rem',
+    color: 'var(--text-secondary)',
+    lineHeight: 1.65,
+    margin: 0,
+};
+
+const seoInnerCardStyle: React.CSSProperties = {
+    background: 'rgba(23, 26, 30, 0.3)',
+    border: '1px solid var(--border-subtle)',
+    borderRadius: 16,
+    padding: 20,
 };

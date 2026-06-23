@@ -5,6 +5,7 @@ import NavbarWrapper from '@/components/NavbarWrapper';
 import Footer from '@/components/Footer';
 import ToolClientRenderer from '@/components/tools/ToolClientRenderer';
 import { QUICK_TOOLS, getToolBySlug } from '@/lib/toolsRegistry';
+import { SEO_TOOLS_CONTENT } from '@/lib/seoToolsContent';
 
 interface Params {
     slug: string;
@@ -21,6 +22,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
     const { slug } = await params;
     const tool = getToolBySlug(slug);
+    const seoData = SEO_TOOLS_CONTENT[slug];
 
     if (!tool) {
         return {
@@ -29,11 +31,13 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
         };
     }
 
-    const title = `${tool.name} – Free Online Utility Tool | VisualizeMyData`;
-    const desc = `${tool.description} Fast, secure, and 100% client-side. No signups, no database, files never leave your device.`;
+    const title = seoData?.seoTitle || `${tool.name} – Free Online Utility Tool | VisualizeMyData`;
+    const desc = seoData?.seoDescription || `${tool.description} Fast, secure, and 100% client-side. No signups, no database, files never leave your device.`;
 
     return {
-        title,
+        title: {
+            absolute: title,
+        },
         description: desc,
         alternates: {
             canonical: `https://visualizemydata.in/tools/${tool.slug}/`,
@@ -55,8 +59,88 @@ export default async function ToolSlugPage({ params }: { params: Promise<Params>
         notFound();
     }
 
+    const seoData = SEO_TOOLS_CONTENT[slug];
+
+    // 1. SoftwareApplication Schema
+    const softwareAppSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareApplication',
+        'name': tool.name,
+        'operatingSystem': 'All',
+        'applicationCategory': seoData?.applicationCategory || 'UtilityApplication',
+        'browserRequirements': 'Requires JavaScript. Requires HTML5.',
+        'offers': {
+            '@type': 'Offer',
+            'price': '0',
+            'priceCurrency': 'USD',
+        },
+        'description': seoData?.seoDescription || tool.description,
+    };
+
+    // 2. FAQPage Schema
+    const faqSchema = seoData?.faqs && seoData.faqs.length > 0 ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        'mainEntity': seoData.faqs.map(faq => ({
+            '@type': 'Question',
+            'name': faq.question,
+            'acceptedAnswer': {
+                '@type': 'Answer',
+                'text': faq.answer,
+            },
+        })),
+    } : null;
+
+    // 3. BreadcrumbList Schema
+    const breadcrumbSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        'itemListElement': [
+            {
+                '@type': 'ListItem',
+                'position': 1,
+                'name': 'Home',
+                'item': 'https://visualizemydata.in',
+            },
+            {
+                '@type': 'ListItem',
+                'position': 2,
+                'name': 'Tools',
+                'item': 'https://visualizemydata.in/tools',
+            },
+            {
+                '@type': 'ListItem',
+                'position': 3,
+                'name': tool.category,
+                'item': `https://visualizemydata.in/tools?cat=${encodeURIComponent(tool.category)}`,
+            },
+            {
+                '@type': 'ListItem',
+                'position': 4,
+                'name': tool.name,
+                'item': `https://visualizemydata.in/tools/${tool.slug}`,
+            },
+        ],
+    };
+
     return (
         <div style={{ minHeight: '100vh', background: 'var(--bg-primary)' }}>
+            {/* Inject JSON-LD Schema Markups */}
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppSchema) }}
+            />
+            {faqSchema && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+                />
+            )}
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+            />
+
             <NavbarWrapper />
             
             <main>
