@@ -7,6 +7,7 @@ import DashboardView from './DashboardView';
 import StickyUploadButton from '@/components/StickyUploadButton';
 import ScrollReveal from '@/components/ScrollReveal';
 import Link from 'next/link';
+import { AdBannerTop, AdBannerMiddle, AdBannerBottom } from '@/components/AdBanners';
 import { QUICK_TOOLS } from '@/lib/toolsRegistry';
 import { 
   Search, Image as ImageIcon, FileText, Layout, Code, Calculator, Hash, 
@@ -317,6 +318,9 @@ export default function HomePage() {
       <section style={{ padding: '0 0 60px', position: 'relative' }}>
         <div className="container">
           
+          {/* Top AdSense Banner (Disabled by default) */}
+          <AdBannerTop />
+
           {/* Popular Tools Section */}
           {!searchQuery && activeCategory === 'All' && (
             <div style={{ marginBottom: 44 }}>
@@ -617,10 +621,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* AdSense Banner Placeholder */}
-      <div className="container" style={{ marginBottom: 60 }}>
-        <div className="adsense-banner">📢 Advertisement · Google AdSense</div>
-      </div>
+      {/* Middle AdSense Banner (Disabled by default) */}
+      <AdBannerMiddle className="container" style={{ marginBottom: 60 }} />
 
       {/* How It Works */}
       <ScrollReveal>
@@ -884,6 +886,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Bottom AdSense Banner (Disabled by default) */}
+      <AdBannerBottom className="container" style={{ margin: '40px auto 0' }} />
 
       {/* CTA */}
       <section style={{ padding: '80px 0', background: 'var(--surface-low)' }}>

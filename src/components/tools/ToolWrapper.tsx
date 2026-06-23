@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { ToolDef, getRelatedTools, QUICK_TOOLS, CATEGORIES } from '@/lib/toolsRegistry';
 import { SEO_TOOLS_CONTENT } from '@/lib/seoToolsContent';
+import { AdBannerMiddle } from '@/components/AdBanners';
 
 interface ToolWrapperProps {
     tool: ToolDef;
@@ -106,6 +107,9 @@ export default function ToolWrapper({ tool, children }: ToolWrapperProps) {
                                 <strong>Privacy Secured:</strong> This utility runs 100% inside your browser. No files, logs, or values are uploaded to any server. Your information stays safe on your device.
                             </p>
                         </div>
+
+                        {/* Mid-Page AdSense Banner (Disabled by default) */}
+                        <AdBannerMiddle style={{ margin: '16px 0' }} />
 
                         {/* Rich SEO Content Section */}
                         {seoData && (
