@@ -123,6 +123,11 @@ export default function RootLayout({
         />
         <link rel="canonical" href={siteUrl} />
         <meta name="theme-color" content="#0c0e12" />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9327674045083855"
+          crossOrigin="anonymous"
+        />
       </head>
       <body className="antialiased">
         <Toaster position="top-center" richColors theme="dark" closeButton duration={3000} />
@@ -142,13 +147,6 @@ export default function RootLayout({
             gtag('config', 'G-K9YT82L55H');
           `}
         </Script>
-        {/* Google AdSense Script */}
-        <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9327674045083855"
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
       </body>
     </html>
   );
