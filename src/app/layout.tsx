@@ -123,10 +123,11 @@ export default function RootLayout({
         />
         <link rel="canonical" href={siteUrl} />
         <meta name="theme-color" content="#0c0e12" />
-        <script
+        <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9327674045083855"
           crossOrigin="anonymous"
+          strategy="afterInteractive"
         />
       </head>
       <body className="antialiased">
