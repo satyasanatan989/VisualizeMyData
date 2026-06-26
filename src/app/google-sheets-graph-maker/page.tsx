@@ -3,8 +3,32 @@ import { ProgrammaticSEOPage } from '@/components/ProgrammaticSEOPage';
 export const metadata: Metadata = {
     title: 'Google Sheets Graph Maker – Create Graphs from Sheets Online | VisualizeMyData',
     description: 'Create professional graphs from Google Sheets data online for free. Paste your spreadsheet URL and generate bar, line, or pie graphs instantly. No login needed.',
-    alternates: { canonical: 'https://visualizemydata.in/google-sheets-graph-maker/' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/google-sheets-graph-maker/',
+    },
+    openGraph: {
+        title: 'Google Sheets Graph Maker – Create Graphs from Sheets Online | VisualizeMyData',
+        description: 'Create professional graphs from Google Sheets data online for free. Paste your spreadsheet URL and generate bar, line, or pie graphs instantly. No login needed.',
+        url: 'https://visualizemydata.in/google-sheets-graph-maker/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Google Sheets Graph Maker – Create Graphs from Sheets Online | VisualizeMyData',
+        description: 'Create professional graphs from Google Sheets data online for free. Paste your spreadsheet URL and generate bar, line, or pie graphs instantly. No login needed.',
+        images: ['/og-image.png'],
+    },
+};;
 export default function Page() {
     return <ProgrammaticSEOPage
         title="Google Sheets Graph Maker"

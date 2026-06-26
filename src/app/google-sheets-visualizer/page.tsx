@@ -7,13 +7,32 @@ import Link from 'next/link';
 export const metadata: Metadata = {
     title: 'Free Google Sheets Data Visualizer Online | Chart From Sheets URL',
     description: 'Paste any public Google Sheets link and instantly create bar, line, pie or area charts online. Free, no login, 100% private — no data sent to servers.',
-    alternates: { canonical: 'https://visualizemydata.in/google-sheets-visualizer/' },
+    alternates: {
+        canonical: 'https://visualizemydata.in/google-sheets-visualizer/',
+    },
     openGraph: {
         title: 'Free Google Sheets Data Visualizer Online | Chart From Sheets URL',
-        description: 'Paste a Google Sheets URL and instantly visualize data as charts. Free, no login, no server upload.',
+        description: 'Paste any public Google Sheets link and instantly create bar, line, pie or area charts online. Free, no login, 100% private — no data sent to servers.',
         url: 'https://visualizemydata.in/google-sheets-visualizer/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
     },
-};
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Free Google Sheets Data Visualizer Online | Chart From Sheets URL',
+        description: 'Paste any public Google Sheets link and instantly create bar, line, pie or area charts online. Free, no login, 100% private — no data sent to servers.',
+        images: ['/og-image.png'],
+    },
+};;
 
 const faqItems = [
     { q: 'How do I visualize Google Sheets data without downloading?', a: 'Click the "Google Sheets Link" tab in the tool above, paste your public Google Sheets URL, and click "Load Sheet". The data is fetched and visualized instantly.' },

@@ -10,11 +10,27 @@ export const metadata: Metadata = {
     },
     openGraph: {
         title: 'Disclaimer | VisualizeMyData',
-        description: 'Disclaimer policy for using VisualizeMyData (ToolVista) file utilities.',
+        description: 'Disclaimer policy for using VisualizeMyData (ToolVista) file utilities. Understand tool output limitations.',
         url: 'https://visualizemydata.in/disclaimer',
         type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
     },
-};
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Disclaimer | VisualizeMyData',
+        description: 'Disclaimer policy for using VisualizeMyData (ToolVista) file utilities. Understand tool output limitations.',
+        images: ['/og-image.png'],
+    },
+};;
 
 export default function DisclaimerPage() {
     return (

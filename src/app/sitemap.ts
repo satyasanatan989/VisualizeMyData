@@ -38,6 +38,7 @@ const excelSeoPages = [
     '/excel-to-line-chart',
     '/excel-to-pie-chart',
     '/excel-to-scatter-plot',
+    '/excel-formula-generator',
 ];
 
 const csvSeoPages = [
@@ -48,6 +49,7 @@ const csvSeoPages = [
     '/csv-to-bar-chart',
     '/csv-to-line-chart',
     '/csv-to-pie-chart',
+    '/csv-cleaner',
 ];
 
 const pdfSeoPages = [
@@ -73,6 +75,9 @@ const generalSeoPages = [
     '/free-data-visualization-tool',
     '/spreadsheet-to-chart',
     '/data-to-chart-online',
+    '/data-cleaning-tool',
+    '/dashboard-templates',
+    '/survey-visualizer',
 ];
 
 const learnPages = [

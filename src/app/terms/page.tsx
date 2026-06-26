@@ -10,11 +10,27 @@ export const metadata: Metadata = {
     },
     openGraph: {
         title: 'Terms & Conditions | VisualizeMyData',
-        description: 'Terms and conditions for using VisualizeMyData (ToolVista).',
+        description: 'Terms and conditions for using VisualizeMyData (ToolVista). Free, browser-based data visualization and utility tools.',
         url: 'https://visualizemydata.in/terms',
         type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
     },
-};
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Terms & Conditions | VisualizeMyData',
+        description: 'Terms and conditions for using VisualizeMyData (ToolVista). Free, browser-based data visualization and utility tools.',
+        images: ['/og-image.png'],
+    },
+};;
 
 export default function TermsPage() {
     return (

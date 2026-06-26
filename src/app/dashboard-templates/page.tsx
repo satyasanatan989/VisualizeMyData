@@ -2,12 +2,37 @@ import type { Metadata } from 'next';
 import NavbarWrapper from '@/components/NavbarWrapper';
 import Footer from '@/components/Footer';
 import TemplateGallery from '@/components/templates/TemplateGallery';
+import DiscoveryLinks from '@/components/DiscoveryLinks';
 
 export const metadata: Metadata = {
     title: 'Free Interactive Data Dashboard Templates | VisualizeMyData',
     description: 'Explore professionally designed data dashboard templates for sales, finance, marketing, student performance, and attendance tracking. Load presets and visualize instantly.',
-    alternates: { canonical: 'https://visualizemydata.in/dashboard-templates/' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/dashboard-templates/',
+    },
+    openGraph: {
+        title: 'Free Interactive Data Dashboard Templates | VisualizeMyData',
+        description: 'Explore professionally designed data dashboard templates for sales, finance, marketing, student performance, and attendance tracking. Load presets and visualize instantly.',
+        url: 'https://visualizemydata.in/dashboard-templates/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Free Interactive Data Dashboard Templates | VisualizeMyData',
+        description: 'Explore professionally designed data dashboard templates for sales, finance, marketing, student performance, and attendance tracking. Load presets and visualize instantly.',
+        images: ['/og-image.png'],
+    },
+};;
 
 export default function DashboardTemplatesPage() {
     const jsonLd = {
@@ -67,6 +92,7 @@ export default function DashboardTemplatesPage() {
                 </div>
             </section>
 
+            <DiscoveryLinks />
             <Footer />
         </div>
     );

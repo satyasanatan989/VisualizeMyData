@@ -7,19 +7,32 @@ import Link from 'next/link';
 export const metadata: Metadata = {
     title: 'CSV to Chart Guide: Convert CSV to Charts Online Free | VisualizeMyData Blog',
     description: 'Complete guide to converting CSV files to bar, line, and pie charts online for free. Learn how to visualize CSV data in under 60 seconds — no coding required.',
-    alternates: { canonical: 'https://visualizemydata.in/blog/csv-to-chart-guide/' },
+    alternates: {
+        canonical: 'https://visualizemydata.in/blog/csv-to-chart-guide/',
+    },
     openGraph: {
-        title: 'CSV to Chart Guide: Free CSV Chart Generator Tutorial',
-        description: 'Complete guide to converting CSV files to bar, line, and pie charts online for free. No coding required.',
+        title: 'CSV to Chart Guide: Convert CSV to Charts Online Free | VisualizeMyData Blog',
+        description: 'Complete guide to converting CSV files to bar, line, and pie charts online for free. Learn how to visualize CSV data in under 60 seconds — no coding required.',
         url: 'https://visualizemydata.in/blog/csv-to-chart-guide/',
-        type: 'article',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'CSV to Chart Guide – Free Online Tutorial | VisualizeMyData',
-        description: 'Learn how to convert CSV files to beautiful charts online in under 60 seconds. No coding needed.',
+        title: 'CSV to Chart Guide: Convert CSV to Charts Online Free | VisualizeMyData Blog',
+        description: 'Complete guide to converting CSV files to bar, line, and pie charts online for free. Learn how to visualize CSV data in under 60 seconds — no coding required.',
+        images: ['/og-image.png'],
     },
-};
+};;
 
 export default function CsvToChartGuidePage() {
     return (

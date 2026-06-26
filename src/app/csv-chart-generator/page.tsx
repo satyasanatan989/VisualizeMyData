@@ -1,6 +1,34 @@
 import type { Metadata } from 'next';
 import { ProgrammaticSEOPage } from '@/components/ProgrammaticSEOPage';
-export const metadata: Metadata = { title: 'Free CSV Chart Generator Online | VisualizeMyData', description: 'Generate bar, line, pie, and area charts from any CSV file online for free. Upload .csv and download beautiful charts instantly. No signup, no server.', alternates: { canonical: 'https://visualizemydata.in/csv-chart-generator/' } };
+export const metadata: Metadata = {
+    title: 'Free CSV Chart Generator Online | VisualizeMyData',
+    description: 'Generate bar, line, pie, and area charts from any CSV file online for free. Upload .csv and download beautiful charts instantly. No signup, no server.',
+    alternates: {
+        canonical: 'https://visualizemydata.in/csv-chart-generator/',
+    },
+    openGraph: {
+        title: 'Free CSV Chart Generator Online | VisualizeMyData',
+        description: 'Generate bar, line, pie, and area charts from any CSV file online for free. Upload .csv and download beautiful charts instantly. No signup, no server.',
+        url: 'https://visualizemydata.in/csv-chart-generator/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Free CSV Chart Generator Online | VisualizeMyData',
+        description: 'Generate bar, line, pie, and area charts from any CSV file online for free. Upload .csv and download beautiful charts instantly. No signup, no server.',
+        images: ['/og-image.png'],
+    },
+};;
 export default function Page() {
     return <ProgrammaticSEOPage title="CSV Chart Generator" heroTitle="Free CSV Chart Generator Online" heroSubtitle="Upload any CSV file and instantly generate bar, line, area, or pie charts. Download as PNG or PDF. 100% free, no signup required, your data stays in your browser." toolHref="/csv-visualizer" toolCta="→ Generate CSV Chart" accentColor="#3b82f6" accentBg="rgba(59,130,246,0.07)" h2="Create Charts from CSV in Seconds" body="CSV (Comma-Separated Values) is the most portable data format in the world — exported from spreadsheets, databases, analytics dashboards, CRMs, and almost every SaaS tool. VisualizeMyData's CSV Chart Generator accepts any standard CSV file, automatically detects column types (numeric, categorical, date), recommends the best chart type, and renders an interactive, downloadable chart in seconds. The entire process happens in your browser — your CSV data is never uploaded to any server." steps={['Open the CSV Visualizer tool', 'Drag and drop your .csv file onto the upload zone', 'Review the auto-generated chart', 'Switch chart types: Bar, Line, Area, or Pie', 'Choose a color scheme and download as PNG or PDF']} related={[{ label: 'CSV to Bar Chart', href: '/csv-to-bar-chart' }, { label: 'CSV to Line Chart', href: '/csv-to-line-chart' }, { label: 'CSV to Pie Chart', href: '/csv-to-pie-chart' }, { label: 'CSV Dashboard Generator', href: '/csv-dashboard-generator' }]} />;
 }

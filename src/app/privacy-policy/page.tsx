@@ -10,11 +10,27 @@ export const metadata: Metadata = {
     },
     openGraph: {
         title: 'Privacy Policy | VisualizeMyData',
-        description: 'Privacy Policy for VisualizeMyData (ToolVista). Learn how we protect your privacy.',
+        description: 'Privacy Policy for VisualizeMyData (ToolVista). Learn how we protect your privacy through 100% browser-based local file processing.',
         url: 'https://visualizemydata.in/privacy-policy',
         type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
     },
-};
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Privacy Policy | VisualizeMyData',
+        description: 'Privacy Policy for VisualizeMyData (ToolVista). Learn how we protect your privacy through 100% browser-based local file processing.',
+        images: ['/og-image.png'],
+    },
+};;
 
 export default function PrivacyPolicyPage() {
     return (

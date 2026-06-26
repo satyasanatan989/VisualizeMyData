@@ -7,19 +7,32 @@ import Link from 'next/link';
 export const metadata: Metadata = {
     title: 'How to Create a Dashboard from CSV Data Online | VisualizeMyData Blog',
     description: 'Step-by-step guide to building an interactive dashboard from a CSV file online for free. Learn CSV dashboard creation without any software or coding skills.',
-    alternates: { canonical: 'https://visualizemydata.in/blog/create-dashboard-from-csv/' },
+    alternates: {
+        canonical: 'https://visualizemydata.in/blog/create-dashboard-from-csv/',
+    },
     openGraph: {
-        title: 'How to Create a Dashboard from CSV Data – Free Method',
-        description: 'Step-by-step guide to building an interactive dashboard from a CSV file for free online. No coding skills needed.',
+        title: 'How to Create a Dashboard from CSV Data Online | VisualizeMyData Blog',
+        description: 'Step-by-step guide to building an interactive dashboard from a CSV file online for free. Learn CSV dashboard creation without any software or coding skills.',
         url: 'https://visualizemydata.in/blog/create-dashboard-from-csv/',
-        type: 'article',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Create a Dashboard from CSV – Free Method | VisualizeMyData',
-        description: 'Free step-by-step guide to building interactive dashboards from CSV files online. No software needed.',
+        title: 'How to Create a Dashboard from CSV Data Online | VisualizeMyData Blog',
+        description: 'Step-by-step guide to building an interactive dashboard from a CSV file online for free. Learn CSV dashboard creation without any software or coding skills.',
+        images: ['/og-image.png'],
     },
-};
+};;
 
 export default function CreateDashboardFromCsvPage() {
     return (

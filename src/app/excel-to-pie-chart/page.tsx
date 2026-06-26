@@ -1,6 +1,34 @@
 import type { Metadata } from 'next';
 import { ProgrammaticSEOPage } from '@/components/ProgrammaticSEOPage';
-export const metadata: Metadata = { title: 'Excel to Pie Chart — Free Online Converter | VisualizeMyData', description: 'Convert Excel data to pie charts online for free. Upload .xlsx and create a beautiful pie chart showing proportions and distributions instantly.', alternates: { canonical: 'https://visualizemydata.in/excel-to-pie-chart/' } };
+export const metadata: Metadata = {
+    title: 'Excel to Pie Chart — Free Online Converter | VisualizeMyData',
+    description: 'Convert Excel data to pie charts online for free. Upload .xlsx and create a beautiful pie chart showing proportions and distributions instantly.',
+    alternates: {
+        canonical: 'https://visualizemydata.in/excel-to-pie-chart/',
+    },
+    openGraph: {
+        title: 'Excel to Pie Chart — Free Online Converter | VisualizeMyData',
+        description: 'Convert Excel data to pie charts online for free. Upload .xlsx and create a beautiful pie chart showing proportions and distributions instantly.',
+        url: 'https://visualizemydata.in/excel-to-pie-chart/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Excel to Pie Chart — Free Online Converter | VisualizeMyData',
+        description: 'Convert Excel data to pie charts online for free. Upload .xlsx and create a beautiful pie chart showing proportions and distributions instantly.',
+        images: ['/og-image.png'],
+    },
+};;
 export default function Page() {
     return <ProgrammaticSEOPage title="Excel to Pie Chart" heroTitle="Excel to Pie Chart — Free Online Converter" heroSubtitle="Transform Excel category data into a clear, visual pie chart. Show market share, budget allocations, survey results, or any proportion breakdown — instantly, free." toolHref="/excel-visualizer" toolCta="→ Convert Excel to Pie Chart" accentColor="#8b5cf6" accentBg="rgba(139,92,246,0.07)" h2="When to Use a Pie Chart for Excel Data" body="Pie charts are perfect for showing proportions — how each category contributes to the total. If your Excel file has a Category column and a Value column, a pie chart immediately communicates relative share. VisualizeMyData reads your Excel columns, generates a distribution summary, and renders an interactive donut-style pie chart that shows the top 10 categories by count or value." steps={['Open the Excel Visualizer', 'Upload your .xlsx or .xls file', 'Select "Pie" from the chart type options', 'Review the category distribution chart', 'Download as PNG or PDF']} related={[{ label: 'Excel to Bar Chart', href: '/excel-to-bar-chart' }, { label: 'Excel to Line Chart', href: '/excel-to-line-chart' }, { label: 'CSV to Pie Chart', href: '/csv-to-pie-chart' }, { label: 'Excel Dashboard Generator', href: '/excel-dashboard-generator' }]} />;
 }

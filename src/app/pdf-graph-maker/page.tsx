@@ -3,8 +3,32 @@ import { ProgrammaticSEOPage } from '@/components/ProgrammaticSEOPage';
 export const metadata: Metadata = {
     title: 'PDF Graph Maker – Create Graphs from PDF Data Online | VisualizeMyData',
     description: 'Turn PDF table data into professional graphs online. Upload your PDF, extract tables automatically, and visualize as bar or line graphs. Free, no software needed.',
-    alternates: { canonical: 'https://visualizemydata.in/pdf-graph-maker/' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/pdf-graph-maker/',
+    },
+    openGraph: {
+        title: 'PDF Graph Maker – Create Graphs from PDF Data Online | VisualizeMyData',
+        description: 'Turn PDF table data into professional graphs online. Upload your PDF, extract tables automatically, and visualize as bar or line graphs. Free, no software needed.',
+        url: 'https://visualizemydata.in/pdf-graph-maker/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'PDF Graph Maker – Create Graphs from PDF Data Online | VisualizeMyData',
+        description: 'Turn PDF table data into professional graphs online. Upload your PDF, extract tables automatically, and visualize as bar or line graphs. Free, no software needed.',
+        images: ['/og-image.png'],
+    },
+};;
 export default function Page() {
     return <ProgrammaticSEOPage
         title="PDF Graph Maker"

@@ -6,13 +6,32 @@ import Link from 'next/link';
 export const metadata: Metadata = {
     title: 'Free Google Sheets Dashboard Builder Online | Auto Visual Dashboard',
     description: 'Paste a Google Sheets link and instantly generate an interactive dashboard with charts, KPI cards, and AI insights. Free, no login, 100% browser-based.',
-    alternates: { canonical: 'https://visualizemydata.in/google-sheets-dashboard/' },
-    openGraph: {
-        title: 'Google Sheets Dashboard Builder — Free Online Tool',
-        description: 'Create dashboards from Google Sheets without exporting. Paste your sheet URL and get instant charts and insights.',
-        url: 'https://visualizemydata.in/google-sheets-dashboard/',
+    alternates: {
+        canonical: 'https://visualizemydata.in/google-sheets-dashboard/',
     },
-};
+    openGraph: {
+        title: 'Free Google Sheets Dashboard Builder Online | Auto Visual Dashboard',
+        description: 'Paste a Google Sheets link and instantly generate an interactive dashboard with charts, KPI cards, and AI insights. Free, no login, 100% browser-based.',
+        url: 'https://visualizemydata.in/google-sheets-dashboard/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Free Google Sheets Dashboard Builder Online | Auto Visual Dashboard',
+        description: 'Paste a Google Sheets link and instantly generate an interactive dashboard with charts, KPI cards, and AI insights. Free, no login, 100% browser-based.',
+        images: ['/og-image.png'],
+    },
+};;
 
 const faqItems = [
     { q: 'How do I create a dashboard from Google Sheets?', a: 'Open the Dashboard Generator, switch to the "Google Sheets" tab, paste your public sheet link, and click Load. Your dashboard generates automatically.' },

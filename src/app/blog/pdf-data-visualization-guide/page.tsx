@@ -7,19 +7,32 @@ import Link from 'next/link';
 export const metadata: Metadata = {
     title: 'PDF Data Visualization Guide: Extract & Visualize PDF Tables | VisualizeMyData Blog',
     description: 'Learn how to extract table data from PDF documents and visualize it as interactive charts online. Free PDF data visualization guide — no software required.',
-    alternates: { canonical: 'https://visualizemydata.in/blog/pdf-data-visualization-guide/' },
+    alternates: {
+        canonical: 'https://visualizemydata.in/blog/pdf-data-visualization-guide/',
+    },
     openGraph: {
-        title: 'PDF Data Visualization Guide – Extract Tables & Create Charts',
-        description: 'Learn how to extract table data from PDF documents and visualize it as interactive charts online. Free — no software required.',
+        title: 'PDF Data Visualization Guide: Extract & Visualize PDF Tables | VisualizeMyData Blog',
+        description: 'Learn how to extract table data from PDF documents and visualize it as interactive charts online. Free PDF data visualization guide — no software required.',
         url: 'https://visualizemydata.in/blog/pdf-data-visualization-guide/',
-        type: 'article',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'PDF Data Visualization Guide | VisualizeMyData',
-        description: 'How to extract and visualize PDF table data as charts online. Free, no software needed.',
+        title: 'PDF Data Visualization Guide: Extract & Visualize PDF Tables | VisualizeMyData Blog',
+        description: 'Learn how to extract table data from PDF documents and visualize it as interactive charts online. Free PDF data visualization guide — no software required.',
+        images: ['/og-image.png'],
     },
-};
+};;
 
 export default function PdfDataVisualizationGuidePage() {
     return (

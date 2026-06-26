@@ -11,11 +11,27 @@ export const metadata: Metadata = {
     },
     openGraph: {
         title: 'About Us | VisualizeMyData',
-        description: 'Learn about VisualizeMyData (ToolVista) — a free, browser-based data visualizer and utility catalog built for privacy and speed.',
+        description: 'Learn about VisualizeMyData (ToolVista) — a free, browser-based tool to visualize Excel, CSV, PDF, and Google Sheets data alongside 29+ helper utilities. Built for privacy and speed.',
         url: 'https://visualizemydata.in/about',
         type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
     },
-};
+    twitter: {
+        card: 'summary_large_image',
+        title: 'About Us | VisualizeMyData',
+        description: 'Learn about VisualizeMyData (ToolVista) — a free, browser-based tool to visualize Excel, CSV, PDF, and Google Sheets data alongside 29+ helper utilities. Built for privacy and speed.',
+        images: ['/og-image.png'],
+    },
+};;
 
 const VALUES = [
     { icon: <Shield size={22} />, title: 'Privacy First', desc: 'All file processing happens in your browser. Your data never touches our servers.' },

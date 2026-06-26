@@ -7,13 +7,32 @@ import { LearnArticle } from '@/components/learn/LearnArticleCard';
 export const metadata: Metadata = {
     title: 'Learn Data Visualization: Guides & Best Practices | VisualizeMyData',
     description: 'Master data visualization with our free educational hub. Learn how to create charts from Excel, design effective dashboards, and choose the right visualization techniques.',
-    alternates: { canonical: 'https://visualizemydata.in/learn/' },
+    alternates: {
+        canonical: 'https://visualizemydata.in/learn/',
+    },
     openGraph: {
-        title: 'Learn Data Visualization | Free Guides & Tutorials',
+        title: 'Learn Data Visualization: Guides & Best Practices | VisualizeMyData',
         description: 'Master data visualization with our free educational hub. Learn how to create charts from Excel, design effective dashboards, and choose the right visualization techniques.',
         url: 'https://visualizemydata.in/learn/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
     },
-};
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Learn Data Visualization: Guides & Best Practices | VisualizeMyData',
+        description: 'Master data visualization with our free educational hub. Learn how to create charts from Excel, design effective dashboards, and choose the right visualization techniques.',
+        images: ['/og-image.png'],
+    },
+};;
 
 export const LEARN_ARTICLES: LearnArticle[] = [
     {

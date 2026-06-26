@@ -8,13 +8,32 @@ import Link from 'next/link';
 export const metadata: Metadata = {
     title: 'Data Visualization Blog | Excel, CSV & Dashboard Guides | VisualizeMyData',
     description: 'Free guides and tutorials on data visualization, Excel dashboards, CSV charts, and online analytics tools. Learn how to visualize data effectively.',
-    alternates: { canonical: 'https://visualizemydata.in/blog/' },
-    openGraph: {
-        title: 'Data Visualization Blog | VisualizeMyData',
-        description: 'Tutorials, guides, and tips on Excel charts, CSV dashboards, and data visualization best practices.',
-        url: 'https://visualizemydata.in/blog/',
+    alternates: {
+        canonical: 'https://visualizemydata.in/blog/',
     },
-};
+    openGraph: {
+        title: 'Data Visualization Blog | Excel, CSV & Dashboard Guides | VisualizeMyData',
+        description: 'Free guides and tutorials on data visualization, Excel dashboards, CSV charts, and online analytics tools. Learn how to visualize data effectively.',
+        url: 'https://visualizemydata.in/blog/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Data Visualization Blog | Excel, CSV & Dashboard Guides | VisualizeMyData',
+        description: 'Free guides and tutorials on data visualization, Excel dashboards, CSV charts, and online analytics tools. Learn how to visualize data effectively.',
+        images: ['/og-image.png'],
+    },
+};;
 
 const posts = [
     {

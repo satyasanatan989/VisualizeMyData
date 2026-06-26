@@ -19,13 +19,34 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             description: 'A user-generated data dashboard on VisualizeMyData.',
         };
     }
+    const url = `https://visualizemydata.in/gallery/${dash.slug}/`;
     return {
         title: dash.seoTitle,
         description: dash.seoDesc,
+        alternates: {
+            canonical: url,
+        },
         openGraph: {
             title: dash.seoTitle,
             description: dash.seoDesc,
+            url: url,
             type: 'article',
+            siteName: 'VisualizeMyData',
+            locale: 'en_US',
+            images: [
+                {
+                    url: '/og-image.png',
+                    width: 1200,
+                    height: 630,
+                    alt: dash.seoTitle,
+                },
+            ],
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: dash.seoTitle,
+            description: dash.seoDesc,
+            images: ['/og-image.png'],
         },
     };
 }

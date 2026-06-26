@@ -3,8 +3,32 @@ import { ProgrammaticSEOPage } from '@/components/ProgrammaticSEOPage';
 export const metadata: Metadata = {
     title: 'PDF Data Visualizer Online – Visualize PDF Table Data Free | VisualizeMyData',
     description: 'Visualize tabular data from PDF documents as interactive charts. Free online PDF data visualizer — upload and analyze PDF tables instantly. No login needed.',
-    alternates: { canonical: 'https://visualizemydata.in/pdf-data-visualizer/' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/pdf-data-visualizer/',
+    },
+    openGraph: {
+        title: 'PDF Data Visualizer Online – Visualize PDF Table Data Free | VisualizeMyData',
+        description: 'Visualize tabular data from PDF documents as interactive charts. Free online PDF data visualizer — upload and analyze PDF tables instantly. No login needed.',
+        url: 'https://visualizemydata.in/pdf-data-visualizer/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'PDF Data Visualizer Online – Visualize PDF Table Data Free | VisualizeMyData',
+        description: 'Visualize tabular data from PDF documents as interactive charts. Free online PDF data visualizer — upload and analyze PDF tables instantly. No login needed.',
+        images: ['/og-image.png'],
+    },
+};;
 export default function Page() {
     return <ProgrammaticSEOPage
         title="PDF Data Visualizer"

@@ -7,13 +7,32 @@ import Link from 'next/link';
 export const metadata: Metadata = {
     title: 'Free CSV to Chart Generator Online | Visualize CSV Data Instantly',
     description: 'Convert any CSV file to interactive bar, line, pie or area charts online. Free CSV data visualizer — no login, no upload to server, instant results.',
-    alternates: { canonical: 'https://visualizemydata.in/csv-visualizer/' },
+    alternates: {
+        canonical: 'https://visualizemydata.in/csv-visualizer/',
+    },
     openGraph: {
         title: 'Free CSV to Chart Generator Online | Visualize CSV Data Instantly',
-        description: 'Convert any CSV file to interactive charts online. Free, no login, no server upload — instant CSV data visualization.',
+        description: 'Convert any CSV file to interactive bar, line, pie or area charts online. Free CSV data visualizer — no login, no upload to server, instant results.',
         url: 'https://visualizemydata.in/csv-visualizer/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
     },
-};
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Free CSV to Chart Generator Online | Visualize CSV Data Instantly',
+        description: 'Convert any CSV file to interactive bar, line, pie or area charts online. Free CSV data visualizer — no login, no upload to server, instant results.',
+        images: ['/og-image.png'],
+    },
+};;
 
 const faqItems = [
     { q: 'How do I convert a CSV file to a chart online?', a: 'Simply upload your CSV file using the tool above. It automatically parses your data and lets you choose from bar, line, area, or pie charts. No conversion software is needed.' },

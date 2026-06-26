@@ -2,12 +2,37 @@ import type { Metadata } from 'next';
 import NavbarWrapper from '@/components/NavbarWrapper';
 import Footer from '@/components/Footer';
 import DataCleaner from '@/components/dashboard/DataCleaner';
+import DiscoveryLinks from '@/components/DiscoveryLinks';
 
 export const metadata: Metadata = {
     title: 'Free Online Data Cleaning Tool – Remove Duplicates & Empty Rows | VisualizeMyData',
     description: 'Clean Excel and CSV files online for free. Remove duplicate rows, strip blank lines, trim spaces, normalize column headers, standardize dates, and download cleaned files client-side. No signup, no logs.',
-    alternates: { canonical: 'https://visualizemydata.in/data-cleaning-tool/' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/data-cleaning-tool/',
+    },
+    openGraph: {
+        title: 'Free Online Data Cleaning Tool – Remove Duplicates & Empty Rows | VisualizeMyData',
+        description: 'Clean Excel and CSV files online for free. Remove duplicate rows, strip blank lines, trim spaces, normalize column headers, standardize dates, and download cleaned files client-side. No signup, no logs.',
+        url: 'https://visualizemydata.in/data-cleaning-tool/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Free Online Data Cleaning Tool – Remove Duplicates & Empty Rows | VisualizeMyData',
+        description: 'Clean Excel and CSV files online for free. Remove duplicate rows, strip blank lines, trim spaces, normalize column headers, standardize dates, and download cleaned files client-side. No signup, no logs.',
+        images: ['/og-image.png'],
+    },
+};;
 
 export default function DataCleaningPage() {
     // Structure schema
@@ -88,6 +113,7 @@ export default function DataCleaningPage() {
                 </div>
             </section>
 
+            <DiscoveryLinks />
             <Footer />
         </div>
     );

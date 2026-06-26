@@ -3,9 +3,33 @@ import LearnArticleLayout from '@/components/learn/LearnArticleLayout';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-    title: 'What Is Data Visualization? A Beginner\'s Guide | VisualizeMyData',
+    title: "What Is Data Visualization? A Beginner's Guide",
     description: 'Understand the core concepts of data visualization, why it matters, and how transforming raw numbers into visual formats helps uncover hidden patterns.',
-    alternates: { canonical: 'https://visualizemydata.in/learn/what-is-data-visualization' },
+    alternates: {
+        canonical: 'https://visualizemydata.in/learn/what-is-data-visualization',
+    },
+    openGraph: {
+        title: "What Is Data Visualization? A Beginner's Guide",
+        description: 'Understand the core concepts of data visualization, why it matters, and how transforming raw numbers into visual formats helps uncover hidden patterns.',
+        url: 'https://visualizemydata.in/learn/what-is-data-visualization',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: "What Is Data Visualization? A Beginner's Guide",
+        description: 'Understand the core concepts of data visualization, why it matters, and how transforming raw numbers into visual formats helps uncover hidden patterns.',
+        images: ['/og-image.png'],
+    },
 };
 
 export default function ArticleWhatIsDataVis() {

@@ -3,8 +3,32 @@ import { ProgrammaticSEOPage } from '@/components/ProgrammaticSEOPage';
 export const metadata: Metadata = {
     title: 'Google Sheets Dashboard Generator – Build Interactive Dashboards | VisualizeMyData',
     description: 'Create interactive dashboards from Google Sheets. Paste your spreadsheet link and instantly get KPI cards, charts, and data insights. Free, no login required.',
-    alternates: { canonical: 'https://visualizemydata.in/google-sheets-dashboard-generator/' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/google-sheets-dashboard-generator/',
+    },
+    openGraph: {
+        title: 'Google Sheets Dashboard Generator – Build Interactive Dashboards | VisualizeMyData',
+        description: 'Create interactive dashboards from Google Sheets. Paste your spreadsheet link and instantly get KPI cards, charts, and data insights. Free, no login required.',
+        url: 'https://visualizemydata.in/google-sheets-dashboard-generator/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Google Sheets Dashboard Generator – Build Interactive Dashboards | VisualizeMyData',
+        description: 'Create interactive dashboards from Google Sheets. Paste your spreadsheet link and instantly get KPI cards, charts, and data insights. Free, no login required.',
+        images: ['/og-image.png'],
+    },
+};;
 export default function Page() {
     return <ProgrammaticSEOPage
         title="Google Sheets Dashboard Generator"

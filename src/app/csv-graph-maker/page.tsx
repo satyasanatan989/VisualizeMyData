@@ -3,8 +3,32 @@ import { ProgrammaticSEOPage } from '@/components/ProgrammaticSEOPage';
 export const metadata: Metadata = {
     title: 'CSV Graph Maker Online – Create Graphs from CSV Free | VisualizeMyData',
     description: 'Create professional graphs from CSV data online. Upload your .csv file and generate bar, line, pie, or area graphs instantly. Free CSV graph maker, no login needed.',
-    alternates: { canonical: 'https://visualizemydata.in/csv-graph-maker/' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/csv-graph-maker/',
+    },
+    openGraph: {
+        title: 'CSV Graph Maker Online – Create Graphs from CSV Free | VisualizeMyData',
+        description: 'Create professional graphs from CSV data online. Upload your .csv file and generate bar, line, pie, or area graphs instantly. Free CSV graph maker, no login needed.',
+        url: 'https://visualizemydata.in/csv-graph-maker/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'CSV Graph Maker Online – Create Graphs from CSV Free | VisualizeMyData',
+        description: 'Create professional graphs from CSV data online. Upload your .csv file and generate bar, line, pie, or area graphs instantly. Free CSV graph maker, no login needed.',
+        images: ['/og-image.png'],
+    },
+};;
 export default function Page() {
     return <ProgrammaticSEOPage
         title="CSV Graph Maker"

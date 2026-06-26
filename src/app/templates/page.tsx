@@ -6,13 +6,32 @@ import TemplateGallery from '@/components/templates/TemplateGallery';
 export const metadata: Metadata = {
     title: 'Data Visualization Templates – Free Dashboard and Chart Examples | VisualizeMyData',
     description: 'Explore ready-made datasets and generate charts or dashboards instantly using our free online data visualization templates. No upload needed.',
-    alternates: { canonical: 'https://visualizemydata.in/templates/' },
-    openGraph: {
-        title: 'Free Data Visualization Templates | VisualizeMyData',
-        description: '6 ready-made datasets — Sales, Marketing, Survey, Expense, Grades, Traffic. Click and get an instant interactive dashboard.',
-        url: 'https://visualizemydata.in/templates/',
+    alternates: {
+        canonical: 'https://visualizemydata.in/templates/',
     },
-};
+    openGraph: {
+        title: 'Data Visualization Templates – Free Dashboard and Chart Examples | VisualizeMyData',
+        description: 'Explore ready-made datasets and generate charts or dashboards instantly using our free online data visualization templates. No upload needed.',
+        url: 'https://visualizemydata.in/templates/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Data Visualization Templates – Free Dashboard and Chart Examples | VisualizeMyData',
+        description: 'Explore ready-made datasets and generate charts or dashboards instantly using our free online data visualization templates. No upload needed.',
+        images: ['/og-image.png'],
+    },
+};;
 
 export default function TemplatesPage() {
     return (

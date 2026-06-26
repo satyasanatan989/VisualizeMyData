@@ -3,8 +3,32 @@ import { ProgrammaticSEOPage } from '@/components/ProgrammaticSEOPage';
 export const metadata: Metadata = {
     title: 'Data to Chart Online – Convert Data to Visual Charts Free | VisualizeMyData',
     description: 'Turn raw data into beautiful charts online. Upload Excel, CSV, or PDF and get bar, line, pie charts instantly. Free data to chart converter, no signup needed.',
-    alternates: { canonical: 'https://visualizemydata.in/data-to-chart-online/' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/data-to-chart-online/',
+    },
+    openGraph: {
+        title: 'Data to Chart Online – Convert Data to Visual Charts Free | VisualizeMyData',
+        description: 'Turn raw data into beautiful charts online. Upload Excel, CSV, or PDF and get bar, line, pie charts instantly. Free data to chart converter, no signup needed.',
+        url: 'https://visualizemydata.in/data-to-chart-online/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Data to Chart Online – Convert Data to Visual Charts Free | VisualizeMyData',
+        description: 'Turn raw data into beautiful charts online. Upload Excel, CSV, or PDF and get bar, line, pie charts instantly. Free data to chart converter, no signup needed.',
+        images: ['/og-image.png'],
+    },
+};;
 export default function Page() {
     return <ProgrammaticSEOPage
         title="Data to Chart Online"

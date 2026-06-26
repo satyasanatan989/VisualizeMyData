@@ -6,8 +6,32 @@ import Link from 'next/link';
 export const metadata: Metadata = {
     title: 'How to Visualize Excel Data Online for Free | VisualizeMyData Blog',
     description: 'Step-by-step guide to visualizing Excel spreadsheet data online for free — create bar charts, line charts, and pie charts without any software installation.',
-    alternates: { canonical: 'https://visualizemydata.in/blog/how-to-visualize-excel-data/' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/blog/how-to-visualize-excel-data/',
+    },
+    openGraph: {
+        title: 'How to Visualize Excel Data Online for Free | VisualizeMyData Blog',
+        description: 'Step-by-step guide to visualizing Excel spreadsheet data online for free — create bar charts, line charts, and pie charts without any software installation.',
+        url: 'https://visualizemydata.in/blog/how-to-visualize-excel-data/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'How to Visualize Excel Data Online for Free | VisualizeMyData Blog',
+        description: 'Step-by-step guide to visualizing Excel spreadsheet data online for free — create bar charts, line charts, and pie charts without any software installation.',
+        images: ['/og-image.png'],
+    },
+};;
 
 export default function HowToVisualizeExcelPage() {
     return (

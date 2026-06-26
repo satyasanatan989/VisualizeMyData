@@ -11,11 +11,27 @@ export const metadata: Metadata = {
     },
     openGraph: {
         title: 'Contact Us | VisualizeMyData',
-        description: 'Contact VisualizeMyData (ToolVista) support. Reach out with questions, bug reports, or suggestions.',
+        description: 'Contact VisualizeMyData (ToolVista) support. Reach out with questions, bug reports, feature suggestions, or feedback about our free, 100% client-side utility tools.',
         url: 'https://visualizemydata.in/contact',
         type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
     },
-};
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Contact Us | VisualizeMyData',
+        description: 'Contact VisualizeMyData (ToolVista) support. Reach out with questions, bug reports, feature suggestions, or feedback about our free, 100% client-side utility tools.',
+        images: ['/og-image.png'],
+    },
+};;
 
 export default function ContactPage() {
     return (

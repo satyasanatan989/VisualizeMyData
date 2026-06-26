@@ -5,8 +5,32 @@ import Link from 'next/link';
 export const metadata: Metadata = {
     title: 'Best Data Visualization Techniques for 2026 | VisualizeMyData',
     description: 'Explore the most effective techniques for modern data presentation, including interactive filtering, color psychology, and proper axis scaling.',
-    alternates: { canonical: 'https://visualizemydata.in/learn/best-data-visualization-techniques' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/learn/best-data-visualization-techniques',
+    },
+    openGraph: {
+        title: 'Best Data Visualization Techniques for 2026 | VisualizeMyData',
+        description: 'Explore the most effective techniques for modern data presentation, including interactive filtering, color psychology, and proper axis scaling.',
+        url: 'https://visualizemydata.in/learn/best-data-visualization-techniques',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Best Data Visualization Techniques for 2026 | VisualizeMyData',
+        description: 'Explore the most effective techniques for modern data presentation, including interactive filtering, color psychology, and proper axis scaling.',
+        images: ['/og-image.png'],
+    },
+};;
 
 export default function ArticleVisualizationTechniques() {
     return (

@@ -2,12 +2,37 @@ import type { Metadata } from 'next';
 import NavbarWrapper from '@/components/NavbarWrapper';
 import Footer from '@/components/Footer';
 import SurveyVisualizer from '@/components/dashboard/SurveyVisualizer';
+import DiscoveryLinks from '@/components/DiscoveryLinks';
 
 export const metadata: Metadata = {
     title: 'Free Google Forms Survey Visualizer Online | VisualizeMyData',
     description: 'Visualize Google Forms CSV exports online for free. Upload survey results and automatically generate pie charts, bar charts, response percentages, and rating statistics client-side. No signup, no logs.',
-    alternates: { canonical: 'https://visualizemydata.in/survey-visualizer/' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/survey-visualizer/',
+    },
+    openGraph: {
+        title: 'Free Google Forms Survey Visualizer Online | VisualizeMyData',
+        description: 'Visualize Google Forms CSV exports online for free. Upload survey results and automatically generate pie charts, bar charts, response percentages, and rating statistics client-side. No signup, no logs.',
+        url: 'https://visualizemydata.in/survey-visualizer/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Free Google Forms Survey Visualizer Online | VisualizeMyData',
+        description: 'Visualize Google Forms CSV exports online for free. Upload survey results and automatically generate pie charts, bar charts, response percentages, and rating statistics client-side. No signup, no logs.',
+        images: ['/og-image.png'],
+    },
+};;
 
 export default function SurveyVisualizerPage() {
     const jsonLd = {
@@ -86,6 +111,7 @@ export default function SurveyVisualizerPage() {
                 </div>
             </section>
 
+            <DiscoveryLinks />
             <Footer />
         </div>
     );

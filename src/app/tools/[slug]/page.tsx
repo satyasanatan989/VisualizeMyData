@@ -47,6 +47,22 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
             description: desc,
             url: `https://visualizemydata.in/tools/${tool.slug}/`,
             type: 'website',
+            siteName: 'VisualizeMyData',
+            locale: 'en_US',
+            images: [
+                {
+                    url: '/og-image.png',
+                    width: 1200,
+                    height: 630,
+                    alt: title,
+                },
+            ],
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title,
+            description: desc,
+            images: ['/og-image.png'],
         },
     };
 }

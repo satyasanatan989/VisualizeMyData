@@ -6,8 +6,32 @@ import Link from 'next/link';
 export const metadata: Metadata = {
     title: 'How to Create a Dashboard from Excel Data (Free Method) | VisualizeMyData',
     description: 'Step-by-step guide to building a complete interactive dashboard from an Excel spreadsheet using free online tools — KPI cards, charts, and AI insights included.',
-    alternates: { canonical: 'https://visualizemydata.in/blog/how-to-create-dashboard-from-excel/' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/blog/how-to-create-dashboard-from-excel/',
+    },
+    openGraph: {
+        title: 'How to Create a Dashboard from Excel Data (Free Method) | VisualizeMyData',
+        description: 'Step-by-step guide to building a complete interactive dashboard from an Excel spreadsheet using free online tools — KPI cards, charts, and AI insights included.',
+        url: 'https://visualizemydata.in/blog/how-to-create-dashboard-from-excel/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'How to Create a Dashboard from Excel Data (Free Method) | VisualizeMyData',
+        description: 'Step-by-step guide to building a complete interactive dashboard from an Excel spreadsheet using free online tools — KPI cards, charts, and AI insights included.',
+        images: ['/og-image.png'],
+    },
+};;
 
 export default function HowToCreateDashboardFromExcelPage() {
     return (

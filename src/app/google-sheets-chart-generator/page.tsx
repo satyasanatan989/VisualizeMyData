@@ -3,8 +3,32 @@ import { ProgrammaticSEOPage } from '@/components/ProgrammaticSEOPage';
 export const metadata: Metadata = {
     title: 'Google Sheets Chart Generator – Visualize Sheets Data Free | VisualizeMyData',
     description: 'Generate bar, line, pie, and area charts from Google Sheets online for free. Paste your public spreadsheet URL and visualize your data instantly. No login.',
-    alternates: { canonical: 'https://visualizemydata.in/google-sheets-chart-generator/' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/google-sheets-chart-generator/',
+    },
+    openGraph: {
+        title: 'Google Sheets Chart Generator – Visualize Sheets Data Free | VisualizeMyData',
+        description: 'Generate bar, line, pie, and area charts from Google Sheets online for free. Paste your public spreadsheet URL and visualize your data instantly. No login.',
+        url: 'https://visualizemydata.in/google-sheets-chart-generator/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Google Sheets Chart Generator – Visualize Sheets Data Free | VisualizeMyData',
+        description: 'Generate bar, line, pie, and area charts from Google Sheets online for free. Paste your public spreadsheet URL and visualize your data instantly. No login.',
+        images: ['/og-image.png'],
+    },
+};;
 export default function Page() {
     return <ProgrammaticSEOPage
         title="Google Sheets Chart Generator"

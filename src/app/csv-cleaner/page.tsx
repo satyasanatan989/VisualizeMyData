@@ -2,12 +2,37 @@ import type { Metadata } from 'next';
 import NavbarWrapper from '@/components/NavbarWrapper';
 import Footer from '@/components/Footer';
 import DataCleaner from '@/components/dashboard/DataCleaner';
+import DiscoveryLinks from '@/components/DiscoveryLinks';
 
 export const metadata: Metadata = {
     title: 'Free Online CSV Cleaner – Remove Duplicates & Empty Rows | VisualizeMyData',
     description: 'Clean CSV files online for free. Remove duplicate rows, strip blank lines, trim spaces, normalize column headers, standardize dates, and download cleaned CSV files client-side. No signup, no logs.',
-    alternates: { canonical: 'https://visualizemydata.in/csv-cleaner/' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/csv-cleaner/',
+    },
+    openGraph: {
+        title: 'Free Online CSV Cleaner – Remove Duplicates & Empty Rows | VisualizeMyData',
+        description: 'Clean CSV files online for free. Remove duplicate rows, strip blank lines, trim spaces, normalize column headers, standardize dates, and download cleaned CSV files client-side. No signup, no logs.',
+        url: 'https://visualizemydata.in/csv-cleaner/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Free Online CSV Cleaner – Remove Duplicates & Empty Rows | VisualizeMyData',
+        description: 'Clean CSV files online for free. Remove duplicate rows, strip blank lines, trim spaces, normalize column headers, standardize dates, and download cleaned CSV files client-side. No signup, no logs.',
+        images: ['/og-image.png'],
+    },
+};;
 
 export default function CsvCleanerPage() {
     // Structure schema
@@ -87,6 +112,7 @@ export default function CsvCleanerPage() {
                 </div>
             </section>
 
+            <DiscoveryLinks />
             <Footer />
         </div>
     );

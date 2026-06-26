@@ -2,12 +2,37 @@ import type { Metadata } from 'next';
 import NavbarWrapper from '@/components/NavbarWrapper';
 import Footer from '@/components/Footer';
 import FormulaGenerator from '@/components/dashboard/FormulaGenerator';
+import DiscoveryLinks from '@/components/DiscoveryLinks';
 
 export const metadata: Metadata = {
     title: 'Free Excel Formula Generator – VLOOKUP, XLOOKUP, INDEX MATCH | VisualizeMyData',
     description: 'Generate Excel and Google Sheets formulas online for free. Use our searchable helper or interactive builder to write VLOOKUP, XLOOKUP, INDEX MATCH, SUMIF, and COUNTIF formulas in seconds.',
-    alternates: { canonical: 'https://visualizemydata.in/excel-formula-generator/' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/excel-formula-generator/',
+    },
+    openGraph: {
+        title: 'Free Excel Formula Generator – VLOOKUP, XLOOKUP, INDEX MATCH | VisualizeMyData',
+        description: 'Generate Excel and Google Sheets formulas online for free. Use our searchable helper or interactive builder to write VLOOKUP, XLOOKUP, INDEX MATCH, SUMIF, and COUNTIF formulas in seconds.',
+        url: 'https://visualizemydata.in/excel-formula-generator/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Free Excel Formula Generator – VLOOKUP, XLOOKUP, INDEX MATCH | VisualizeMyData',
+        description: 'Generate Excel and Google Sheets formulas online for free. Use our searchable helper or interactive builder to write VLOOKUP, XLOOKUP, INDEX MATCH, SUMIF, and COUNTIF formulas in seconds.',
+        images: ['/og-image.png'],
+    },
+};;
 
 export default function ExcelFormulaGeneratorPage() {
     const jsonLd = {
@@ -87,6 +112,7 @@ export default function ExcelFormulaGeneratorPage() {
                 </div>
             </section>
 
+            <DiscoveryLinks />
             <Footer />
         </div>
     );

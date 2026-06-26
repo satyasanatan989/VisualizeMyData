@@ -7,13 +7,32 @@ import Link from 'next/link';
 export const metadata: Metadata = {
     title: 'Free Excel Data Visualizer Online | Convert Spreadsheet to Chart',
     description: 'Upload any Excel file and instantly convert it to bar, line, pie or area charts online. Free, no login required. Files never leave your device.',
-    alternates: { canonical: 'https://visualizemydata.in/excel-visualizer/' },
+    alternates: {
+        canonical: 'https://visualizemydata.in/excel-visualizer/',
+    },
     openGraph: {
         title: 'Free Excel Data Visualizer Online | Convert Spreadsheet to Chart',
-        description: 'Upload any Excel file and instantly convert it to bar, line, pie or area charts online. Free, no login required.',
+        description: 'Upload any Excel file and instantly convert it to bar, line, pie or area charts online. Free, no login required. Files never leave your device.',
         url: 'https://visualizemydata.in/excel-visualizer/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
     },
-};
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Free Excel Data Visualizer Online | Convert Spreadsheet to Chart',
+        description: 'Upload any Excel file and instantly convert it to bar, line, pie or area charts online. Free, no login required. Files never leave your device.',
+        images: ['/og-image.png'],
+    },
+};;
 
 const faqItems = [
     { q: 'Is this Excel visualizer free to use?', a: 'Yes, completely free. There are no hidden charges, no subscriptions, and no credit card required. Simply upload your Excel file and start visualizing.' },

@@ -5,8 +5,32 @@ import Link from 'next/link';
 export const metadata: Metadata = {
     title: 'Dashboard Design Best Practices | VisualizeMyData',
     description: 'Learn how to build KPI dashboards that actually drive decisions. Covers layout hierarchy, reducing cognitive load, and actionable metrics.',
-    alternates: { canonical: 'https://visualizemydata.in/learn/dashboard-design-best-practices' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/learn/dashboard-design-best-practices',
+    },
+    openGraph: {
+        title: 'Dashboard Design Best Practices | VisualizeMyData',
+        description: 'Learn how to build KPI dashboards that actually drive decisions. Covers layout hierarchy, reducing cognitive load, and actionable metrics.',
+        url: 'https://visualizemydata.in/learn/dashboard-design-best-practices',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Dashboard Design Best Practices | VisualizeMyData',
+        description: 'Learn how to build KPI dashboards that actually drive decisions. Covers layout hierarchy, reducing cognitive load, and actionable metrics.',
+        images: ['/og-image.png'],
+    },
+};;
 
 export default function ArticleDashboardDesign() {
     return (

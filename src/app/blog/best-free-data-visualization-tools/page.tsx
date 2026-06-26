@@ -6,8 +6,32 @@ import Link from 'next/link';
 export const metadata: Metadata = {
     title: 'Best Free Data Visualization Tools in 2025 | VisualizeMyData Blog',
     description: 'Compare the top free data visualization tools of 2025 — from browser-based chart generators to full BI platforms. Find the right tool for your data.',
-    alternates: { canonical: 'https://visualizemydata.in/blog/best-free-data-visualization-tools/' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/blog/best-free-data-visualization-tools/',
+    },
+    openGraph: {
+        title: 'Best Free Data Visualization Tools in 2025 | VisualizeMyData Blog',
+        description: 'Compare the top free data visualization tools of 2025 — from browser-based chart generators to full BI platforms. Find the right tool for your data.',
+        url: 'https://visualizemydata.in/blog/best-free-data-visualization-tools/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Best Free Data Visualization Tools in 2025 | VisualizeMyData Blog',
+        description: 'Compare the top free data visualization tools of 2025 — from browser-based chart generators to full BI platforms. Find the right tool for your data.',
+        images: ['/og-image.png'],
+    },
+};;
 
 const tools = [
     { name: 'VisualizeMyData', best: 'Quick chart generation from Excel/CSV/PDF, dashboard builder, AI insights', free: true, signup: false, notes: 'Files stay in browser — fully private' },

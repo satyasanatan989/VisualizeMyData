@@ -3,8 +3,32 @@ import { ProgrammaticSEOPage } from '@/components/ProgrammaticSEOPage';
 export const metadata: Metadata = {
     title: 'Free Data Visualization Tool Online – No Signup Required | VisualizeMyData',
     description: 'The best free online data visualization tool. Upload Excel, CSV, PDF or Google Sheets and get charts, dashboards and insights instantly. 100% free, no login required.',
-    alternates: { canonical: 'https://visualizemydata.in/free-data-visualization-tool/' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/free-data-visualization-tool/',
+    },
+    openGraph: {
+        title: 'Free Data Visualization Tool Online – No Signup Required | VisualizeMyData',
+        description: 'The best free online data visualization tool. Upload Excel, CSV, PDF or Google Sheets and get charts, dashboards and insights instantly. 100% free, no login required.',
+        url: 'https://visualizemydata.in/free-data-visualization-tool/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Free Data Visualization Tool Online – No Signup Required | VisualizeMyData',
+        description: 'The best free online data visualization tool. Upload Excel, CSV, PDF or Google Sheets and get charts, dashboards and insights instantly. 100% free, no login required.',
+        images: ['/og-image.png'],
+    },
+};;
 export default function Page() {
     return <ProgrammaticSEOPage
         title="Free Data Visualization Tool"

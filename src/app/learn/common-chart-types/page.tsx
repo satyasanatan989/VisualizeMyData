@@ -5,8 +5,32 @@ import Link from 'next/link';
 export const metadata: Metadata = {
     title: 'Common Chart Types & When to Use Them | VisualizeMyData',
     description: 'Stop guessing which chart to use. This comprehensive guide explains exactly when to use Bar, Line, Pie, Area, and Scatter charts for your specific dataset.',
-    alternates: { canonical: 'https://visualizemydata.in/learn/common-chart-types' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/learn/common-chart-types',
+    },
+    openGraph: {
+        title: 'Common Chart Types & When to Use Them | VisualizeMyData',
+        description: 'Stop guessing which chart to use. This comprehensive guide explains exactly when to use Bar, Line, Pie, Area, and Scatter charts for your specific dataset.',
+        url: 'https://visualizemydata.in/learn/common-chart-types',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Common Chart Types & When to Use Them | VisualizeMyData',
+        description: 'Stop guessing which chart to use. This comprehensive guide explains exactly when to use Bar, Line, Pie, Area, and Scatter charts for your specific dataset.',
+        images: ['/og-image.png'],
+    },
+};;
 
 export default function ArticleCommonChartTypes() {
     return (

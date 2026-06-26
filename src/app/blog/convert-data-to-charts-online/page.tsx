@@ -6,8 +6,32 @@ import Link from 'next/link';
 export const metadata: Metadata = {
     title: 'How to Convert Data to Charts Online: The Complete Guide | VisualizeMyData',
     description: 'A complete guide to converting Excel, CSV, PDF, and Google Sheets data into professional charts online — free, instant, no software needed.',
-    alternates: { canonical: 'https://visualizemydata.in/blog/convert-data-to-charts-online/' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/blog/convert-data-to-charts-online/',
+    },
+    openGraph: {
+        title: 'How to Convert Data to Charts Online: The Complete Guide | VisualizeMyData',
+        description: 'A complete guide to converting Excel, CSV, PDF, and Google Sheets data into professional charts online — free, instant, no software needed.',
+        url: 'https://visualizemydata.in/blog/convert-data-to-charts-online/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'How to Convert Data to Charts Online: The Complete Guide | VisualizeMyData',
+        description: 'A complete guide to converting Excel, CSV, PDF, and Google Sheets data into professional charts online — free, instant, no software needed.',
+        images: ['/og-image.png'],
+    },
+};;
 
 export default function ConvertDataToChartsOnlinePage() {
     return (

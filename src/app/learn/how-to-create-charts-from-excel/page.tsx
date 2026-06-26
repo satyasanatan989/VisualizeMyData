@@ -5,8 +5,32 @@ import Link from 'next/link';
 export const metadata: Metadata = {
     title: 'How to Create Charts from Excel Data Online | VisualizeMyData',
     description: 'A complete step-by-step tutorial on preparing your spreadsheet data, selecting the right columns, and generating professional charts instantly.',
-    alternates: { canonical: 'https://visualizemydata.in/learn/how-to-create-charts-from-excel' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/learn/how-to-create-charts-from-excel',
+    },
+    openGraph: {
+        title: 'How to Create Charts from Excel Data Online | VisualizeMyData',
+        description: 'A complete step-by-step tutorial on preparing your spreadsheet data, selecting the right columns, and generating professional charts instantly.',
+        url: 'https://visualizemydata.in/learn/how-to-create-charts-from-excel',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'How to Create Charts from Excel Data Online | VisualizeMyData',
+        description: 'A complete step-by-step tutorial on preparing your spreadsheet data, selecting the right columns, and generating professional charts instantly.',
+        images: ['/og-image.png'],
+    },
+};;
 
 export default function ArticleCreatingChartsExcel() {
     return (

@@ -6,13 +6,32 @@ import Link from 'next/link';
 export const metadata: Metadata = {
     title: 'Free Excel Dashboard Generator Online | Auto-Create Dashboards from Excel',
     description: 'Upload an Excel file and automatically generate a full dashboard with KPI cards, bar charts, line charts, pie charts, and AI insights. Free, no login required.',
-    alternates: { canonical: 'https://visualizemydata.in/excel-dashboard-generator/' },
-    openGraph: {
-        title: 'Free Excel Dashboard Generator Online',
-        description: 'Transform Excel data into interactive dashboards instantly. Free, browser-based, no signup.',
-        url: 'https://visualizemydata.in/excel-dashboard-generator/',
+    alternates: {
+        canonical: 'https://visualizemydata.in/excel-dashboard-generator/',
     },
-};
+    openGraph: {
+        title: 'Free Excel Dashboard Generator Online | Auto-Create Dashboards from Excel',
+        description: 'Upload an Excel file and automatically generate a full dashboard with KPI cards, bar charts, line charts, pie charts, and AI insights. Free, no login required.',
+        url: 'https://visualizemydata.in/excel-dashboard-generator/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Free Excel Dashboard Generator Online | Auto-Create Dashboards from Excel',
+        description: 'Upload an Excel file and automatically generate a full dashboard with KPI cards, bar charts, line charts, pie charts, and AI insights. Free, no login required.',
+        images: ['/og-image.png'],
+    },
+};;
 
 const faqItems = [
     { q: 'Can I create a dashboard from an Excel file for free?', a: 'Yes. VisualizeMyData\'s Excel Dashboard Generator is completely free. Upload your .xlsx or .xls file and it instantly generates KPI cards, interactive charts, and AI-style insights with no account required.' },

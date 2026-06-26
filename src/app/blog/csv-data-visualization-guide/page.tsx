@@ -6,8 +6,32 @@ import Link from 'next/link';
 export const metadata: Metadata = {
     title: 'CSV Data Visualization Guide: From Raw Data to Charts | VisualizeMyData',
     description: 'Learn how to convert raw CSV files into interactive charts and dashboards online for free — no coding, no software installation required.',
-    alternates: { canonical: 'https://visualizemydata.in/blog/csv-data-visualization-guide/' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/blog/csv-data-visualization-guide/',
+    },
+    openGraph: {
+        title: 'CSV Data Visualization Guide: From Raw Data to Charts | VisualizeMyData',
+        description: 'Learn how to convert raw CSV files into interactive charts and dashboards online for free — no coding, no software installation required.',
+        url: 'https://visualizemydata.in/blog/csv-data-visualization-guide/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'CSV Data Visualization Guide: From Raw Data to Charts | VisualizeMyData',
+        description: 'Learn how to convert raw CSV files into interactive charts and dashboards online for free — no coding, no software installation required.',
+        images: ['/og-image.png'],
+    },
+};;
 
 export default function CsvDataVisualizationGuidePage() {
     return (

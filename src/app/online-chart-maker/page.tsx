@@ -3,8 +3,32 @@ import { ProgrammaticSEOPage } from '@/components/ProgrammaticSEOPage';
 export const metadata: Metadata = {
     title: 'Online Chart Maker – Free Chart Generator for Any Data | VisualizeMyData',
     description: 'Create professional charts online from Excel, CSV, PDF, or Google Sheets. Free online chart maker — no signup, no software, instant bar, line, pie, and area charts.',
-    alternates: { canonical: 'https://visualizemydata.in/online-chart-maker/' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/online-chart-maker/',
+    },
+    openGraph: {
+        title: 'Online Chart Maker – Free Chart Generator for Any Data | VisualizeMyData',
+        description: 'Create professional charts online from Excel, CSV, PDF, or Google Sheets. Free online chart maker — no signup, no software, instant bar, line, pie, and area charts.',
+        url: 'https://visualizemydata.in/online-chart-maker/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Online Chart Maker – Free Chart Generator for Any Data | VisualizeMyData',
+        description: 'Create professional charts online from Excel, CSV, PDF, or Google Sheets. Free online chart maker — no signup, no software, instant bar, line, pie, and area charts.',
+        images: ['/og-image.png'],
+    },
+};;
 export default function Page() {
     return <ProgrammaticSEOPage
         title="Online Chart Maker"

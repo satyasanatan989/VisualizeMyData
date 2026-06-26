@@ -3,8 +3,32 @@ import { ProgrammaticSEOPage } from '@/components/ProgrammaticSEOPage';
 export const metadata: Metadata = {
     title: 'Spreadsheet to Chart Online – Convert Sheets to Charts Free | VisualizeMyData',
     description: 'Convert any spreadsheet (Excel, CSV, Google Sheets) to a professional chart online in seconds. Free spreadsheet to chart converter — no login, browser-based.',
-    alternates: { canonical: 'https://visualizemydata.in/spreadsheet-to-chart/' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/spreadsheet-to-chart/',
+    },
+    openGraph: {
+        title: 'Spreadsheet to Chart Online – Convert Sheets to Charts Free | VisualizeMyData',
+        description: 'Convert any spreadsheet (Excel, CSV, Google Sheets) to a professional chart online in seconds. Free spreadsheet to chart converter — no login, browser-based.',
+        url: 'https://visualizemydata.in/spreadsheet-to-chart/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Spreadsheet to Chart Online – Convert Sheets to Charts Free | VisualizeMyData',
+        description: 'Convert any spreadsheet (Excel, CSV, Google Sheets) to a professional chart online in seconds. Free spreadsheet to chart converter — no login, browser-based.',
+        images: ['/og-image.png'],
+    },
+};;
 export default function Page() {
     return <ProgrammaticSEOPage
         title="Spreadsheet to Chart Converter"

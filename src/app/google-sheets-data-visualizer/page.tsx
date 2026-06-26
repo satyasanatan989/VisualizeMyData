@@ -3,8 +3,32 @@ import { ProgrammaticSEOPage } from '@/components/ProgrammaticSEOPage';
 export const metadata: Metadata = {
     title: 'Google Sheets Data Visualizer – Visualize Sheets Online Free | VisualizeMyData',
     description: 'Visualize Google Sheets data as interactive charts online for free. Paste your spreadsheet URL and explore bar, line, pie, and area charts instantly. No login.',
-    alternates: { canonical: 'https://visualizemydata.in/google-sheets-data-visualizer/' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/google-sheets-data-visualizer/',
+    },
+    openGraph: {
+        title: 'Google Sheets Data Visualizer – Visualize Sheets Online Free | VisualizeMyData',
+        description: 'Visualize Google Sheets data as interactive charts online for free. Paste your spreadsheet URL and explore bar, line, pie, and area charts instantly. No login.',
+        url: 'https://visualizemydata.in/google-sheets-data-visualizer/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Google Sheets Data Visualizer – Visualize Sheets Online Free | VisualizeMyData',
+        description: 'Visualize Google Sheets data as interactive charts online for free. Paste your spreadsheet URL and explore bar, line, pie, and area charts instantly. No login.',
+        images: ['/og-image.png'],
+    },
+};;
 export default function Page() {
     return <ProgrammaticSEOPage
         title="Google Sheets Data Visualizer"

@@ -3,8 +3,32 @@ import { ProgrammaticSEOPage } from '@/components/ProgrammaticSEOPage';
 export const metadata: Metadata = {
     title: 'PDF Dashboard Generator – Build Dashboards from PDF Data | VisualizeMyData',
     description: 'Extract data from PDF reports and build interactive dashboards with KPI cards and charts. Free browser-based PDF dashboard generator — no login, no software needed.',
-    alternates: { canonical: 'https://visualizemydata.in/pdf-dashboard-generator/' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/pdf-dashboard-generator/',
+    },
+    openGraph: {
+        title: 'PDF Dashboard Generator – Build Dashboards from PDF Data | VisualizeMyData',
+        description: 'Extract data from PDF reports and build interactive dashboards with KPI cards and charts. Free browser-based PDF dashboard generator — no login, no software needed.',
+        url: 'https://visualizemydata.in/pdf-dashboard-generator/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'PDF Dashboard Generator – Build Dashboards from PDF Data | VisualizeMyData',
+        description: 'Extract data from PDF reports and build interactive dashboards with KPI cards and charts. Free browser-based PDF dashboard generator — no login, no software needed.',
+        images: ['/og-image.png'],
+    },
+};;
 export default function Page() {
     return <ProgrammaticSEOPage
         title="PDF Dashboard Generator"

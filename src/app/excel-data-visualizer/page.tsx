@@ -3,8 +3,32 @@ import { ProgrammaticSEOPage } from '@/components/ProgrammaticSEOPage';
 export const metadata: Metadata = {
     title: 'Excel Data Visualizer Online – Free Excel to Chart Tool | VisualizeMyData',
     description: 'Visualize Excel data as interactive charts online for free. Upload any .xlsx or .xls file and get instant bar, line, pie, or area charts. 100% free, no login.',
-    alternates: { canonical: 'https://visualizemydata.in/excel-data-visualizer/' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/excel-data-visualizer/',
+    },
+    openGraph: {
+        title: 'Excel Data Visualizer Online – Free Excel to Chart Tool | VisualizeMyData',
+        description: 'Visualize Excel data as interactive charts online for free. Upload any .xlsx or .xls file and get instant bar, line, pie, or area charts. 100% free, no login.',
+        url: 'https://visualizemydata.in/excel-data-visualizer/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Excel Data Visualizer Online – Free Excel to Chart Tool | VisualizeMyData',
+        description: 'Visualize Excel data as interactive charts online for free. Upload any .xlsx or .xls file and get instant bar, line, pie, or area charts. 100% free, no login.',
+        images: ['/og-image.png'],
+    },
+};;
 export default function Page() {
     return <ProgrammaticSEOPage
         title="Excel Data Visualizer"

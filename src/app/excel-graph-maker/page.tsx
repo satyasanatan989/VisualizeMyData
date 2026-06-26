@@ -3,8 +3,32 @@ import { ProgrammaticSEOPage } from '@/components/ProgrammaticSEOPage';
 export const metadata: Metadata = {
     title: 'Excel Graph Maker Online – Create Graphs from Excel Free | VisualizeMyData',
     description: 'Make professional graphs from Excel data instantly online. Upload .xlsx or .xls and generate bar, line, pie, or area graphs. Free, no software needed, no login.',
-    alternates: { canonical: 'https://visualizemydata.in/excel-graph-maker/' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/excel-graph-maker/',
+    },
+    openGraph: {
+        title: 'Excel Graph Maker Online – Create Graphs from Excel Free | VisualizeMyData',
+        description: 'Make professional graphs from Excel data instantly online. Upload .xlsx or .xls and generate bar, line, pie, or area graphs. Free, no software needed, no login.',
+        url: 'https://visualizemydata.in/excel-graph-maker/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Excel Graph Maker Online – Create Graphs from Excel Free | VisualizeMyData',
+        description: 'Make professional graphs from Excel data instantly online. Upload .xlsx or .xls and generate bar, line, pie, or area graphs. Free, no software needed, no login.',
+        images: ['/og-image.png'],
+    },
+};;
 export default function Page() {
     return <ProgrammaticSEOPage
         title="Excel Graph Maker"

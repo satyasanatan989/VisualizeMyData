@@ -3,8 +3,32 @@ import { ProgrammaticSEOPage } from '@/components/ProgrammaticSEOPage';
 export const metadata: Metadata = {
     title: 'PDF Chart Generator – Convert PDF Tables to Charts Online | VisualizeMyData',
     description: 'Extract tables from PDF documents and generate charts instantly online. Free PDF chart generator — no signup, no software installation required.',
-    alternates: { canonical: 'https://visualizemydata.in/pdf-chart-generator/' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/pdf-chart-generator/',
+    },
+    openGraph: {
+        title: 'PDF Chart Generator – Convert PDF Tables to Charts Online | VisualizeMyData',
+        description: 'Extract tables from PDF documents and generate charts instantly online. Free PDF chart generator — no signup, no software installation required.',
+        url: 'https://visualizemydata.in/pdf-chart-generator/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'PDF Chart Generator – Convert PDF Tables to Charts Online | VisualizeMyData',
+        description: 'Extract tables from PDF documents and generate charts instantly online. Free PDF chart generator — no signup, no software installation required.',
+        images: ['/og-image.png'],
+    },
+};;
 export default function Page() {
     return <ProgrammaticSEOPage
         title="PDF Chart Generator"

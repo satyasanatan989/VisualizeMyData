@@ -3,8 +3,32 @@ import { ProgrammaticSEOPage } from '@/components/ProgrammaticSEOPage';
 export const metadata: Metadata = {
     title: 'CSV Data Visualizer Online – Visualize CSV Data Instantly | VisualizeMyData',
     description: 'Visualize CSV data as interactive charts online for free. Upload your comma-separated file and get instant bar, line, pie, or area charts. No login required.',
-    alternates: { canonical: 'https://visualizemydata.in/csv-data-visualizer/' },
-};
+    alternates: {
+        canonical: 'https://visualizemydata.in/csv-data-visualizer/',
+    },
+    openGraph: {
+        title: 'CSV Data Visualizer Online – Visualize CSV Data Instantly | VisualizeMyData',
+        description: 'Visualize CSV data as interactive charts online for free. Upload your comma-separated file and get instant bar, line, pie, or area charts. No login required.',
+        url: 'https://visualizemydata.in/csv-data-visualizer/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'CSV Data Visualizer Online – Visualize CSV Data Instantly | VisualizeMyData',
+        description: 'Visualize CSV data as interactive charts online for free. Upload your comma-separated file and get instant bar, line, pie, or area charts. No login required.',
+        images: ['/og-image.png'],
+    },
+};;
 export default function Page() {
     return <ProgrammaticSEOPage
         title="CSV Data Visualizer"

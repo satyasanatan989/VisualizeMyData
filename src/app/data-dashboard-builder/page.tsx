@@ -6,13 +6,32 @@ import Link from 'next/link';
 export const metadata: Metadata = {
     title: 'Free Data Dashboard Builder Online | Create Interactive Dashboards',
     description: 'Build interactive data dashboards from Excel, CSV, Google Sheets, or PDF in seconds. Free online dashboard builder — no login, no install, instant results.',
-    alternates: { canonical: 'https://visualizemydata.in/data-dashboard-builder/' },
-    openGraph: {
-        title: 'Free Data Dashboard Builder Online',
-        description: 'Create dashboards from your data in seconds. Free, browser-based, no signup.',
-        url: 'https://visualizemydata.in/data-dashboard-builder/',
+    alternates: {
+        canonical: 'https://visualizemydata.in/data-dashboard-builder/',
     },
-};
+    openGraph: {
+        title: 'Free Data Dashboard Builder Online | Create Interactive Dashboards',
+        description: 'Build interactive data dashboards from Excel, CSV, Google Sheets, or PDF in seconds. Free online dashboard builder — no login, no install, instant results.',
+        url: 'https://visualizemydata.in/data-dashboard-builder/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Free Data Dashboard Builder Online | Create Interactive Dashboards',
+        description: 'Build interactive data dashboards from Excel, CSV, Google Sheets, or PDF in seconds. Free online dashboard builder — no login, no install, instant results.',
+        images: ['/og-image.png'],
+    },
+};;
 
 const faqItems = [
     { q: 'What is a data dashboard builder?', a: 'A data dashboard builder is a tool that takes raw data — from Excel, CSV, or other sources — and automatically creates visual summaries including charts, KPI metrics, and insights panels.' },

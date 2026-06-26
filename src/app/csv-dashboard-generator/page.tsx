@@ -6,13 +6,32 @@ import Link from 'next/link';
 export const metadata: Metadata = {
     title: 'Free CSV Dashboard Generator Online | Instant Dashboard from CSV',
     description: 'Upload a CSV file and automatically generate an interactive dashboard with charts, KPI cards, and AI insights. Free, browser-based, no login required.',
-    alternates: { canonical: 'https://visualizemydata.in/csv-dashboard-generator/' },
-    openGraph: {
-        title: 'Free CSV Dashboard Generator Online',
-        description: 'Transform CSV data into interactive dashboards instantly. Free, no signup required.',
-        url: 'https://visualizemydata.in/csv-dashboard-generator/',
+    alternates: {
+        canonical: 'https://visualizemydata.in/csv-dashboard-generator/',
     },
-};
+    openGraph: {
+        title: 'Free CSV Dashboard Generator Online | Instant Dashboard from CSV',
+        description: 'Upload a CSV file and automatically generate an interactive dashboard with charts, KPI cards, and AI insights. Free, browser-based, no login required.',
+        url: 'https://visualizemydata.in/csv-dashboard-generator/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Free CSV Dashboard Generator Online | Instant Dashboard from CSV',
+        description: 'Upload a CSV file and automatically generate an interactive dashboard with charts, KPI cards, and AI insights. Free, browser-based, no login required.',
+        images: ['/og-image.png'],
+    },
+};;
 
 const faqItems = [
     { q: 'How do I create a dashboard from a CSV file?', a: 'Go to the Dashboard Generator, upload your CSV file, and the tool instantly creates KPI cards, charts, and an AI insights panel.' },

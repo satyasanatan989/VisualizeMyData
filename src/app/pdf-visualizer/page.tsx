@@ -7,13 +7,32 @@ import Link from 'next/link';
 export const metadata: Metadata = {
     title: 'Free PDF Table Extractor & Data Visualizer Online | No Login',
     description: 'Extract tables from any PDF and instantly create bar, line or pie charts online. Free PDF data visualizer — no signup, no server upload, 100% private.',
-    alternates: { canonical: 'https://visualizemydata.in/pdf-visualizer/' },
+    alternates: {
+        canonical: 'https://visualizemydata.in/pdf-visualizer/',
+    },
     openGraph: {
         title: 'Free PDF Table Extractor & Data Visualizer Online | No Login',
-        description: 'Extract tables from PDF files and convert to charts online. Free, private, no server upload — try it instantly.',
+        description: 'Extract tables from any PDF and instantly create bar, line or pie charts online. Free PDF data visualizer — no signup, no server upload, 100% private.',
         url: 'https://visualizemydata.in/pdf-visualizer/',
+        type: 'website',
+        siteName: 'VisualizeMyData',
+        locale: 'en_US',
+        images: [
+            {
+                url: '/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'VisualizeMyData',
+            },
+        ],
     },
-};
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Free PDF Table Extractor & Data Visualizer Online | No Login',
+        description: 'Extract tables from any PDF and instantly create bar, line or pie charts online. Free PDF data visualizer — no signup, no server upload, 100% private.',
+        images: ['/og-image.png'],
+    },
+};;
 
 const faqItems = [
     { q: 'Can I create a chart directly from a PDF file?', a: 'Yes. Upload your PDF and the tool automatically attempts to detect and extract any embedded tables. If a table is found, it is converted into a dataset you can chart immediately.' },
