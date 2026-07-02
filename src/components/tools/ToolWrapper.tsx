@@ -4,11 +4,14 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { 
     Lock, Shield, Clock, ArrowRight, Home, History, Sparkles, 
-    Image as ImageIcon, FileText, ListFilter, Code, QrCode, ChevronRight 
+    Image as ImageIcon, FileText, ListFilter, Code, QrCode, ChevronRight,
+    Star, Share2, Copy, MessageSquare, Plus, Info, Check
 } from 'lucide-react';
+import { toast } from 'sonner';
 import { ToolDef, getRelatedTools, QUICK_TOOLS, CATEGORIES } from '@/lib/toolsRegistry';
 import { SEO_TOOLS_CONTENT } from '@/lib/seoToolsContent';
 import { AdBannerMiddle } from '@/components/AdBanners';
+import { trackFavoriteToggle, trackToolUsage, trackDownload } from '@/lib/analytics';
 
 interface ToolWrapperProps {
     tool: ToolDef;
@@ -26,7 +29,24 @@ const ICON_MAP: Record<string, any> = {
 export default function ToolWrapper({ tool, children }: ToolWrapperProps) {
     const [recentlyUsed, setRecentlyUsed] = useState<ToolDef[]>([]);
     const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
-    
+    const [isFavourited, setIsFavourited] = useState(false);
+    const [feedbackOpen, setFeedbackOpen] = useState(false);
+    const [feedbackText, setFeedbackText] = useState('');
+    const [feedbackType, setFeedbackType] = useState<'feedback' | 'suggest'>('feedback');
+    const [feedbackEmail, setFeedbackEmail] = useState('');
+
+    // Track usage in Google Analytics
+    useEffect(() => {
+        trackToolUsage(tool.slug, tool.name);
+    }, [tool.slug, tool.name]);
+
+    // Check favourite state on mount
+    useEffect(() => {
+        const favs = localStorage.getItem('favourite_tools');
+        const list: string[] = favs ? JSON.parse(favs) : [];
+        setIsFavourited(list.includes(tool.slug));
+    }, [tool.slug]);
+
     // Track Recently Used Tools in localStorage
     useEffect(() => {
         const stored = localStorage.getItem('recently_used_tools');
@@ -44,12 +64,130 @@ export default function ToolWrapper({ tool, children }: ToolWrapperProps) {
         setRecentlyUsed(mapped);
     }, [tool.slug]);
 
+    const toggleFavourite = () => {
+        const favs = localStorage.getItem('favourite_tools');
+        let list: string[] = favs ? JSON.parse(favs) : [];
+        const nextState = !isFavourited;
+        if (nextState) {
+            list.push(tool.slug);
+            toast.success(`Added ${tool.name} to Favourites!`);
+        } else {
+            list = list.filter(slug => slug !== tool.slug);
+            toast.success(`Removed ${tool.name} from Favourites.`);
+        }
+        localStorage.setItem('favourite_tools', JSON.stringify(list));
+        setIsFavourited(nextState);
+        trackFavoriteToggle(tool.slug, nextState);
+        
+        // Dispatch custom event to sync favorites count across app
+        window.dispatchEvent(new Event('favourites-updated'));
+    };
+
+    const handleCopyLink = () => {
+        if (typeof window !== 'undefined') {
+            navigator.clipboard.writeText(window.location.href);
+            toast.success('Link copied to clipboard!');
+        }
+    };
+
+    const handleShare = async () => {
+        if (typeof navigator !== 'undefined' && navigator.share) {
+            try {
+                await navigator.share({
+                    title: `${tool.name} - ToolVista`,
+                    text: tool.description,
+                    url: window.location.href
+                });
+            } catch (e) {
+                handleCopyLink();
+            }
+        } else {
+            handleCopyLink();
+        }
+    };
+
+    const handleFeedbackSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!feedbackText.trim()) return;
+        
+        toast.success(
+            feedbackType === 'feedback' 
+                ? 'Thank you for your feedback! Our engineers will review it.' 
+                : 'Thank you for your suggestion! We will notify you when it is built.'
+        );
+        setFeedbackText('');
+        setFeedbackEmail('');
+        setFeedbackOpen(false);
+    };
+
     const related = getRelatedTools(tool, 3);
     const CategoryIcon = tool.category === 'Image Tools' ? ImageIcon : FileText;
     const seoData = SEO_TOOLS_CONTENT[tool.slug];
 
+    // JSON-LD schema objects
+    const siteUrl = "https://visualizemydata.in";
+    
+    const webAppSchema = {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": tool.name,
+        "url": `${siteUrl}/tools/${tool.slug}`,
+        "description": tool.description,
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Requires HTML5.",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    };
+
+    const breadcrumbSchema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": siteUrl
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Tools",
+                "item": `${siteUrl}/tools`
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": tool.name,
+                "item": `${siteUrl}/tools/${tool.slug}`
+            }
+        ]
+    };
+
+    const faqSchema = seoData?.faqs && seoData.faqs.length > 0 ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": seoData.faqs.map((faq: { question: string; answer: string }) => ({
+            "@type": "Question",
+            "name": faq.question,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.answer
+            }
+        }))
+    } : null;
+
     return (
         <div style={{ minHeight: '100vh', background: 'var(--bg-primary)', color: 'var(--text-primary)', paddingBottom: 80 }}>
+            {/* Inline JSON-LD schemas */}
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+            {faqSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />}
+
             {/* Header / Breadcrumbs */}
             <div style={{ borderBottom: '1px solid var(--border-subtle)', background: 'rgba(2, 8, 23, 0.4)', backdropFilter: 'blur(10px)', padding: '24px 0' }}>
                 <div className="container">
@@ -73,6 +211,13 @@ export default function ToolWrapper({ tool, children }: ToolWrapperProps) {
                         <h1 style={{ fontFamily: 'var(--font-manrope)', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)', fontWeight: 900, margin: 0, color: 'var(--text-primary)' }}>
                             {tool.name}
                         </h1>
+                        <button 
+                            onClick={toggleFavourite} 
+                            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, display: 'flex', alignItems: 'center', color: isFavourited ? '#f59e0b' : 'var(--text-muted)', transition: 'all 0.2s' }}
+                            title={isFavourited ? "Remove from Favourites" : "Add to Favourites"}
+                        >
+                            <Star size={24} fill={isFavourited ? '#f59e0b' : 'none'} />
+                        </button>
                         <span style={{ fontSize: '0.65rem', fontWeight: 800, color: '#000', background: 'linear-gradient(135deg, #ba9eff, #8455ef)', padding: '3px 8px', borderRadius: 4, textTransform: 'uppercase' }}>
                             {tool.badge}
                         </span>
@@ -98,6 +243,26 @@ export default function ToolWrapper({ tool, children }: ToolWrapperProps) {
                             backdropFilter: 'blur(8px)'
                         }}>
                             {children}
+                        </div>
+
+                        {/* Tool Actions Row */}
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12, borderTop: '1px solid var(--border-subtle)', paddingTop: 16 }}>
+                            <div style={{ display: 'flex', gap: 8 }}>
+                                <button onClick={handleShare} className="btn-secondary" style={{ padding: '6px 12px', fontSize: '0.78rem', gap: 6, display: 'inline-flex', alignItems: 'center' }}>
+                                    <Share2 size={13} /> Share Tool
+                                </button>
+                                <button onClick={handleCopyLink} className="btn-secondary" style={{ padding: '6px 12px', fontSize: '0.78rem', gap: 6, display: 'inline-flex', alignItems: 'center' }}>
+                                    <Copy size={13} /> Copy Link
+                                </button>
+                            </div>
+                            <div style={{ display: 'flex', gap: 8 }}>
+                                <button onClick={() => { setFeedbackType('feedback'); setFeedbackOpen(true); }} className="btn-secondary" style={{ padding: '6px 12px', fontSize: '0.78rem', gap: 6, display: 'inline-flex', alignItems: 'center', borderColor: 'transparent', color: 'var(--text-muted)' }}>
+                                    <MessageSquare size={13} /> Feedback
+                                </button>
+                                <button onClick={() => { setFeedbackType('suggest'); setFeedbackOpen(true); }} className="btn-secondary" style={{ padding: '6px 12px', fontSize: '0.78rem', gap: 6, display: 'inline-flex', alignItems: 'center', borderColor: 'transparent', color: 'var(--text-muted)' }}>
+                                    <Plus size={13} /> Suggest a Tool
+                                </button>
+                            </div>
                         </div>
 
                         {/* Local execution notice */}
@@ -225,6 +390,28 @@ export default function ToolWrapper({ tool, children }: ToolWrapperProps) {
                                         </div>
                                     </div>
                                 )}
+
+                                {/* People Also Use / Continue Exploring */}
+                                <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: 32, marginTop: 16 }}>
+                                    <h3 style={{ ...seoSectionTitleStyle, display: 'flex', alignItems: 'center', gap: 8 }}>
+                                        <Sparkles size={16} color="var(--accent-primary)" /> People Also Use
+                                    </h3>
+                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }} className="explore-grid">
+                                        {related.map(t => (
+                                            <Link key={t.slug} href={`/tools/${t.slug}`} style={{ textDecoration: 'none' }}>
+                                                <div className="glass-card popular-tool-card" style={{ padding: 16, height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', background: 'rgba(23, 26, 30, 0.3)', border: '1px solid var(--border-subtle)', borderRadius: 12 }}>
+                                                    <div>
+                                                        <h4 style={{ margin: '0 0 6px', fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-primary)' }}>{t.name}</h4>
+                                                        <p style={{ margin: 0, fontSize: '0.72rem', color: 'var(--text-secondary)', lineHeight: 1.4 }}>{t.description.slice(0, 75)}...</p>
+                                                    </div>
+                                                    <span style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: '0.7rem', fontWeight: 600, color: 'var(--accent-primary)', marginTop: 12 }}>
+                                                        Open Tool <ArrowRight size={10} />
+                                                    </span>
+                                                </div>
+                                            </Link>
+                                        ))}
+                                    </div>
+                                </div>
                             </div>
                         )}
                     </div>
@@ -236,10 +423,12 @@ export default function ToolWrapper({ tool, children }: ToolWrapperProps) {
                         <div style={sidebarCardStyle}>
                             <h4 style={sidebarTitleStyle}>🔒 Privacy Guarantee</h4>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                                <PrivacyItem text="Files never leave your device" />
+                                <PrivacyItem text="Files never leave your browser" />
                                 <PrivacyItem text="No login required" />
                                 <PrivacyItem text="No database required" />
                                 <PrivacyItem text="100% browser-based" />
+                                <PrivacyItem text="Privacy first guarantee" />
+                                <PrivacyItem text="Zero data tracking logs" />
                             </div>
                         </div>
 
@@ -292,6 +481,49 @@ export default function ToolWrapper({ tool, children }: ToolWrapperProps) {
                 </div>
             </div>
 
+            {/* Feedback & Suggestion Modal */}
+            {feedbackOpen && (
+                <div style={{ position: 'fixed', inset: 0, zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(2, 8, 23, 0.75)', backdropFilter: 'blur(8px)' }}>
+                    <div style={{ width: '90%', maxWidth: '440px', background: 'rgba(10,18,36,0.95)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 20, padding: 24, boxShadow: '0 20px 50px rgba(0,0,0,0.6)', color: 'var(--text-primary)' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+                            <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 800 }}>
+                                {feedbackType === 'feedback' ? '💡 Share Feedback' : '🚀 Suggest a New Tool'}
+                            </h3>
+                            <button onClick={() => setFeedbackOpen(false)} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontSize: '1.2rem' }}>×</button>
+                        </div>
+                        <form onSubmit={handleFeedbackSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                            <div>
+                                <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: 6 }}>Email (Optional)</label>
+                                <input 
+                                    type="email" 
+                                    value={feedbackEmail} 
+                                    onChange={(e) => setFeedbackEmail(e.target.value)} 
+                                    placeholder="your@email.com" 
+                                    style={{ width: '100%', padding: '8px 12px', borderRadius: 8, background: 'var(--bg-secondary)', border: '1px solid var(--border-subtle)', color: 'var(--text-primary)', fontSize: '0.85rem', outline: 'none' }}
+                                />
+                            </div>
+                            <div>
+                                <label style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: 6 }}>
+                                    {feedbackType === 'feedback' ? 'What can we improve?' : 'What tool should we build next?'}
+                                </label>
+                                <textarea 
+                                    rows={4} 
+                                    required 
+                                    value={feedbackText} 
+                                    onChange={(e) => setFeedbackText(e.target.value)} 
+                                    placeholder={feedbackType === 'feedback' ? "Tell us what you think..." : "Describe the tool, its features, and how it works..."} 
+                                    style={{ width: '100%', padding: '8px 12px', borderRadius: 8, background: 'var(--bg-secondary)', border: '1px solid var(--border-subtle)', color: 'var(--text-primary)', fontSize: '0.85rem', outline: 'none', resize: 'vertical' }}
+                                />
+                            </div>
+                            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10, marginTop: 6 }}>
+                                <button type="button" onClick={() => setFeedbackOpen(false)} className="btn-secondary" style={{ padding: '8px 16px', fontSize: '0.8rem' }}>Cancel</button>
+                                <button type="submit" className="btn-primary" style={{ padding: '8px 20px', fontSize: '0.8rem', color: '#000' }}>Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+
             <style>{`
                 @media (max-width: 900px) {
                     .tool-layout-grid {
@@ -305,6 +537,10 @@ export default function ToolWrapper({ tool, children }: ToolWrapperProps) {
                     .features-grid {
                         grid-template-columns: 1fr !important;
                         gap: 16px !important;
+                    }
+                    .explore-grid {
+                        grid-template-columns: 1fr !important;
+                        gap: 12px !important;
                     }
                 }
             `}</style>

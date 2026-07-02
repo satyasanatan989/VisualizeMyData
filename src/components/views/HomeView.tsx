@@ -9,6 +9,7 @@ import ScrollReveal from '@/components/ScrollReveal';
 import Link from 'next/link';
 import { toast } from 'sonner';
 import { AdBannerTop, AdBannerMiddle, AdBannerBottom } from '@/components/AdBanners';
+import { trackSearchQuery, trackThemeToggle, trackGAEvent, trackFavoriteToggle, trackToolUsage } from '@/lib/analytics';
 import { QUICK_TOOLS } from '@/lib/toolsRegistry';
 import { 
   Search, Image as ImageIcon, FileText, Layout, Code, Calculator, Hash, 
@@ -239,13 +240,13 @@ export default function HomePage() {
   // Load local storage states on client render
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const storedRecent = localStorage.getItem('recently-used-tools');
+      const storedRecent = localStorage.getItem('recently_used_tools');
       if (storedRecent) setRecentTools(JSON.parse(storedRecent));
 
-      const storedFaves = localStorage.getItem('favourite-tools');
+      const storedFaves = localStorage.getItem('favourite_tools');
       if (storedFaves) setFaves(JSON.parse(storedFaves));
 
-      const storedDashes = localStorage.getItem('recent-dashboards');
+      const storedDashes = localStorage.getItem('recent_dashboards');
       if (storedDashes) setRecentDashes(JSON.parse(storedDashes));
 
       const storedTheme = localStorage.getItem('theme-preference');
@@ -255,10 +256,31 @@ export default function HomePage() {
     }
   }, []);
 
+  // Listen to cross-page updates for favourites
+  useEffect(() => {
+    const handleFavsUpdate = () => {
+      const storedFaves = localStorage.getItem('favourite_tools');
+      if (storedFaves) setFaves(JSON.parse(storedFaves));
+    };
+    window.addEventListener('favourites-updated', handleFavsUpdate);
+    return () => window.removeEventListener('favourites-updated', handleFavsUpdate);
+  }, []);
+
+  // Debounced search queries tracker
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (searchQuery.trim()) {
+        trackSearchQuery(searchQuery);
+      }
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
   const handleToggleTheme = () => {
     const nextDark = !darkMode;
     setDarkMode(nextDark);
     localStorage.setItem('theme-preference', nextDark ? 'dark' : 'light');
+    trackThemeToggle(nextDark ? 'dark' : 'light');
   };
 
   const toggleFave = (e: React.MouseEvent, slug: string) => {
@@ -266,14 +288,22 @@ export default function HomePage() {
     e.stopPropagation();
     const updated = faves.includes(slug) ? faves.filter(s => s !== slug) : [...faves, slug];
     setFaves(updated);
-    localStorage.setItem('favourite-tools', JSON.stringify(updated));
-    toast.success(faves.includes(slug) ? 'Removed from favourites' : 'Added to favourites!');
+    localStorage.setItem('favourite_tools', JSON.stringify(updated));
+    const nextIsFav = !faves.includes(slug);
+    toast.success(nextIsFav ? 'Added to favourites!' : 'Removed from favourites');
+    trackFavoriteToggle(slug, nextIsFav);
   };
 
   const trackClick = (slug: string) => {
     const updated = [slug, ...recentTools.filter(s => s !== slug)].slice(0, 5);
     setRecentTools(updated);
-    localStorage.setItem('recently-used-tools', JSON.stringify(updated));
+    localStorage.setItem('recently_used_tools', JSON.stringify(updated));
+    
+    // Track usage in GA
+    const toolDef = allCombinedTools.find(t => t.slug === slug);
+    if (toolDef) {
+      trackToolUsage(slug, toolDef.name);
+    }
   };
 
   // Combine all tools (29 quick + 6 core data tools)
@@ -352,13 +382,13 @@ export default function HomePage() {
           </div>
           
           {/* Headline */}
-          <h1 style={{ fontFamily: 'var(--font-manrope)', fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 800, letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: 16, background: 'linear-gradient(135deg, #f8f9fe 30%, #ba9eff 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-            ToolVista
+          <h1 style={{ fontFamily: 'var(--font-manrope)', fontSize: 'clamp(2.25rem, 5.5vw, 4rem)', fontWeight: 800, letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: 16, background: 'linear-gradient(135deg, #f8f9fe 30%, #ba9eff 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+            Instantly Visualize Data & Solve Everyday PDF, Image & Dev Tasks Offline
           </h1>
           
           {/* Subtext */}
-          <p style={{ color: 'var(--text-secondary)', fontSize: 'clamp(0.95rem, 2.5vw, 1.1rem)', lineHeight: 1.6, maxWidth: 580, margin: '0 auto 32px' }}>
-            Free, fast, and 100% client-side web tools. Complete your image, PDF, text, and coding tasks directly in your browser with absolute privacy.
+          <p style={{ color: 'var(--text-secondary)', fontSize: 'clamp(0.95rem, 2.2vw, 1.05rem)', lineHeight: 1.6, maxWidth: 680, margin: '0 auto 32px' }}>
+            An offline-first platform featuring premium browser calculators, e-signatures, invoice builders, image beautifiers, and dynamic data visualizers. No logins, no databases, 100% secure.
           </p>
 
           {/* Search bar */}

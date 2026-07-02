@@ -87,6 +87,12 @@ export const metadata: Metadata = {
   alternates: {
     canonical: siteUrl,
   },
+  manifest: "/manifest.json",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 const jsonLd = {
@@ -128,10 +134,11 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <script
+        <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9327674045083855"
           crossOrigin="anonymous"
+          strategy="afterInteractive"
         />
         <Toaster position="top-center" richColors theme="dark" closeButton duration={3000} />
         <PageTransition>
