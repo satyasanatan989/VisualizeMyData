@@ -142,13 +142,18 @@ export default function QuickToolsSection() {
 function HomepageToolCard({ tool }: { tool: ToolDef }) {
     const CategoryIcon = tool.category === 'Image Tools' ? ImageIcon : FileText;
     
-    const colors = {
+    const categoryColors: Record<string, { bg: string; border: string; text: string }> = {
         'Image Tools': { bg: 'rgba(236,72,153,0.06)', border: 'rgba(236,72,153,0.15)', text: '#ec4899' },
         'PDF Tools': { bg: 'rgba(239,68,68,0.06)', border: 'rgba(239,68,68,0.15)', text: '#ef4444' },
         'Text Tools': { bg: 'rgba(245,158,11,0.06)', border: 'rgba(245,158,11,0.15)', text: '#f59e0b' },
         'Developer Tools': { bg: 'rgba(16,185,129,0.06)', border: 'rgba(16,185,129,0.15)', text: '#10b981' },
-        'Utility Tools': { bg: 'rgba(59,130,246,0.06)', border: 'rgba(59,130,246,0.15)', text: '#3b82f6' }
-    }[tool.category];
+        'Utility Tools': { bg: 'rgba(59,130,246,0.06)', border: 'rgba(59,130,246,0.15)', text: '#3b82f6' },
+        'Student Tools': { bg: 'rgba(99,102,241,0.06)', border: 'rgba(99,102,241,0.15)', text: '#6366f1' },
+        'Business Tools': { bg: 'rgba(244,63,94,0.06)', border: 'rgba(244,63,94,0.15)', text: '#f43f5e' },
+        'Food Technology': { bg: 'rgba(139,92,246,0.06)', border: 'rgba(139,92,246,0.15)', text: '#8b5cf6' },
+        'Shareable Tools': { bg: 'rgba(14,165,233,0.06)', border: 'rgba(14,165,233,0.15)', text: '#0ea5e9' }
+    };
+    const colors = categoryColors[tool.category] || { bg: 'rgba(255,255,255,0.02)', border: 'var(--border-subtle)', text: 'var(--text-secondary)' };
 
     return (
         <Link href={`/tools/${tool.slug}`} style={{ textDecoration: 'none' }}>

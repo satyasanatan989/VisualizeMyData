@@ -132,7 +132,7 @@ export default function ToolWrapper({ tool, children }: ToolWrapperProps) {
                                     <div style={seoInnerCardStyle}>
                                         <h3 style={seoSubTitleStyle}>Key Features</h3>
                                         <ul style={{ paddingLeft: 18, margin: 0, color: 'var(--text-secondary)', fontSize: '0.82rem', lineHeight: 1.7 }}>
-                                            {seoData.features.map((feat, idx) => (
+                                            {seoData.features.map((feat: string, idx: number) => (
                                                 <li key={idx} style={{ marginBottom: 6 }}>{feat}</li>
                                             ))}
                                         </ul>
@@ -148,7 +148,7 @@ export default function ToolWrapper({ tool, children }: ToolWrapperProps) {
                                 <div style={seoSectionStyle}>
                                     <h2 style={seoSectionTitleStyle}>Common Use Cases</h2>
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                                        {seoData.useCases.map((useCase, idx) => (
+                                        {seoData.useCases.map((useCase: string, idx: number) => (
                                             <div key={idx} style={{ display: 'flex', gap: 8, alignItems: 'flex-start', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
                                                 <span style={{ color: 'var(--accent-primary)', fontWeight: 'bold' }}>•</span>
                                                 <span style={{ lineHeight: 1.4 }}>{useCase}</span>
@@ -162,7 +162,7 @@ export default function ToolWrapper({ tool, children }: ToolWrapperProps) {
                                     <div style={seoSectionStyle}>
                                         <h2 style={seoSectionTitleStyle}>Frequently Asked Questions</h2>
                                         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                                            {seoData.faqs.map((faq, idx) => {
+                                            {seoData.faqs.map((faq: { question: string; answer: string }, idx: number) => {
                                                 const isOpen = openFaqIndex === idx;
                                                 return (
                                                     <div 

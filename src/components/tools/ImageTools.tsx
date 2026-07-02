@@ -822,3 +822,425 @@ const btnOptionActiveStyle: React.CSSProperties = {
     border: '1px solid rgba(186,158,255,0.3)',
     color: '#ba9eff',
 };
+
+// Helper style declarations for new tools
+const dropzoneStyleNew = (active: boolean): React.CSSProperties => ({
+    border: '2px dashed var(--border-subtle)',
+    borderRadius: 16,
+    padding: 32,
+    textAlign: 'center',
+    background: active ? 'rgba(132, 85, 239, 0.05)' : 'rgba(255,255,255,0.01)',
+    cursor: 'pointer',
+    transition: 'all 0.2s',
+});
+
+const labelStyle: React.CSSProperties = {
+    display: 'block',
+    fontSize: '0.82rem',
+    fontWeight: 600,
+    color: 'var(--text-secondary)',
+    marginBottom: 8
+};
+
+const grid2Style: React.CSSProperties = {
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: 16
+};
+
+// 9. Passport Photo Maker
+export function PassportPhotoMaker() {
+    const [image, setImage] = useState<HTMLImageElement | null>(null);
+    const [size, setSize] = useState<'2x2' | '35x45'>('2x2');
+    const [scale, setScale] = useState(100);
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+
+    const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+            const img = new Image();
+            img.onload = () => setImage(img);
+            img.src = reader.result as string;
+        };
+        reader.readAsDataURL(file);
+    };
+
+    const drawPhoto = () => {
+        if (!image || !canvasRef.current) return;
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        const width = size === '2x2' ? 600 : 413;
+        const height = size === '2x2' ? 600 : 531;
+
+        canvas.width = width;
+        canvas.height = height;
+
+        ctx.clearRect(0, 0, width, height);
+
+        const s = scale / 100;
+        const drawWidth = image.width * s;
+        const drawHeight = image.height * s;
+        const x = (width - drawWidth) / 2;
+        const y = (height - drawHeight) / 2;
+
+        ctx.drawImage(image, x, y, drawWidth, drawHeight);
+
+        ctx.strokeStyle = 'rgba(239, 68, 68, 0.4)';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([5, 5]);
+        ctx.beginPath();
+        ctx.ellipse(width / 2, height * 0.45, width * 0.25, height * 0.3, 0, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+    };
+
+    useEffect(() => {
+        drawPhoto();
+    }, [image, size, scale]);
+
+    const handleDownload = () => {
+        if (!canvasRef.current) return;
+        const link = document.createElement('a');
+        link.href = canvasRef.current.toDataURL('image/png');
+        link.download = `passport_photo_${size}.png`;
+        link.click();
+        toast.success('Downloaded passport photo!');
+    };
+
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <div style={cardStyle}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                    <div>
+                        <label style={labelStyle}>Select Image File</label>
+                        <input type="file" accept="image/*" onChange={handleFile} style={inputStyle} />
+                    </div>
+                    <div style={grid2Style}>
+                        <div>
+                            <label style={labelStyle}>Standard Ratio Size</label>
+                            <select value={size} onChange={(e) => setSize(e.target.value as any)} style={{ ...inputStyle, background: 'var(--bg-secondary)' }}>
+                                <option value="2x2">US Standard (2x2 Inches)</option>
+                                <option value="35x45">EU Standard (35x45 mm)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style={labelStyle}>Zoom Scale: {scale}%</label>
+                            <input type="range" min="20" max="200" value={scale} onChange={(e) => setScale(parseInt(e.target.value))} style={{ width: '100%', accentColor: 'var(--accent-primary)' }} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {image && (
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14 }}>
+                    <div style={{ position: 'relative', border: '1px solid var(--border-subtle)', borderRadius: 12, overflow: 'hidden' }}>
+                        <canvas ref={canvasRef} style={{ display: 'block', maxWidth: '240px', height: 'auto', background: '#fff' }} />
+                    </div>
+                    <button onClick={handleDownload} className="btn-primary" style={{ width: '100%', maxWidth: 260 }}>
+                        <Download size={14} style={{ marginRight: 6 }} /> Download Photo PNG
+                    </button>
+                </div>
+            )}
+        </div>
+    );
+}
+
+// 10. Screenshot Beautifier
+export function ScreenshotBeautifier() {
+    const [image, setImage] = useState<HTMLImageElement | null>(null);
+    const [padding, setPadding] = useState(40);
+    const [radius, setRadius] = useState(12);
+    const [shadow, setShadow] = useState(15);
+    const [gradient, setGradient] = useState('sunset');
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+
+    const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+            const img = new Image();
+            img.onload = () => setImage(img);
+            img.src = reader.result as string;
+        };
+        reader.readAsDataURL(file);
+    };
+
+    const drawBeautified = () => {
+        if (!image || !canvasRef.current) return;
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        const w = image.width + padding * 2;
+        const h = image.height + padding * 2;
+
+        canvas.width = w;
+        canvas.height = h;
+
+        const grad = ctx.createLinearGradient(0, 0, w, h);
+        if (gradient === 'sunset') {
+            grad.addColorStop(0, '#f97316');
+            grad.addColorStop(1, '#ec4899');
+        } else if (gradient === 'ocean') {
+            grad.addColorStop(0, '#0ea5e9');
+            grad.addColorStop(1, '#10b981');
+        } else if (gradient === 'purple') {
+            grad.addColorStop(0, '#8455ef');
+            grad.addColorStop(1, '#ec4899');
+        } else {
+            grad.addColorStop(0, '#0f172a');
+            grad.addColorStop(1, '#334155');
+        }
+
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, w, h);
+
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
+        ctx.shadowBlur = shadow;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 4;
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.roundRect(padding, padding, image.width, image.height, radius);
+        ctx.clip();
+        ctx.drawImage(image, padding, padding);
+        ctx.restore();
+    };
+
+    useEffect(() => {
+        drawBeautified();
+    }, [image, padding, radius, shadow, gradient]);
+
+    const handleDownload = () => {
+        if (!canvasRef.current) return;
+        const link = document.createElement('a');
+        link.href = canvasRef.current.toDataURL('image/png');
+        link.download = 'screenshot_beautified.png';
+        link.click();
+        toast.success('Downloaded beautified screenshot!');
+    };
+
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <div style={cardStyle}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                    <div>
+                        <label style={labelStyle}>Upload Screenshot</label>
+                        <input type="file" accept="image/*" onChange={handleFile} style={inputStyle} />
+                    </div>
+                    {image && (
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                            <div>
+                                <label style={labelStyle}>Frame Padding: {padding}px</label>
+                                <input type="range" min="10" max="80" value={padding} onChange={(e) => setPadding(parseInt(e.target.value))} style={{ width: '100%', accentColor: 'var(--accent-primary)' }} />
+                            </div>
+                            <div>
+                                <label style={labelStyle}>Rounded Corners: {radius}px</label>
+                                <input type="range" min="0" max="30" value={radius} onChange={(e) => setRadius(parseInt(e.target.value))} style={{ width: '100%', accentColor: 'var(--accent-primary)' }} />
+                            </div>
+                        </div>
+                    )}
+                    {image && (
+                        <div style={grid2Style}>
+                            <div>
+                                <label style={labelStyle}>Gradient Background Theme</label>
+                                <select value={gradient} onChange={(e) => setGradient(e.target.value)} style={{ ...inputStyle, background: 'var(--bg-secondary)' }}>
+                                    <option value="sunset">Sunset (Orange/Pink)</option>
+                                    <option value="ocean">Ocean (Blue/Green)</option>
+                                    <option value="purple">Dreamy Purple (Violet/Pink)</option>
+                                    <option value="slate">Minimalist Slate (Dark Grey)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label style={labelStyle}>Shadow Depth: {shadow}px</label>
+                                <input type="range" min="0" max="40" value={shadow} onChange={(e) => setShadow(parseInt(e.target.value))} style={{ width: '100%', accentColor: 'var(--accent-primary)' }} />
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </div>
+
+            {image && (
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14 }}>
+                    <canvas ref={canvasRef} style={{ border: '1px solid var(--border-subtle)', borderRadius: 12, maxWidth: '100%', height: 'auto', display: 'block', background: '#000' }} />
+                    <button onClick={handleDownload} className="btn-primary" style={{ width: '100%', maxWidth: 260 }}>
+                        <Download size={14} style={{ marginRight: 6 }} /> Download Beautified Image
+                    </button>
+                </div>
+            )}
+        </div>
+    );
+}
+
+// 11. Favicon Generator
+export function FaviconGenerator() {
+    const [image, setImage] = useState<HTMLImageElement | null>(null);
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+
+    const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+            const img = new Image();
+            img.onload = () => setImage(img);
+            img.src = reader.result as string;
+        };
+        reader.readAsDataURL(file);
+    };
+
+    const downloadIcon = (size: number) => {
+        if (!image || !canvasRef.current) return;
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        canvas.width = size;
+        canvas.height = size;
+        ctx.clearRect(0, 0, size, size);
+        ctx.drawImage(image, 0, 0, size, size);
+
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL('image/png');
+        link.download = `favicon-${size}x${size}.png`;
+        link.click();
+        toast.success(`Downloaded ${size}x${size} icon!`);
+    };
+
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <div style={cardStyle}>
+                <label style={labelStyle}>Upload Base Icon Image</label>
+                <input type="file" accept="image/*" onChange={handleFile} style={inputStyle} />
+            </div>
+
+            {image && (
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20 }}>
+                    <canvas ref={canvasRef} style={{ display: 'none' }} />
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 14, width: '100%' }}>
+                        {[16, 32, 192, 512].map(size => (
+                            <div key={size} style={{ ...cardStyle, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
+                                <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-secondary)' }}>{size} × {size}</span>
+                                <div style={{ width: size > 48 ? 48 : size, height: size > 48 ? 48 : size, overflow: 'hidden', border: '1px solid var(--border-subtle)', background: '#fff' }}>
+                                    <img src={image.src} style={{ width: '100%', height: '100%', objectFit: 'contain' }} alt="favicon" />
+                                </div>
+                                <button onClick={() => downloadIcon(size)} className="btn-secondary" style={{ width: '100%', fontSize: '0.75rem', padding: '6px 0' }}>
+                                    Download
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+}
+
+// 12. Color Palette Extractor
+export function ColorPaletteExtractor() {
+    const [imageSrc, setImageSrc] = useState<string>('');
+    const [colors, setColors] = useState<string[]>([]);
+    const imageRef = useRef<HTMLImageElement>(null);
+
+    const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+            setImageSrc(reader.result as string);
+            setColors([]);
+        };
+        reader.readAsDataURL(file);
+    };
+
+    const extractColors = () => {
+        const img = imageRef.current;
+        if (!img) return;
+
+        const canvas = document.createElement('canvas');
+        canvas.width = 100;
+        canvas.height = 100;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        ctx.drawImage(img, 0, 0, 100, 100);
+        const data = ctx.getImageData(0, 0, 100, 100).data;
+
+        const colorCounts: Record<string, number> = {};
+
+        const rgbToHex = (r: number, g: number, b: number) => {
+            const clamp = (val: number) => Math.max(0, Math.min(255, val));
+            const round = (val: number) => Math.round(val / 15) * 15;
+            const rh = clamp(round(r)).toString(16).padStart(2, '0');
+            const gh = clamp(round(g)).toString(16).padStart(2, '0');
+            const bh = clamp(round(b)).toString(16).padStart(2, '0');
+            return `#${rh}${gh}${bh}`;
+        };
+
+        for (let i = 0; i < data.length; i += 40) {
+            const r = data[i];
+            const g = data[i + 1];
+            const b = data[i + 2];
+            const hex = rgbToHex(r, g, b);
+            colorCounts[hex] = (colorCounts[hex] || 0) + 1;
+        }
+
+        const sortedColors = Object.keys(colorCounts)
+            .sort((a, b) => colorCounts[b] - colorCounts[a])
+            .slice(0, 6);
+
+        setColors(sortedColors);
+        toast.success('Successfully extracted dominant color palette!');
+    };
+
+    const copyToClipboard = (hex: string) => {
+        navigator.clipboard.writeText(hex);
+        toast.success(`Copied: ${hex}`);
+    };
+
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <div style={cardStyle}>
+                <label style={labelStyle}>Upload Image for Palette Extraction</label>
+                <input type="file" accept="image/*" onChange={handleFile} style={inputStyle} />
+            </div>
+
+            {imageSrc && (
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20 }}>
+                    <img 
+                        ref={imageRef} 
+                        src={imageSrc} 
+                        onLoad={extractColors} 
+                        style={{ maxWidth: '100%', maxHeight: '200px', borderRadius: 12, border: '1px solid var(--border-subtle)' }} 
+                        alt="source"
+                    />
+
+                    {colors.length > 0 && (
+                        <div style={cardStyle}>
+                            <h3 style={{ margin: '0 0 16px', fontSize: '0.9rem', color: 'var(--text-primary)', textAlign: 'center' }}>Dominant Colors</h3>
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12 }}>
+                                {colors.map(color => (
+                                    <div 
+                                        key={color} 
+                                        onClick={() => copyToClipboard(color)}
+                                        style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer', gap: 6 }}
+                                    >
+                                        <div style={{ width: '100%', height: 48, borderRadius: 8, background: color, border: '1px solid rgba(255,255,255,0.08)' }} />
+                                        <span style={{ fontSize: '0.72rem', fontFamily: 'monospace', fontWeight: 'bold' }}>{color.toUpperCase()}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            )}
+        </div>
+    );
+}
+

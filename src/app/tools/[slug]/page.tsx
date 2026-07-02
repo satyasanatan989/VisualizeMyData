@@ -97,7 +97,7 @@ export default async function ToolSlugPage({ params }: { params: Promise<Params>
     const faqSchema = seoData?.faqs && seoData.faqs.length > 0 ? {
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
-        'mainEntity': seoData.faqs.map(faq => ({
+        'mainEntity': seoData.faqs.map((faq: { question: string; answer: string }) => ({
             '@type': 'Question',
             'name': faq.question,
             'acceptedAnswer': {

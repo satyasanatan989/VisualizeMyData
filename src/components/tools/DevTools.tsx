@@ -652,3 +652,358 @@ const indentedStyle: React.CSSProperties = {
     paddingLeft: 14,
     borderLeft: '1px dashed rgba(255,255,255,0.08)',
 };
+
+const grid2Style: React.CSSProperties = {
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: 16,
+};
+
+// 7. UUID Generator
+export function UuidGenerator() {
+    const [version, setVersion] = useState<'v4' | 'v1'>('v4');
+    const [qty, setQty] = useState(5);
+    const [uuids, setUuids] = useState<string[]>([]);
+    const [copied, setCopied] = useState(false);
+
+    const generateUUIDs = () => {
+        const list: string[] = [];
+        for (let i = 0; i < qty; i++) {
+            if (version === 'v4') {
+                if (typeof window !== 'undefined' && window.crypto && window.crypto.randomUUID) {
+                    list.push(window.crypto.randomUUID());
+                } else {
+                    const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+                        const r = (Math.random() * 16) | 0;
+                        const v = c === 'x' ? r : (r & 0x3) | 0x8;
+                        return v.toString(16);
+                    });
+                    list.push(uuid);
+                }
+            } else {
+                // Mock v1 UUID (timestamp-based)
+                const now = Date.now();
+                const uuid = `11ed${now.toString(16)}-xxxx-1xxx-yxxx-xxxxxxxxxxxx`.replace(/[xy]/g, (c) => {
+                    const r = (Math.random() * 16) | 0;
+                    const v = c === 'x' ? r : (r & 0x3) | 0x8;
+                    return v.toString(16);
+                });
+                list.push(uuid);
+            }
+        }
+        setUuids(list);
+        toast.success(`Generated ${qty} UUIDs!`);
+    };
+
+    useEffect(() => {
+        generateUUIDs();
+    }, [version]);
+
+    const handleCopy = () => {
+        if (uuids.length === 0) return;
+        navigator.clipboard.writeText(uuids.join('\n'));
+        setCopied(true);
+        toast.success('UUIDs copied to clipboard!');
+        setTimeout(() => setCopied(false), 2000);
+    };
+
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <div style={cardStyle}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr auto', gap: 12, alignItems: 'end' }}>
+                    <div>
+                        <label style={labelStyle}>UUID Version</label>
+                        <select value={version} onChange={(e) => setVersion(e.target.value as any)} style={selectStyle}>
+                            <option value="v4">UUID v4 (Random)</option>
+                            <option value="v1">UUID v1 (Timestamp)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style={labelStyle}>Quantity</label>
+                        <input type="number" min="1" max="100" value={qty} onChange={(e) => setQty(parseInt(e.target.value) || 1)} style={inputStyle} />
+                    </div>
+                    <button onClick={generateUUIDs} className="btn-primary" style={{ height: 42 }}>
+                        Generate
+                    </button>
+                </div>
+            </div>
+
+            {uuids.length > 0 && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                    <textarea 
+                        readOnly 
+                        value={uuids.join('\n')} 
+                        style={{ ...textareaStyle, height: 200, fontFamily: 'monospace' }} 
+                    />
+                    <button onClick={handleCopy} className="btn-secondary" style={{ width: '100%' }}>
+                        {copied ? <Check size={14} color="#10b981" /> : <Clipboard size={14} />} Copy UUIDs
+                    </button>
+                </div>
+            )}
+        </div>
+    );
+}
+
+// 8. JWT Decoder
+export function JwtDecoder() {
+    const [jwt, setJwt] = useState('');
+    const [header, setHeader] = useState('');
+    const [payload, setPayload] = useState('');
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (!jwt.trim()) {
+            setHeader('');
+            setPayload('');
+            setError(null);
+            return;
+        }
+
+        const parts = jwt.split('.');
+        if (parts.length !== 3) {
+            setError('Invalid JWT structure. It must consist of header, payload, and signature separated by dots.');
+            setHeader('');
+            setPayload('');
+            return;
+        }
+
+        try {
+            const decodePart = (part: string) => {
+                const normalized = part.replace(/-/g, '+').replace(/_/g, '/');
+                return JSON.stringify(JSON.parse(atob(normalized)), null, 2);
+            };
+
+            setHeader(decodePart(parts[0]));
+            setPayload(decodePart(parts[1]));
+            setError(null);
+        } catch (e: any) {
+            setError('Failed to base64 decode JWT. Please check if your token is valid.');
+            setHeader('');
+            setPayload('');
+        }
+    }, [jwt]);
+
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <div style={cardStyle}>
+                <label style={labelStyle}>Paste JSON Web Token (JWT)</label>
+                <textarea 
+                    value={jwt} 
+                    onChange={(e) => setJwt(e.target.value)} 
+                    placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    style={{ ...textareaStyle, height: 100 }}
+                />
+            </div>
+
+            {error && (
+                <div style={{ padding: '10px 14px', background: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.2)', borderRadius: 10, color: '#f87171', fontSize: '0.8rem' }}>
+                    <strong>Decoding Error:</strong> {error}
+                </div>
+            )}
+
+            {!error && payload && (
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}>
+                    <div>
+                        <label style={labelStyle}>Header (Algorithm & Token Type)</label>
+                        <textarea readOnly value={header} style={{ ...textareaStyle, height: 180, fontFamily: 'monospace', background: 'rgba(0,0,0,0.1)' }} />
+                    </div>
+                    <div>
+                        <label style={labelStyle}>Payload (Claims / Data)</label>
+                        <textarea readOnly value={payload} style={{ ...textareaStyle, height: 180, fontFamily: 'monospace', background: 'rgba(0,0,0,0.1)' }} />
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+}
+
+// 9. JSON Validator & Linter
+export function JsonValidator() {
+    const [input, setInput] = useState('');
+    const [status, setStatus] = useState<'idle' | 'valid' | 'invalid'>('idle');
+    const [errorMsg, setErrorMsg] = useState('');
+
+    const validate = () => {
+        if (!input.trim()) {
+            setStatus('idle');
+            setErrorMsg('');
+            return;
+        }
+        try {
+            JSON.parse(input);
+            setStatus('valid');
+            setErrorMsg('');
+        } catch (e: any) {
+            setStatus('invalid');
+            setErrorMsg(e.message || 'Invalid JSON syntax.');
+        }
+    };
+
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <div style={cardStyle}>
+                <label style={labelStyle}>Enter JSON to Validate</label>
+                <textarea 
+                    value={input} 
+                    onChange={(e) => setInput(e.target.value)} 
+                    placeholder='{"key": "value"}'
+                    style={{ ...textareaStyle, height: 220 }}
+                />
+            </div>
+            <button onClick={validate} className="btn-primary">Validate JSON</button>
+
+            {status === 'valid' && (
+                <div style={{ padding: '14px 20px', borderRadius: 12, background: 'rgba(16, 185, 129, 0.08)', border: '1px solid rgba(16, 185, 129, 0.2)', color: '#10b981', fontWeight: 600, textAlign: 'center' }}>
+                    ✓ Valid JSON Structure.
+                </div>
+            )}
+
+            {status === 'invalid' && (
+                <div style={{ padding: '14px 20px', borderRadius: 12, background: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.2)', color: '#f87171', fontSize: '0.85rem' }}>
+                    <strong>Invalid JSON syntax:</strong> {errorMsg}
+                </div>
+            )}
+        </div>
+    );
+}
+
+// 10. Regex Match Tester
+export function RegexTester() {
+    const [pattern, setPattern] = useState('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}');
+    const [flags, setFlags] = useState('g');
+    const [text, setText] = useState('Contact us at support@visualizemydata.in or sales@example.com for queries.');
+    const [matches, setMatches] = useState<string[]>([]);
+    const [error, setError] = useState<string | null>(null);
+
+    const testRegex = () => {
+        if (!pattern) {
+            setMatches([]);
+            setError(null);
+            return;
+        }
+        try {
+            const regex = new RegExp(pattern, flags);
+            const found = text.match(regex);
+            setMatches(found ? Array.from(found) : []);
+            setError(null);
+        } catch (e: any) {
+            setError(e.message || 'Invalid regular expression.');
+            setMatches([]);
+        }
+    };
+
+    useEffect(() => {
+        testRegex();
+    }, [pattern, flags, text]);
+
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <div style={cardStyle}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                    <div style={grid2Style}>
+                        <div>
+                            <label style={labelStyle}>Regex Pattern (Without slashes)</label>
+                            <input type="text" value={pattern} onChange={(e) => setPattern(e.target.value)} style={inputStyle} />
+                        </div>
+                        <div>
+                            <label style={labelStyle}>Flags</label>
+                            <input type="text" value={flags} onChange={(e) => setFlags(e.target.value)} placeholder="g, i, m" style={inputStyle} />
+                        </div>
+                    </div>
+                    <div>
+                        <label style={labelStyle}>Test Text</label>
+                        <textarea rows={4} value={text} onChange={(e) => setText(e.target.value)} style={inputStyle} />
+                    </div>
+                </div>
+            </div>
+
+            {error && (
+                <div style={{ padding: '10px 14px', background: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.2)', borderRadius: 10, color: '#f87171', fontSize: '0.8rem' }}>
+                    <strong>Regex Error:</strong> {error}
+                </div>
+            )}
+
+            {!error && (
+                <div style={cardStyle}>
+                    <h3 style={{ margin: '0 0 12px', fontSize: '0.9rem', color: 'var(--text-primary)' }}>Matches found: {matches.length}</h3>
+                    {matches.length === 0 ? (
+                        <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.82rem' }}>No matches found in text.</p>
+                    ) : (
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                            {matches.map((m, idx) => (
+                                <span key={idx} style={{ padding: '4px 10px', borderRadius: 8, background: 'rgba(132, 85, 239, 0.1)', border: '1px solid rgba(132, 85, 239, 0.2)', fontSize: '0.8rem', color: '#ba9eff', fontFamily: 'monospace' }}>
+                                    {m}
+                                </span>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            )}
+        </div>
+    );
+}
+
+// 11. Epoch Timestamp Converter
+export function TimestampConverter() {
+    const [epoch, setEpoch] = useState(Math.floor(Date.now() / 1000).toString());
+    const [localTime, setLocalTime] = useState('');
+    const [utcTime, setUtcTime] = useState('');
+    const [isoTime, setIsoTime] = useState('');
+
+    const convert = () => {
+        let val = parseInt(epoch) || 0;
+        // Detect milliseconds
+        if (epoch.length > 11) {
+            val = Math.floor(val / 1000);
+        }
+        try {
+            const date = new Date(val * 1000);
+            setLocalTime(date.toString());
+            setUtcTime(date.toUTCString());
+            setIsoTime(date.toISOString());
+        } catch (e) {}
+    };
+
+    useEffect(() => {
+        convert();
+    }, [epoch]);
+
+    const setNow = () => {
+        setEpoch(Math.floor(Date.now() / 1000).toString());
+    };
+
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            <div style={cardStyle}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                    <div>
+                        <label style={labelStyle}>Unix Epoch Timestamp (Seconds)</label>
+                        <div style={{ display: 'flex', gap: 10 }}>
+                            <input type="text" value={epoch} onChange={(e) => setEpoch(e.target.value)} style={inputStyle} />
+                            <button onClick={setNow} className="btn-secondary" style={{ whiteSpace: 'nowrap' }}>Current Time</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style={cardStyle}>
+                <h3 style={{ margin: '0 0 16px', fontSize: '1rem', color: 'var(--text-primary)' }}>Converted Timestamps</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                    <div>
+                        <span style={labelStyle}>ISO 8601 Format</span>
+                        <input type="text" readOnly value={isoTime} style={{ ...inputStyle, background: 'rgba(0,0,0,0.1)' }} />
+                    </div>
+                    <div>
+                        <span style={labelStyle}>Greenwich Mean Time (GMT / UTC)</span>
+                        <input type="text" readOnly value={utcTime} style={{ ...inputStyle, background: 'rgba(0,0,0,0.1)' }} />
+                    </div>
+                    <div>
+                        <span style={labelStyle}>Your Local Time Zone</span>
+                        <input type="text" readOnly value={localTime} style={{ ...inputStyle, background: 'rgba(0,0,0,0.1)' }} />
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+

@@ -2,7 +2,16 @@ export interface ToolDef {
     slug: string;
     name: string;
     description: string;
-    category: 'Image Tools' | 'PDF Tools' | 'Text Tools' | 'Developer Tools' | 'Utility Tools';
+    category:
+        | 'Image Tools'
+        | 'PDF Tools'
+        | 'Text Tools'
+        | 'Developer Tools'
+        | 'Utility Tools'
+        | 'Student Tools'
+        | 'Business Tools'
+        | 'Food Technology'
+        | 'Shareable Tools';
     icon: string; // Lucide icon string
     badge: 'NEW' | 'POPULAR' | 'FREE';
     isFeatured?: boolean;
@@ -76,6 +85,39 @@ export const QUICK_TOOLS: ToolDef[] = [
         category: 'Image Tools',
         icon: 'RotateCw',
         badge: 'FREE',
+    },
+    {
+        slug: 'passport-photo-maker',
+        name: 'Passport Photo Maker',
+        description: 'Crop and resize images to standard passport photo dimensions with guides.',
+        category: 'Image Tools',
+        icon: 'UserSquare',
+        badge: 'NEW',
+    },
+    {
+        slug: 'screenshot-beautifier',
+        name: 'Screenshot Beautifier',
+        description: 'Wrap your screenshots in premium gradient frames, shadows, and borders.',
+        category: 'Image Tools',
+        icon: 'Laptop',
+        badge: 'POPULAR',
+        isPopular: true,
+    },
+    {
+        slug: 'favicon-generator',
+        name: 'Favicon Generator',
+        description: 'Create multi-size favicons and web icons from any image upload.',
+        category: 'Image Tools',
+        icon: 'Globe',
+        badge: 'FREE',
+    },
+    {
+        slug: 'color-palette-extractor',
+        name: 'Color Palette Extractor',
+        description: 'Upload an image and instantly extract the dominant hex color palette.',
+        category: 'Image Tools',
+        icon: 'Palette',
+        badge: 'NEW',
     },
 
     // PDF Tools
@@ -208,6 +250,47 @@ export const QUICK_TOOLS: ToolDef[] = [
         icon: 'Globe',
         badge: 'FREE',
     },
+    {
+        slug: 'uuid-generator',
+        name: 'UUID Generator',
+        description: 'Generate standard v1 and v4 UUID tokens in bulk.',
+        category: 'Developer Tools',
+        icon: 'Key',
+        badge: 'NEW',
+    },
+    {
+        slug: 'jwt-decoder',
+        name: 'JWT Decoder',
+        description: 'Decode JWT headers and payloads client-side with signature status.',
+        category: 'Developer Tools',
+        icon: 'ShieldAlert',
+        badge: 'NEW',
+    },
+    {
+        slug: 'json-validator',
+        name: 'JSON Validator & Linter',
+        description: 'Validate and check JSON syntax with precise line error indicators.',
+        category: 'Developer Tools',
+        icon: 'CheckSquare',
+        badge: 'POPULAR',
+        isPopular: true,
+    },
+    {
+        slug: 'regex-tester',
+        name: 'Regex Match Tester',
+        description: 'Test Javascript regular expressions with live highlights and match groups.',
+        category: 'Developer Tools',
+        icon: 'Regex',
+        badge: 'FREE',
+    },
+    {
+        slug: 'timestamp-converter',
+        name: 'Epoch Timestamp Converter',
+        description: 'Convert Unix Epoch timestamps to ISO, UTC, and local time zones.',
+        category: 'Developer Tools',
+        icon: 'CalendarClock',
+        badge: 'FREE',
+    },
 
     // Utility Tools
     {
@@ -260,6 +343,272 @@ export const QUICK_TOOLS: ToolDef[] = [
         category: 'Utility Tools',
         icon: 'RefreshCw',
         badge: 'FREE',
+    },
+
+    // Student Tools
+    {
+        slug: 'attendance-calculator',
+        name: 'Attendance Calculator',
+        description: 'Calculate how many classes you can skip or need to attend to hit your attendance goal.',
+        category: 'Student Tools',
+        icon: 'CalendarCheck',
+        badge: 'POPULAR',
+        isPopular: true,
+    },
+    {
+        slug: 'cgpa-calculator',
+        name: 'CGPA Calculator',
+        description: 'Track and calculate your cumulative GPA across multiple semesters.',
+        category: 'Student Tools',
+        icon: 'GraduationCap',
+        badge: 'POPULAR',
+        isFeatured: true,
+        isPopular: true,
+    },
+    {
+        slug: 'gpa-converter',
+        name: 'GPA Converter',
+        description: 'Convert GPA grades between 4.0 scale, 10.0 scale, and percentage values.',
+        category: 'Student Tools',
+        icon: 'Percent',
+        badge: 'FREE',
+    },
+    {
+        slug: 'study-timer',
+        name: 'Study Timer & Stopwatch',
+        description: 'Customizable countdown timers and stopwatch to focus on your studies.',
+        category: 'Student Tools',
+        icon: 'Clock',
+        badge: 'FREE',
+    },
+    {
+        slug: 'pomodoro-timer',
+        name: 'Pomodoro Timer',
+        description: 'Enhance your study productivity with customizable 25/5 intervals and audio alarms.',
+        category: 'Student Tools',
+        icon: 'Timer',
+        badge: 'POPULAR',
+        isPopular: true,
+    },
+    {
+        slug: 'exam-countdown',
+        name: 'Exam Countdown Timer',
+        description: 'Set custom countdown timers for upcoming exam dates and deadlines.',
+        category: 'Student Tools',
+        icon: 'Hourglass',
+        badge: 'NEW',
+    },
+    {
+        slug: 'resume-builder',
+        name: 'Professional Resume Builder',
+        description: 'Create a professional resume in minutes and export directly to print-ready PDF.',
+        category: 'Student Tools',
+        icon: 'FileUser',
+        badge: 'POPULAR',
+        isFeatured: true,
+        isPopular: true,
+    },
+    {
+        slug: 'internship-resume-builder',
+        name: 'Internship Resume Builder',
+        description: 'Specifically tailored resume builder for students applying to internships.',
+        category: 'Student Tools',
+        icon: 'Briefcase',
+        badge: 'NEW',
+    },
+    {
+        slug: 'cover-page-generator',
+        name: 'Academic Cover Page Generator',
+        description: 'Design beautiful assignment front sheets and cover pages in standard formats.',
+        category: 'Student Tools',
+        icon: 'FileText',
+        badge: 'FREE',
+    },
+
+    // Business Tools
+    {
+        slug: 'invoice-generator',
+        name: 'PDF Invoice Generator',
+        description: 'Generate professional business invoices with custom items, taxes, and download PDF.',
+        category: 'Business Tools',
+        icon: 'Receipt',
+        badge: 'POPULAR',
+        isFeatured: true,
+        isPopular: true,
+    },
+    {
+        slug: 'quotation-generator',
+        name: 'Quotation Creator',
+        description: 'Generate product quotes and estimates for your clients instantly in PDF format.',
+        category: 'Business Tools',
+        icon: 'FileSpreadsheet',
+        badge: 'NEW',
+    },
+    {
+        slug: 'business-card-generator',
+        name: 'Business Card Designer',
+        description: 'Create a professional business card with custom colors, contact details, and logo.',
+        category: 'Business Tools',
+        icon: 'Contact',
+        badge: 'NEW',
+    },
+    {
+        slug: 'letterhead-generator',
+        name: 'Company Letterhead Generator',
+        description: 'Design and draft official business letters with professional headers and footers.',
+        category: 'Business Tools',
+        icon: 'FileSignature',
+        badge: 'FREE',
+    },
+    {
+        slug: 'signature-generator',
+        name: 'E-Signature Generator',
+        description: 'Draw or type online signatures and export as transparent PNG files.',
+        category: 'Business Tools',
+        icon: 'PenTool',
+        badge: 'POPULAR',
+        isPopular: true,
+    },
+    {
+        slug: 'certificate-generator',
+        name: 'Certificate Maker',
+        description: 'Generate customized participation or excellence awards with printable templates.',
+        category: 'Business Tools',
+        icon: 'Award',
+        badge: 'POPULAR',
+        isPopular: true,
+    },
+
+    // Food Technology
+    {
+        slug: 'milk-snf-calculator',
+        name: 'Milk SNF Calculator',
+        description: 'Calculate Solids-Not-Fat (SNF) in milk using Lactometer Reading (CLR) and Gerber Fat.',
+        category: 'Food Technology',
+        icon: 'Droplet',
+        badge: 'POPULAR',
+        isFeatured: true,
+        isPopular: true,
+    },
+    {
+        slug: 'gerber-fat-calculator',
+        name: 'Gerber Fat Calculator',
+        description: 'Analyze milk fat percentages and adjust standard ratios for processing.',
+        category: 'Food Technology',
+        icon: 'Activity',
+        badge: 'FREE',
+    },
+    {
+        slug: 'ffa-calculator',
+        name: 'FFA Acidity Calculator',
+        description: 'Determine Free Fatty Acids (FFA) percentage in oils via titration inputs.',
+        category: 'Food Technology',
+        icon: 'Flame',
+        badge: 'NEW',
+    },
+    {
+        slug: 'moisture-basis-converter',
+        name: 'Moisture Basis Converter',
+        description: 'Convert food moisture levels between Wet Basis (WB) and Dry Basis (DB).',
+        category: 'Food Technology',
+        icon: 'Thermometer',
+        badge: 'FREE',
+    },
+    {
+        slug: 'recipe-scaling-calculator',
+        name: 'Recipe Scaling Calculator',
+        description: 'Scale food recipe ingredient ratios up or down based on total target yield.',
+        category: 'Food Technology',
+        icon: 'Scale',
+        badge: 'POPULAR',
+        isPopular: true,
+    },
+    {
+        slug: 'food-cost-calculator',
+        name: 'Food Cost & Margin Calculator',
+        description: 'Calculate recipe food cost percentages, portion pricing, and profit margins.',
+        category: 'Food Technology',
+        icon: 'DollarSign',
+        badge: 'NEW',
+    },
+    {
+        slug: 'nutrition-label-calculator',
+        name: 'FDA Nutrition Facts Panel Generator',
+        description: 'Generate standard FDA nutrition facts panels based on ingredient details.',
+        category: 'Food Technology',
+        icon: 'Heart',
+        badge: 'POPULAR',
+        isFeatured: true,
+        isPopular: true,
+    },
+    {
+        slug: 'batch-yield-calculator',
+        name: 'Batch Yield Calculator',
+        description: 'Measure factory batch yield efficiency and raw material wastage index.',
+        category: 'Food Technology',
+        icon: 'Combine',
+        badge: 'FREE',
+    },
+
+    // Shareable Tools
+    {
+        slug: 'qr-generator-pro',
+        name: 'QR Code Generator Pro',
+        description: 'Generate custom QR codes with logo overlays, color gradients, and border frames.',
+        category: 'Shareable Tools',
+        icon: 'QrCode',
+        badge: 'POPULAR',
+        isPopular: true,
+    },
+    {
+        slug: 'barcode-generator-pro',
+        name: 'EAN/UPC Barcode Generator Pro',
+        description: 'Create industrial Code 128, EAN-13, and UPC barcodes with print settings.',
+        category: 'Shareable Tools',
+        icon: 'Barcode',
+        badge: 'POPULAR',
+        isPopular: true,
+    },
+    {
+        slug: 'random-team-generator',
+        name: 'Random Team Generator',
+        description: 'Input list of names and instantly split them into balanced random teams.',
+        category: 'Shareable Tools',
+        icon: 'Users',
+        badge: 'FREE',
+    },
+    {
+        slug: 'random-name-picker',
+        name: 'Random Name Picker',
+        description: 'Pick random winners or draw names from lists with full animations.',
+        category: 'Shareable Tools',
+        icon: 'UserCheck',
+        badge: 'NEW',
+    },
+    {
+        slug: 'spin-wheel',
+        name: 'Interactive Decision Spin Wheel',
+        description: 'Customize a prize spin wheel and draw random choices with sound effects.',
+        category: 'Shareable Tools',
+        icon: 'HelpCircle',
+        badge: 'POPULAR',
+        isPopular: true,
+    },
+    {
+        slug: 'coin-flip',
+        name: '3D Coin Flipper',
+        description: 'Flip a coin with high-performance CSS 3D rotation animations.',
+        category: 'Shareable Tools',
+        icon: 'CircleDot',
+        badge: 'FREE',
+    },
+    {
+        slug: 'dice-roller',
+        name: '3D Dice Roller',
+        description: 'Roll up to 5 dice simultaneously with realistic rolling physics animations.',
+        category: 'Shareable Tools',
+        icon: 'Dices',
+        badge: 'FREE',
     }
 ];
 
@@ -268,15 +617,17 @@ export const CATEGORIES = [
     { name: 'PDF Tools', icon: '📕', color: '#ef4444', slug: 'pdf' },
     { name: 'Text Tools', icon: '📝', color: '#f59e0b', slug: 'text' },
     { name: 'Developer Tools', icon: '💻', color: '#10b981', slug: 'developer' },
-    { name: 'Utility Tools', icon: '🛠️', color: '#3b82f6', slug: 'utility' }
+    { name: 'Utility Tools', icon: '🛠️', color: '#3b82f6', slug: 'utility' },
+    { name: 'Student Tools', icon: '🎓', color: '#6366f1', slug: 'student' },
+    { name: 'Business Tools', icon: '💼', color: '#f43f5e', slug: 'business' },
+    { name: 'Food Technology', icon: '🧪', color: '#8b5cf6', slug: 'food-tech' },
+    { name: 'Shareable Tools', icon: '🤝', color: '#0ea5e9', slug: 'shareable' }
 ];
 
 export function getToolBySlug(slug: string): ToolDef | undefined {
-    return QUICK_TOOLS.find(t => t.slug === slug);
+    return QUICK_TOOLS.find((t) => t.slug === slug);
 }
 
 export function getRelatedTools(tool: ToolDef, limit = 3): ToolDef[] {
-    return QUICK_TOOLS
-        .filter(t => t.slug !== tool.slug && t.category === tool.category)
-        .slice(0, limit);
+    return QUICK_TOOLS.filter((t) => t.slug !== tool.slug && t.category === tool.category).slice(0, limit);
 }

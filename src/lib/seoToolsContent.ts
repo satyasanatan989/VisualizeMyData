@@ -1,5 +1,6 @@
 // Unique SEO Content and FAQ Registry for all 29 Quick Tools
 // Enables each page to function as a separate 500-1000 word SEO landing page.
+import { getDynamicSEOContent } from './seoGenerator';
 
 export interface ToolSEOData {
     seoTitle: string;
@@ -13,7 +14,7 @@ export interface ToolSEOData {
     faqs: { question: string; answer: string }[];
 }
 
-export const SEO_TOOLS_CONTENT: Record<string, ToolSEOData> = {
+const RAW_SEO_TOOLS_CONTENT: Record<string, ToolSEOData> = {
     'jpg-to-png': {
         seoTitle: 'Convert JPG to PNG Online – Free & 100% Client-Side | VisualizeMyData',
         seoDescription: 'Convert JPG/JPEG images to PNG format instantly in your browser. Maintain transparency, preserve image details, and convert files offline with zero server uploads.',
@@ -719,3 +720,13 @@ export const SEO_TOOLS_CONTENT: Record<string, ToolSEOData> = {
         ]
     }
 };
+
+// Wrap in a Proxy to dynamically generate SEO content for all new tools
+export const SEO_TOOLS_CONTENT = new Proxy(RAW_SEO_TOOLS_CONTENT, {
+    get: (target: any, prop: string) => {
+        if (typeof prop === 'string' && prop in target) {
+            return target[prop];
+        }
+        return getDynamicSEOContent(prop);
+    }
+});

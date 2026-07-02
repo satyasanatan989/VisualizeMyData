@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import DashboardView from '@/app/DashboardView';
 import StickyUploadButton from '@/components/StickyUploadButton';
 import ScrollReveal from '@/components/ScrollReveal';
 import Link from 'next/link';
+import { toast } from 'sonner';
 import { AdBannerTop, AdBannerMiddle, AdBannerBottom } from '@/components/AdBanners';
 import { QUICK_TOOLS } from '@/lib/toolsRegistry';
 import { 
@@ -133,7 +134,11 @@ const HOMEPAGE_CATEGORIES = [
   { id: 'Data Tools', name: 'Data Tools', icon: '📊' },
   { id: 'Developer Tools', name: 'Developer Tools', icon: '💻' },
   { id: 'Text Tools', name: 'Text Tools', icon: '📝' },
-  { id: 'Utility Tools', name: 'Utility Tools', icon: '🧮' }
+  { id: 'Utility Tools', name: 'Utility Tools', icon: '🧮' },
+  { id: 'Student Tools', name: 'Student Tools', icon: '🎓' },
+  { id: 'Business Tools', name: 'Business Tools', icon: '💼' },
+  { id: 'Food Technology', name: 'Food Tech Tools', icon: '🧪' },
+  { id: 'Shareable Tools', name: 'Shareable Tools', icon: '🤝' }
 ];
 
 const TOOL_ICON_MAP: Record<string, any> = {
@@ -142,6 +147,10 @@ const TOOL_ICON_MAP: Record<string, any> = {
   'Maximize': ImageIcon,
   'Crop': ImageIcon,
   'RotateCw': ImageIcon,
+  'UserSquare': FileText,
+  'Laptop': Layout,
+  'Globe': Globe,
+  'Palette': ImageIcon,
   'FileText': FileText,
   'Eye': Eye,
   'Files': Files,
@@ -153,14 +162,41 @@ const TOOL_ICON_MAP: Record<string, any> = {
   'Code': Code,
   'FolderTree': Code,
   'Binary': Binary,
-  'Globe': Globe,
+  'ShieldAlert': ShieldCheck,
+  'CheckSquare': Check,
+  'Regex': Code,
+  'CalendarClock': Calendar,
   'QrCode': Code,
   'Barcode': Code,
   'Calendar': Calendar,
   'Activity': Activity,
   'Percent': Percent,
   'RefreshCw': RefreshCw,
-  'Layout': Layout
+  'Layout': Layout,
+  'CalendarCheck': Calendar,
+  'GraduationCap': Cpu,
+  'Clock': RefreshCw,
+  'Timer': RefreshCw,
+  'Hourglass': RefreshCw,
+  'FileUser': FileText,
+  'Briefcase': FileText,
+  'Receipt': FileText,
+  'Contact': Globe,
+  'FileSignature': FileText,
+  'PenTool': Code,
+  'Award': Sparkles,
+  'Droplet': ImageIcon,
+  'Flame': Zap,
+  'Thermometer': Activity,
+  'Scale': Calculator,
+  'DollarSign': Calculator,
+  'Heart': Activity,
+  'Combine': Layout,
+  'Users': Globe,
+  'UserCheck': ShieldCheck,
+  'HelpCircle': Settings,
+  'CircleDot': Lock,
+  'Dices': Hash
 };
 
 const getCategoryColor = (category: string) => {
@@ -171,6 +207,10 @@ const getCategoryColor = (category: string) => {
     case 'Developer Tools': return '#10b981';
     case 'Text Tools': return '#f59e0b';
     case 'Utility Tools': return '#3b82f6';
+    case 'Student Tools': return '#6366f1';
+    case 'Business Tools': return '#f43f5e';
+    case 'Food Technology': return '#8b5cf6';
+    case 'Shareable Tools': return '#0ea5e9';
     default: return '#3b82f6';
   }
 };
@@ -192,6 +232,49 @@ export default function HomePage() {
   const [darkMode, setDarkMode] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
+  const [recentTools, setRecentTools] = useState<string[]>([]);
+  const [faves, setFaves] = useState<string[]>([]);
+  const [recentDashes, setRecentDashes] = useState<string[]>([]);
+
+  // Load local storage states on client render
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedRecent = localStorage.getItem('recently-used-tools');
+      if (storedRecent) setRecentTools(JSON.parse(storedRecent));
+
+      const storedFaves = localStorage.getItem('favourite-tools');
+      if (storedFaves) setFaves(JSON.parse(storedFaves));
+
+      const storedDashes = localStorage.getItem('recent-dashboards');
+      if (storedDashes) setRecentDashes(JSON.parse(storedDashes));
+
+      const storedTheme = localStorage.getItem('theme-preference');
+      if (storedTheme) {
+        setDarkMode(storedTheme === 'dark');
+      }
+    }
+  }, []);
+
+  const handleToggleTheme = () => {
+    const nextDark = !darkMode;
+    setDarkMode(nextDark);
+    localStorage.setItem('theme-preference', nextDark ? 'dark' : 'light');
+  };
+
+  const toggleFave = (e: React.MouseEvent, slug: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const updated = faves.includes(slug) ? faves.filter(s => s !== slug) : [...faves, slug];
+    setFaves(updated);
+    localStorage.setItem('favourite-tools', JSON.stringify(updated));
+    toast.success(faves.includes(slug) ? 'Removed from favourites' : 'Added to favourites!');
+  };
+
+  const trackClick = (slug: string) => {
+    const updated = [slug, ...recentTools.filter(s => s !== slug)].slice(0, 5);
+    setRecentTools(updated);
+    localStorage.setItem('recently-used-tools', JSON.stringify(updated));
+  };
 
   // Combine all tools (29 quick + 6 core data tools)
   const allCombinedTools = React.useMemo(() => {
@@ -216,6 +299,10 @@ export default function HomePage() {
       else if (activeCategory === 'Developer Tools') categoryMatches = t.category === 'Developer Tools';
       else if (activeCategory === 'Text Tools') categoryMatches = t.category === 'Text Tools';
       else if (activeCategory === 'Utility Tools') categoryMatches = t.category === 'Utility Tools';
+      else if (activeCategory === 'Student Tools') categoryMatches = t.category === 'Student Tools';
+      else if (activeCategory === 'Business Tools') categoryMatches = t.category === 'Business Tools';
+      else if (activeCategory === 'Food Technology') categoryMatches = t.category === 'Food Technology';
+      else if (activeCategory === 'Shareable Tools') categoryMatches = t.category === 'Shareable Tools';
       
       return categoryMatches && matchesSearch;
     });
@@ -236,13 +323,18 @@ export default function HomePage() {
       if (catId === 'Developer Tools') return t.category === 'Developer Tools';
       if (catId === 'Text Tools') return t.category === 'Text Tools';
       if (catId === 'Utility Tools') return t.category === 'Utility Tools';
+      if (catId === 'Student Tools') return t.category === 'Student Tools';
+      if (catId === 'Business Tools') return t.category === 'Business Tools';
+      if (catId === 'Food Technology') return t.category === 'Food Technology';
+      if (catId === 'Shareable Tools') return t.category === 'Shareable Tools';
       return false;
     }).length;
   };
 
+
   return (
     <div className={darkMode ? '' : 'light'} style={{ minHeight: '100vh', background: 'var(--bg-primary)' }}>
-      <Navbar darkMode={darkMode} onToggleDark={() => setDarkMode(d => !d)} />
+      <Navbar darkMode={darkMode} onToggleDark={handleToggleTheme} />
 
       {/* ── HERO SECTION ── */}
       <section style={{ padding: '80px 0 30px', position: 'relative', overflow: 'hidden' }}>
@@ -321,6 +413,81 @@ export default function HomePage() {
           {/* Top AdSense Banner (Disabled by default) */}
           <AdBannerTop />
 
+          {/* Personalized Hub */}
+          {!searchQuery && activeCategory === 'All' && (recentTools.length > 0 || faves.length > 0 || recentDashes.length > 0) && (
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+              gap: 20,
+              marginBottom: 44,
+              padding: 20,
+              background: 'rgba(255, 255, 255, 0.01)',
+              border: '1px solid var(--border-subtle)',
+              borderRadius: 16
+            }}>
+              {/* Favourites */}
+              {faves.length > 0 && (
+                <div>
+                  <h3 style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
+                    ★ Favourites ({faves.length})
+                  </h3>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                    {faves.map(slug => {
+                      const t = allCombinedTools.find(tool => tool.slug === slug);
+                      if (!t) return null;
+                      return (
+                        <Link key={slug} href={t.href} style={{ textDecoration: 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 12px', background: 'rgba(255,255,255,0.02)', borderRadius: 8, border: '1px solid var(--border-subtle)' }} onClick={() => trackClick(slug)}>
+                          <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{t.name}</span>
+                          <button onClick={(e) => toggleFave(e, slug)} style={{ background: 'none', border: 'none', color: '#f59e0b', cursor: 'pointer', fontSize: '0.8rem' }}>✕</button>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Recently Used */}
+              {recentTools.length > 0 && (
+                <div>
+                  <h3 style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
+                    ⏱ Recently Used
+                  </h3>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                    {recentTools.map(slug => {
+                      const t = allCombinedTools.find(tool => tool.slug === slug);
+                      if (!t) return null;
+                      return (
+                        <Link key={slug} href={t.href} style={{ textDecoration: 'none', padding: '8px 12px', background: 'rgba(255,255,255,0.02)', borderRadius: 8, border: '1px solid var(--border-subtle)' }} onClick={() => trackClick(slug)}>
+                          <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{t.name}</span>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Recent Dashboard Templates */}
+              {recentDashes.length > 0 && (
+                <div>
+                  <h3 style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
+                    📊 Recent Dashboards
+                  </h3>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                    {recentDashes.map(slug => {
+                      const d = GALLERY_DASHBOARDS.find(dash => dash.slug === slug);
+                      if (!d) return null;
+                      return (
+                        <Link key={slug} href={`/gallery/${slug}`} style={{ textDecoration: 'none', padding: '8px 12px', background: 'rgba(255,255,255,0.02)', borderRadius: 8, border: '1px solid var(--border-subtle)' }}>
+                          <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{d.title}</span>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Popular Tools Section */}
           {!searchQuery && activeCategory === 'All' && (
             <div style={{ marginBottom: 44 }}>
@@ -338,25 +505,99 @@ export default function HomePage() {
                 {popularTools.slice(0, 4).map(tool => {
                   const IconComponent = TOOL_ICON_MAP[tool.icon] || Settings;
                   return (
-                    <Link key={tool.slug} href={tool.href} style={{ textDecoration: 'none' }}>
+                    <Link key={tool.slug} href={tool.href} style={{ textDecoration: 'none' }} onClick={() => trackClick(tool.slug)}>
                       <div style={{
                         padding: '16px 20px', borderRadius: 14,
                         border: '1px solid rgba(132, 85, 239, 0.25)',
                         background: 'rgba(132, 85, 239, 0.04)',
-                        display: 'flex', alignItems: 'center', gap: 14,
+                        display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 14,
                         transition: 'all 0.2s', cursor: 'pointer'
                       }} className="popular-tool-card">
-                        <div style={{
-                          width: 34, height: 34, borderRadius: 8,
-                          background: 'rgba(132, 85, 239, 0.1)',
-                          display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0
-                        }}>
-                          <IconComponent size={16} color="#ba9eff" />
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                          <div style={{
+                            width: 34, height: 34, borderRadius: 8,
+                            background: 'rgba(132, 85, 239, 0.1)',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0
+                          }}>
+                            <IconComponent size={16} color="#ba9eff" />
+                          </div>
+                          <div>
+                            <h4 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 2px' }}>{tool.name}</h4>
+                            <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>{tool.category}</span>
+                          </div>
                         </div>
-                        <div>
-                          <h4 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 2px' }}>{tool.name}</h4>
-                          <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>{tool.category}</span>
+                        <button
+                          onClick={(e) => toggleFave(e, tool.slug)}
+                          style={{
+                            background: 'none', border: 'none', cursor: 'pointer',
+                            color: faves.includes(tool.slug) ? '#f59e0b' : 'var(--text-muted)',
+                            padding: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem'
+                          }}
+                        >
+                          ★
+                        </button>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Popular Productivity Tools Section */}
+          {!searchQuery && activeCategory === 'All' && (
+            <div style={{ marginBottom: 44 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 18 }}>
+                <Zap size={16} color="#ef4444" />
+                <h2 style={{ fontFamily: 'var(--font-manrope)', fontSize: '1.25rem', fontWeight: 800, margin: 0, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
+                  Popular Productivity Tools
+                </h2>
+              </div>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+                gap: 16
+              }}>
+                {[
+                  { slug: 'cgpa-calculator', name: 'CGPA Calculator', category: 'Student Tools', icon: 'GraduationCap' },
+                  { slug: 'invoice-generator', name: 'PDF Invoice Generator', category: 'Business Tools', icon: 'Receipt' },
+                  { slug: 'qr-generator-pro', name: 'QR Code Generator Pro', category: 'Shareable Tools', icon: 'QrCode' },
+                  { slug: 'attendance-calculator', name: 'Attendance Calculator', category: 'Student Tools', icon: 'CalendarCheck' }
+                ].map(tool => {
+                  const IconComponent = TOOL_ICON_MAP[tool.icon] || Settings;
+                  const fullTool = allCombinedTools.find(t => t.slug === tool.slug) || { ...tool, href: `/tools/${tool.slug}` };
+                  return (
+                    <Link key={tool.slug} href={fullTool.href} style={{ textDecoration: 'none' }} onClick={() => trackClick(tool.slug)}>
+                      <div style={{
+                        padding: '16px 20px', borderRadius: 14,
+                        border: '1px solid rgba(239, 68, 68, 0.25)',
+                        background: 'rgba(239, 68, 68, 0.04)',
+                        display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 14,
+                        transition: 'all 0.2s', cursor: 'pointer'
+                      }} className="popular-tool-card">
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                          <div style={{
+                            width: 34, height: 34, borderRadius: 8,
+                            background: 'rgba(239, 68, 68, 0.1)',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0
+                          }}>
+                            <IconComponent size={16} color="#f43f5e" />
+                          </div>
+                          <div>
+                            <h4 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 2px' }}>{tool.name}</h4>
+                            <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>{tool.category}</span>
+                          </div>
                         </div>
+                        <button
+                          onClick={(e) => toggleFave(e, tool.slug)}
+                          style={{
+                            background: 'none', border: 'none', cursor: 'pointer',
+                            color: faves.includes(tool.slug) ? '#f59e0b' : 'var(--text-muted)',
+                            padding: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem'
+                          }}
+                        >
+                          ★
+                        </button>
                       </div>
                     </Link>
                   );
@@ -412,7 +653,7 @@ export default function HomePage() {
               {filteredTools.map(tool => {
                 const IconComponent = TOOL_ICON_MAP[tool.icon] || Settings;
                 return (
-                  <Link key={tool.slug} href={tool.href} style={{ textDecoration: 'none' }}>
+                  <Link key={tool.slug} href={tool.href} style={{ textDecoration: 'none' }} onClick={() => trackClick(tool.slug)}>
                     <div 
                       className="glass-card glass-card-hover toolvista-card" 
                       style={{ 
@@ -433,16 +674,29 @@ export default function HomePage() {
                           }}>
                             <IconComponent size={18} color={getCategoryColor(tool.category)} />
                           </div>
-                          {tool.badge && (
-                            <span style={{
-                              fontSize: '0.62rem', fontWeight: 800, color: '#000',
-                              background: tool.badge === 'NEW' ? '#10b981' : (tool.badge === 'POPULAR' ? 'linear-gradient(135deg, #ba9eff, #8455ef)' : 'rgba(255,255,255,0.2)'),
-                              padding: '2px 6px', borderRadius: 4, textTransform: 'uppercase'
-                            }}>
-                              {tool.badge}
-                            </span>
-                          )}
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                            <button
+                              onClick={(e) => toggleFave(e, tool.slug)}
+                              style={{
+                                background: 'none', border: 'none', cursor: 'pointer',
+                                color: faves.includes(tool.slug) ? '#f59e0b' : 'var(--text-muted)',
+                                padding: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem'
+                              }}
+                            >
+                              ★
+                            </button>
+                            {tool.badge && (
+                              <span style={{
+                                fontSize: '0.62rem', fontWeight: 800, color: '#000',
+                                background: tool.badge === 'NEW' ? '#10b981' : (tool.badge === 'POPULAR' ? 'linear-gradient(135deg, #ba9eff, #8455ef)' : 'rgba(255,255,255,0.2)'),
+                                padding: '2px 6px', borderRadius: 4, textTransform: 'uppercase'
+                              }}>
+                                {tool.badge}
+                              </span>
+                            )}
+                          </div>
                         </div>
+
 
                         {/* Title */}
                         <h3 style={{
