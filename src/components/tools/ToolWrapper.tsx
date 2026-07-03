@@ -6,7 +6,7 @@ import {
     Lock, Shield, Clock, ArrowRight, Home, History, Sparkles, 
     Image as ImageIcon, FileText, ListFilter, Code, ChevronRight, ChevronLeft,
     Star, Share2, Copy, MessageSquare, Plus, Info, Check, User, ShieldAlert, Award,
-    BookOpen, Tag, Mail, PanelLeftClose, PanelLeftOpen, Folder, Search
+    BookOpen, Tag, Mail, PanelLeftClose, PanelLeftOpen, Folder, Search, Cpu
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { ToolDef, getRelatedTools, QUICK_TOOLS } from '@/lib/toolsRegistry';
@@ -328,10 +328,12 @@ export default function ToolWrapper({ tool, children }: ToolWrapperProps) {
                     </div>
 
                     {/* EEAT Meta Data Row */}
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, fontSize: '0.72rem', color: 'var(--text-muted)', marginBottom: 4, alignItems: 'center' }}>
-                        <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><User size={11} /> Written by Prabhdeep Singh</span>
-                        <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><Check size={11} color="#10b981" /> Technical Review by Editorial Board</span>
-                        <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><Clock size={11} /> Updated: July 2026</span>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px 24px', fontSize: '0.72rem', color: 'var(--text-muted)', marginBottom: 8, alignItems: 'center' }}>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><User size={11} /> <strong>Written By:</strong> Prabhdeep Singh</span>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><Check size={11} color="#10b981" /> <strong>Reviewed By:</strong> Editorial Board &amp; Data Architects</span>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><Clock size={11} /> <strong>Last Updated:</strong> July 2026</span>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><Lock size={11} color="#10b981" /> <strong>Privacy Promise:</strong> 100% Secure Client Memory</span>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><Cpu size={11} /> <strong>Browser Processing:</strong> Local Sandboxed Execution</span>
                     </div>
 
                     <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', margin: 0, maxWidth: 640, lineHeight: 1.6 }}>
@@ -707,9 +709,9 @@ export default function ToolWrapper({ tool, children }: ToolWrapperProps) {
                                 </ul>
                             </div>
 
-                            {/* 11. Common Mistakes */}
+                            {/* 11. Troubleshooting */}
                             <div style={seoSectionStyle}>
-                                <h2 style={seoSectionTitleStyle}>11. Common Pitfalls &amp; Mistakes to Avoid</h2>
+                                <h2 style={seoSectionTitleStyle}>11. Troubleshooting &amp; Common Pitfalls to Avoid</h2>
                                 <ul style={{ paddingLeft: 18, margin: 0, color: 'var(--text-secondary)', fontSize: '0.8rem', lineHeight: 1.7 }}>
                                     {seoData.mistakes.map((mis, i) => <li key={i} style={{ marginBottom: 4 }}><span style={{ color: '#ef4444' }}>✗</span> {mis}</li>)}
                                 </ul>

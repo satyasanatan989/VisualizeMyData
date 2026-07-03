@@ -264,6 +264,50 @@ export default async function CategorySlugPage({ params }: { params: Promise<Par
         return tool.category === cat.originalId;
     });
 
+    // Category FAQ System (10 detailed, schema-enabled FAQs)
+    const categoryFaqs = [
+        {
+            q: `What is the primary purpose of the ${cat.name} category?`,
+            a: `The ${cat.name} category provides a suite of high-performance, browser-based applications designed to process local files, compile data structures, format code, and generate visual reports. These tools eliminate the need for complicated database setups, licensing fees, or server deployments.`
+        },
+        {
+            q: `How do these ${cat.name} process files and parameters offline?`,
+            a: `Once you open the tools in this category, their underlying scripts are fully cached in your browser. All spreadsheet parsing, canvas manipulations, and mathematical computations are handled locally in-memory using JavaScript client-side APIs, requiring no internet connection.`
+        },
+        {
+            q: `Are my private corporate records secure when using ${cat.name}?`,
+            a: `Yes. VisualizeMyData operates a strict zero-upload, zero-server policy. All records are processed inside your browser's sandboxed memory and are immediately cleared when you close the browser tab. Your files never travel across the network.`
+        },
+        {
+            q: `Do I need to sign up or pay to use the tools under ${cat.name}?`,
+            a: `No. All tools in the ${cat.name} ecosystem are 100% free with no registration, email requirements, or premium paywalls.`
+        },
+        {
+            q: `Can I download or export the visualizations built with these tools?`,
+            a: `Yes. You can export dashboards as presentation-ready PDF reports or high-resolution PNG image panels. Spreadsheets and code utilities allow downloading cleaned standard CSV, XLSX, or formatted text files directly to your device.`
+        },
+        {
+            q: `What is the maximum file size that these local browser tools can handle?`,
+            a: `Since computations happen in your browser memory, the maximum size depends on your machine's physical RAM. For the smoothest experience, we recommend uploading spreadsheets or documents under 50MB.`
+        },
+        {
+            q: `Are the spreadsheet exports compatible with standard office suites?`,
+            a: `Yes. Spreadsheet-derived utilities export standard CSV and XLSX files that are fully readable by Microsoft Excel, Google Sheets, Apple Numbers, and LibreOffice.`
+        },
+        {
+            q: `How do client-side utilities help with GDPR and regulatory compliance?`,
+            a: `By eliminating data transmission. Since no personal identifiable information (PII) or files are uploaded to third-party databases, using our local sandbox keeps your organization fully compliant with GDPR, HIPAA, and corporate security guidelines.`
+        },
+        {
+            q: `What should I do if a tool in the ${cat.name} category fails to parse my document?`,
+            a: `Ensure your document is not corrupted and conforms to the supported file formats (e.g. valid .csv, .xlsx, or .pdf). Check for missing headers or nested column structures. You can send pre-filled bug emails using the links on the tool pages.`
+        },
+        {
+            q: `How often are the tools in this category updated?`,
+            a: `We update our utilities regularly to optimize parsing speeds, add chart types, and support modern browser engine formats. All updates are pushed directly to our serverless static front-end.`
+        }
+    ];
+
     // Category Breadcrumb Schema
     const breadcrumbSchema = {
         "@context": "https://schema.org",
@@ -290,9 +334,45 @@ export default async function CategorySlugPage({ params }: { params: Promise<Par
         ]
     };
 
+    const organizationSchema = {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "VisualizeMyData",
+        "url": "https://visualizemydata.in",
+        "logo": "https://visualizemydata.in/logo.png"
+    };
+
+    const websiteSchema = {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "VisualizeMyData",
+        "url": "https://visualizemydata.in",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://visualizemydata.in/tools?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    };
+
+    const faqSchema = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": categoryFaqs.map((faq) => ({
+            "@type": "Question",
+            "name": faq.q,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.a
+            }
+        }))
+    };
+
     return (
         <div style={{ minHeight: '100vh', background: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
             <NavbarWrapper />
 
@@ -353,6 +433,51 @@ export default async function CategorySlugPage({ params }: { params: Promise<Par
                 </div>
             </section>
 
+            {/* Section 1: Detailed Overview (Technical SEO Copy expansion for 1500+ words target) */}
+            <section style={{ padding: '60px 0', borderTop: '1px solid var(--border-subtle)', background: 'var(--surface-mid)' }}>
+                <div className="container" style={{ maxWidth: 780 }}>
+                    <h2 style={{ fontFamily: 'var(--font-manrope)', fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: 16 }}>
+                        Comprehensive Guide to {cat.name}
+                    </h2>
+                    <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: 16 }}>
+                        In the modern digital workspace, professionals, students, and businesses handle massive volumes of proprietary data daily. Traditionally, converting or visualizing these datasets required uploading documents to cloud-based servers. However, this introduces substantial security vulnerabilities, exposure of sensitive intellectual property, and network latency. The <strong>{cat.name}</strong> collection solves this challenge by implementing a serverless, client-side execution framework.
+                    </p>
+                    <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: 16 }}>
+                        By leveraging advanced browser compilers and standard Web APIs, these utilities read your input parameters and file streams directly into your device's local memory (RAM). This ensures that your files never travel across the internet, protecting you from data breaches and third-party trackers. Once loaded, the utilities are completely self-contained, offering sub-second render speeds and stable offline operations.
+                    </p>
+                </div>
+            </section>
+
+            {/* Section 2: How It Works */}
+            <section style={{ padding: '60px 0', borderTop: '1px solid var(--border-subtle)' }}>
+                <div className="container" style={{ maxWidth: 780 }}>
+                    <h2 style={{ fontFamily: 'var(--font-manrope)', fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: 16 }}>
+                        Technical Specifications &amp; In-Browser Execution
+                    </h2>
+                    <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: 16 }}>
+                        Our local processing engine uses specialized JavaScript parsers (such as PapaParse for CSV streams, SheetJS for binary Excel files, and pdf-lib for document manipulation) to decode data structures in real-time. Because the computations bypass server round-trips, the performance of <strong>{cat.name}</strong> scales with your local machine's processing power.
+                    </p>
+                    <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: 16 }}>
+                        When you upload a file in this category, the browser initiates a standard File Reader thread that parses the raw bytes into structured JSON arrays in-memory. For graphics and image formatting, HTML5 Canvas rendering contexts compress pixels locally, ensuring instant conversions without compromise.
+                    </p>
+                </div>
+            </section>
+
+            {/* Section 3: Privacy & Security Standards */}
+            <section style={{ padding: '60px 0', borderTop: '1px solid var(--border-subtle)', background: 'var(--surface-low)' }}>
+                <div className="container" style={{ maxWidth: 780 }}>
+                    <h2 style={{ fontFamily: 'var(--font-manrope)', fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: 16 }}>
+                        Privacy Shield &amp; Regulatory Compliance
+                    </h2>
+                    <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: 16 }}>
+                        VisualizeMyData is built with a privacy-first posture. Organizations handling financial charts, personal student grades, or proprietary industrial recipes face strict regulatory compliance frameworks, including GDPR, HIPAA, and corporate data protection policies.
+                    </p>
+                    <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: 16 }}>
+                        Since the tools in the <strong>{cat.name}</strong> category do not create database logs, compile cookies, or upload records, they are completely safe to use within secure corporate networks. Your files remain on your local disk, and all cache memory is cleared as soon as the browser tab is closed.
+                    </p>
+                </div>
+            </section>
+
             {/* FAQs section */}
             <section style={{ padding: '60px 0', borderTop: '1px solid var(--border-subtle)' }}>
                 <div className="container" style={{ maxWidth: 780 }}>
@@ -360,7 +485,7 @@ export default async function CategorySlugPage({ params }: { params: Promise<Par
                         <HelpCircle size={16} color="var(--accent-primary)" /> Category FAQs
                     </h2>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                        {cat.faqs.map((faq, idx) => (
+                        {categoryFaqs.map((faq, idx) => (
                             <div key={idx} style={{ padding: '18px 24px', borderRadius: 14, border: '1px solid var(--border-subtle)', background: 'var(--bg-glass)' }}>
                                 <h3 style={{ fontSize: '0.92rem', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 8px' }}>{faq.q}</h3>
                                 <p style={{ color: 'var(--text-secondary)', fontSize: '0.82rem', margin: 0, lineHeight: 1.6 }}>{faq.a}</p>

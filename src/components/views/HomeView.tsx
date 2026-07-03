@@ -332,12 +332,38 @@ export default function HomePage() {
       if (catId === 'Food Science Tools') return t.category === 'Food Technology';
       if (catId === 'Shareable Tools') return t.category === 'Shareable Tools';
       if (catId === 'Productivity Tools') return t.category === 'Student Tools' || t.category === 'Business Tools' || t.category === 'Shareable Tools';
-      return false;
     }).length;
+  };
+
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "VisualizeMyData",
+    "url": "https://visualizemydata.in",
+    "logo": "https://visualizemydata.in/logo.png",
+    "sameAs": [
+      "https://twitter.com/visualizemydata",
+      "https://github.com/satyasanatan989/VisualizeMyData"
+    ]
+  };
+
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "VisualizeMyData",
+    "url": "https://visualizemydata.in",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://visualizemydata.in/tools?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
   };
 
   return (
     <div className={darkMode ? '' : 'light'} style={{ minHeight: '100vh', background: 'var(--bg-primary)' }}>
+      {/* Dynamic JSON-LD schemas */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
       <Navbar darkMode={darkMode} onToggleDark={handleToggleTheme} />
 
       {/* ── 1. HERO SECTION (SaaS Polish) ── */}

@@ -80,7 +80,7 @@ const LEARN_ARTICLES = [
         category: 'Data Visualization'
     },
     {
-        title: 'How to Create Professional Dashboards: The Complete Guide',
+        title: 'How to Build Executive Dashboards: The Complete Guide',
         description: 'Detailed analysis of information grids, target persona definitions, and metrics filtering to construct business dashboards.',
         href: '/blog/how-to-create-professional-dashboards',
         readTime: '12 min',
@@ -89,7 +89,7 @@ const LEARN_ARTICLES = [
         category: 'Dashboards'
     },
     {
-        title: 'Best Excel Dashboard Templates for Business Operations',
+        title: 'Top 20 Excel Dashboard Templates for Business Operations',
         description: 'Explore professional pre-made templates to turn your Excel spreadsheets into fully functioning KPI trackers.',
         href: '/blog/best-excel-dashboard-templates',
         readTime: '8 min',
@@ -98,34 +98,43 @@ const LEARN_ARTICLES = [
         category: 'Excel'
     },
     {
-        title: 'Dashboard Design Principles: Cognitive Load & Grid Layouts',
+        title: 'Best Dashboard Examples & Layout Paradigms',
         description: 'Align widgets, reduce visual clutter, and manage Z-pattern reading flows for presentation-ready analytical panels.',
-        href: '/blog/dashboard-design-principles',
+        href: '/blog/dashboard-examples',
         readTime: '9 min',
         icon: '🎨',
         color: '#6366f1',
         category: 'Dashboards'
     },
     {
-        title: 'Essential Excel Tips for Data Analysts',
-        description: 'Formulas, macros bypasses, and data layout formats every spreadsheet designer needs to know.',
-        href: '/blog/excel-tips',
+        title: 'Excel vs Google Sheets: Which Platform is Best for Analytics?',
+        description: 'A deep comparative analysis of Google Sheets and Microsoft Excel for spreadsheet analysis, data cleaning, and online collaboration.',
+        href: '/blog/excel-vs-google-sheets',
         readTime: '9 min',
-        icon: '⚡',
+        icon: '📊',
         color: '#10b981',
-        category: 'Excel'
-    },
-    {
-        title: 'Google Sheets Live Dashboard Guide',
-        description: 'Sync online sheets, use public viewer links, and generate live charts without exports.',
-        href: '/blog/google-sheets-guide',
-        readTime: '8 min',
-        icon: '🔗',
-        color: '#3b82f6',
         category: 'Google Sheets'
     },
     {
-        title: 'The Complete Guide to Handling CSV Files Online',
+        title: 'Best Charts for Business Reports & Analytical Presentations',
+        description: 'Choosing the best charts for corporate reporting: compare multi-axis bars, stacked bars, progress rings, and radars.',
+        href: '/blog/best-charts-for-reports',
+        readTime: '8 min',
+        icon: '📈',
+        color: '#3b82f6',
+        category: 'Data Visualization'
+    },
+    {
+        title: 'Top 10 Data Visualization Mistakes to Avoid',
+        description: 'Common pitfalls in data charts — learn how to avoid deceptive axes, excessive legends, and high cognitive loads.',
+        href: '/blog/data-visualization-mistakes',
+        readTime: '8 min',
+        icon: '⚠️',
+        color: '#f43f5e',
+        category: 'Data Visualization'
+    },
+    {
+        title: 'How to Analyze CSV Data: The Ultimate Guide',
         description: 'UTF encoding, raw delimit parameters, and comma-separated layouts parsed in-memory.',
         href: '/blog/csv-guide',
         readTime: '8 min',
@@ -134,22 +143,31 @@ const LEARN_ARTICLES = [
         category: 'CSV'
     },
     {
-        title: 'The Ultimate Data Cleaning Guide for Spreadsheets',
-        description: 'Remove duplicates, handle blank coordinates, and standardize columns for error-free graphing.',
-        href: '/blog/data-cleaning-guide',
+        title: 'Interactive Dashboard Guide: Build Custom Panels In-Browser',
+        description: 'Step-by-step workbook for extracting insights, configuring dashboard widgets, and exporting PDFs offline.',
+        href: '/blog/interactive-dashboard-guide',
         readTime: '9 min',
-        icon: '🧹',
+        icon: '⚡',
         color: '#8455ef',
-        category: 'CSV'
+        category: 'Dashboards'
     },
     {
-        title: 'Image Optimization Best Practices for Web Performance',
-        description: 'Resize, crop, and convert files into highly compressed WEBP formats without leaving the browser.',
-        href: '/blog/image-optimization-guide',
+        title: 'Business Dashboard Examples & KPI Dashboards',
+        description: 'A comprehensive collection of executive dashboard templates for sales pipeline, HR metrics, and project tracking.',
+        href: '/blog/business-dashboard-examples',
         readTime: '7 min',
-        icon: '🎨',
-        color: '#f43f5e',
-        category: 'Images'
+        icon: '💼',
+        color: '#ba9eff',
+        category: 'Business'
+    },
+    {
+        title: 'Student Dashboard Examples for Academic Progress Tracking',
+        description: 'Learn how to construct study planners, GPA calculators, and attendance dashboards in a secure offline sandbox.',
+        href: '/blog/student-dashboard-examples',
+        readTime: '8 min',
+        icon: '🎓',
+        color: '#10b981',
+        category: 'Student'
     },
     {
         title: 'PDF Table Extraction & Workspace Workflows',
@@ -161,13 +179,13 @@ const LEARN_ARTICLES = [
         category: 'PDF'
     },
     {
-        title: 'Essential Developer Utilities Guide',
-        description: 'Browser-based JSON parsing, UUID generation, and base64 tools to keep keys private.',
-        href: '/blog/developer-utilities-guide',
+        title: 'Food Quality Dashboard Guide for Lab Managers',
+        description: 'Learn how to track Food Science metrics, Gerber fat, SNF equations, and scale batch recipes in real-time.',
+        href: '/blog/food-quality-dashboard-guide',
         readTime: '8 min',
-        icon: '💻',
+        icon: '🧪',
         color: '#10b981',
-        category: 'Developer'
+        category: 'Food Science'
     }
 ];
 
