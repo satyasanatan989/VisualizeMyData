@@ -4,16 +4,13 @@ import React, { useState } from 'react';
 import Footer from '@/components/Footer';
 import NavbarWrapper from '@/components/NavbarWrapper';
 import FileUploadZone from '@/components/FileUploadZone';
-import DashboardGenerator from '@/components/dashboard/DashboardGenerator';
-import TemplateSelector from '@/components/dashboard/templates/TemplateSelector';
-import TemplateRenderer from '@/components/dashboard/templates/TemplateRenderer';
+import DashboardPlatform from '@/components/dashboard/DashboardPlatform';
 import { ParsedData } from '@/lib/excelParser';
 import type { PdfParseResult } from '@/lib/pdfParser';
 
 export default function DashboardGeneratorView() {
     const [parsedData, setParsedData] = useState<ParsedData | null>(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
 
     const handleDataParsed = (data: ParsedData, _isPdf?: boolean, _pdfResult?: PdfParseResult) => {
         setParsedData(data);
@@ -21,7 +18,6 @@ export default function DashboardGeneratorView() {
 
     const handleReset = () => {
         setParsedData(null);
-        setSelectedTemplate(null);
     };
 
     return (
@@ -62,19 +58,10 @@ export default function DashboardGeneratorView() {
                         isLoading={isLoading}
                         setIsLoading={setIsLoading}
                     />
-                ) : !selectedTemplate ? (
-                    <TemplateSelector onSelect={setSelectedTemplate} />
-                ) : selectedTemplate === 'default' ? (
-                    <DashboardGenerator
-                        parsedData={parsedData}
-                        onReset={handleReset}
-                    />
                 ) : (
-                    <TemplateRenderer
-                        templateId={selectedTemplate}
+                    <DashboardPlatform
                         parsedData={parsedData}
                         onReset={handleReset}
-                        onBack={() => setSelectedTemplate(null)}
                     />
                 )}
             </main>
