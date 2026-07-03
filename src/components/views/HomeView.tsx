@@ -183,7 +183,7 @@ export default function HomePage() {
   const [recentTools, setRecentTools] = useState<string[]>([]);
   const [faves, setFaves] = useState<string[]>([]);
   const [recentDashes, setRecentDashes] = useState<string[]>([]);
-  const [trendingTab, setTrendingTab] = useState<'trending' | 'recent' | 'favorites'>('trending');
+  const [trendingTab, setTrendingTab] = useState<'trending' | 'recent_added' | 'most_used' | 'editors_picks' | 'popular_week' | 'recent' | 'favorites'>('trending');
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
   
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -299,7 +299,23 @@ export default function HomePage() {
   }, [searchQuery, activeCategory, allCombinedTools]);
 
   const trendingTools = React.useMemo(() => {
-    return allCombinedTools.filter(t => t.badge === 'POPULAR' || t.slug === 'image-compressor' || t.slug === 'excel-visualizer' || t.slug === 'invoice-generator');
+    return allCombinedTools.filter(t => t.badge === 'POPULAR' || (t as any).isPopular);
+  }, [allCombinedTools]);
+
+  const recentlyAddedTools = React.useMemo(() => {
+    return allCombinedTools.filter(t => t.badge === 'NEW');
+  }, [allCombinedTools]);
+
+  const mostUsedTools = React.useMemo(() => {
+    return allCombinedTools.filter(t => t.slug === 'image-compressor' || t.slug === 'excel-visualizer' || t.slug === 'csv-visualizer' || t.slug === 'qr-code-generator');
+  }, [allCombinedTools]);
+
+  const editorsPicksTools = React.useMemo(() => {
+    return allCombinedTools.filter(t => (t as any).isFeatured);
+  }, [allCombinedTools]);
+
+  const popularWeekTools = React.useMemo(() => {
+    return allCombinedTools.filter(t => t.slug === 'invoice-generator' || t.slug === 'pdf-merger' || t.slug === 'cgpa-calculator' || t.slug === 'word-counter');
   }, [allCombinedTools]);
 
   const getToolCountForCategory = (catId: string) => {
@@ -583,9 +599,13 @@ export default function HomePage() {
         <section style={{ padding: '20px 0' }}>
           <div className="container">
             {/* Navigation Tabs */}
-            <div style={{ display: 'flex', gap: 16, borderBottom: '1px solid var(--border-subtle)', paddingBottom: 10, marginBottom: 20 }}>
+            <div style={{ display: 'flex', gap: 12, borderBottom: '1px solid var(--border-subtle)', paddingBottom: 10, marginBottom: 20, overflowX: 'auto', scrollbarWidth: 'none' }} className="category-scroll-container">
               {[
-                { id: 'trending', label: '🔥 Trending Tools' },
+                { id: 'trending', label: '🔥 Trending' },
+                { id: 'recent_added', label: '⏰ Recently Added' },
+                { id: 'most_used', label: '📈 Most Used' },
+                { id: 'editors_picks', label: '⭐ Editor\'s Picks' },
+                { id: 'popular_week', label: '📅 Popular This Week' },
                 { id: 'recent', label: '⏰ Recently Used', count: recentTools.length },
                 { id: 'favorites', label: '⭐ Favorites', count: faves.length }
               ].map(tab => {
@@ -598,11 +618,12 @@ export default function HomePage() {
                       background: 'none',
                       border: 'none',
                       padding: '4px 8px',
-                      fontSize: '0.88rem',
+                      fontSize: '0.85rem',
                       fontWeight: isActive ? 700 : 500,
                       color: isActive ? 'var(--accent-primary)' : 'var(--text-secondary)',
                       cursor: 'pointer',
                       position: 'relative',
+                      whiteSpace: 'nowrap',
                       transition: 'color 0.2s'
                     }}
                   >
@@ -626,6 +647,102 @@ export default function HomePage() {
                         <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
                           <div style={{ width: 34, height: 34, borderRadius: 8, background: 'rgba(132, 85, 239, 0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <IconComponent size={16} color="#ba9eff" />
+                          </div>
+                          <div>
+                            <h4 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>{tool.name}</h4>
+                            <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>{tool.category}</span>
+                          </div>
+                        </div>
+                        <ChevronRight size={14} color="var(--text-muted)" />
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
+
+            {trendingTab === 'recent_added' && (
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16 }}>
+                {recentlyAddedTools.slice(0, 4).map(tool => {
+                  const IconComponent = TOOL_ICON_MAP[tool.icon] || Settings;
+                  return (
+                    <Link key={tool.slug} href={tool.href} style={{ textDecoration: 'none' }} onClick={() => trackClick(tool.slug)}>
+                      <div className="glass-card popular-tool-card" style={{ padding: '16px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid var(--border-subtle)', background: 'rgba(255,255,255,0.01)', borderRadius: 14 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                          <div style={{ width: 34, height: 34, borderRadius: 8, background: 'rgba(255,255,255,0.04)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <IconComponent size={16} color="var(--text-secondary)" />
+                          </div>
+                          <div>
+                            <h4 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>{tool.name}</h4>
+                            <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>{tool.category}</span>
+                          </div>
+                        </div>
+                        <ChevronRight size={14} color="var(--text-muted)" />
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
+
+            {trendingTab === 'most_used' && (
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16 }}>
+                {mostUsedTools.slice(0, 4).map(tool => {
+                  const IconComponent = TOOL_ICON_MAP[tool.icon] || Settings;
+                  return (
+                    <Link key={tool.slug} href={tool.href} style={{ textDecoration: 'none' }} onClick={() => trackClick(tool.slug)}>
+                      <div className="glass-card popular-tool-card" style={{ padding: '16px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid var(--border-subtle)', background: 'rgba(255,255,255,0.01)', borderRadius: 14 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                          <div style={{ width: 34, height: 34, borderRadius: 8, background: 'rgba(255,255,255,0.04)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <IconComponent size={16} color="var(--text-secondary)" />
+                          </div>
+                          <div>
+                            <h4 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>{tool.name}</h4>
+                            <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>{tool.category}</span>
+                          </div>
+                        </div>
+                        <ChevronRight size={14} color="var(--text-muted)" />
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
+
+            {trendingTab === 'editors_picks' && (
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16 }}>
+                {editorsPicksTools.slice(0, 4).map(tool => {
+                  const IconComponent = TOOL_ICON_MAP[tool.icon] || Settings;
+                  return (
+                    <Link key={tool.slug} href={tool.href} style={{ textDecoration: 'none' }} onClick={() => trackClick(tool.slug)}>
+                      <div className="glass-card popular-tool-card" style={{ padding: '16px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid var(--border-subtle)', background: 'rgba(255,255,255,0.01)', borderRadius: 14 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                          <div style={{ width: 34, height: 34, borderRadius: 8, background: 'rgba(255,255,255,0.04)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <IconComponent size={16} color="var(--text-secondary)" />
+                          </div>
+                          <div>
+                            <h4 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>{tool.name}</h4>
+                            <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>{tool.category}</span>
+                          </div>
+                        </div>
+                        <ChevronRight size={14} color="var(--text-muted)" />
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
+
+            {trendingTab === 'popular_week' && (
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16 }}>
+                {popularWeekTools.slice(0, 4).map(tool => {
+                  const IconComponent = TOOL_ICON_MAP[tool.icon] || Settings;
+                  return (
+                    <Link key={tool.slug} href={tool.href} style={{ textDecoration: 'none' }} onClick={() => trackClick(tool.slug)}>
+                      <div className="glass-card popular-tool-card" style={{ padding: '16px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid var(--border-subtle)', background: 'rgba(255,255,255,0.01)', borderRadius: 14 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                          <div style={{ width: 34, height: 34, borderRadius: 8, background: 'rgba(255,255,255,0.04)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <IconComponent size={16} color="var(--text-secondary)" />
                           </div>
                           <div>
                             <h4 style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>{tool.name}</h4>

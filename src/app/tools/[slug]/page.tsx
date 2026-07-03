@@ -5,13 +5,13 @@ import NavbarWrapper from '@/components/NavbarWrapper';
 import Footer from '@/components/Footer';
 import ToolClientRenderer from '@/components/tools/ToolClientRenderer';
 import { QUICK_TOOLS, getToolBySlug } from '@/lib/toolsRegistry';
-import { SEO_TOOLS_CONTENT } from '@/lib/seoToolsContent';
+import { getDynamicSEOContent } from '@/lib/seoGenerator';
 
 interface Params {
     slug: string;
 }
 
-// Statically generate all 29 tool routes during build
+// Statically generate all quick tool routes during build
 export async function generateStaticParams() {
     return QUICK_TOOLS.map((t) => ({
         slug: t.slug,
@@ -22,7 +22,6 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
     const { slug } = await params;
     const tool = getToolBySlug(slug);
-    const seoData = SEO_TOOLS_CONTENT[slug];
 
     if (!tool) {
         return {
@@ -31,8 +30,9 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
         };
     }
 
-    const title = seoData?.seoTitle || `${tool.name} – Free Online Utility Tool | VisualizeMyData`;
-    const desc = seoData?.seoDescription || `${tool.description} Fast, secure, and 100% client-side. No signups, no database, files never leave your device.`;
+    const seoData = getDynamicSEOContent(slug);
+    const title = seoData.seoTitle;
+    const desc = seoData.seoDescription;
 
     return {
         title: {
@@ -75,7 +75,7 @@ export default async function ToolSlugPage({ params }: { params: Promise<Params>
         notFound();
     }
 
-    const seoData = SEO_TOOLS_CONTENT[slug];
+    const seoData = getDynamicSEOContent(slug);
 
     // 1. SoftwareApplication Schema
     const softwareAppSchema = {
@@ -83,18 +83,18 @@ export default async function ToolSlugPage({ params }: { params: Promise<Params>
         '@type': 'SoftwareApplication',
         'name': tool.name,
         'operatingSystem': 'All',
-        'applicationCategory': seoData?.applicationCategory || 'UtilityApplication',
+        'applicationCategory': seoData.applicationCategory,
         'browserRequirements': 'Requires JavaScript. Requires HTML5.',
         'offers': {
             '@type': 'Offer',
             'price': '0',
             'priceCurrency': 'USD',
         },
-        'description': seoData?.seoDescription || tool.description,
+        'description': seoData.seoDescription,
     };
 
     // 2. FAQPage Schema
-    const faqSchema = seoData?.faqs && seoData.faqs.length > 0 ? {
+    const faqSchema = seoData.faqs && seoData.faqs.length > 0 ? {
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
         'mainEntity': seoData.faqs.map((faq: { question: string; answer: string }) => ({
@@ -125,10 +125,10 @@ export default async function ToolSlugPage({ params }: { params: Promise<Params>
                 'item': 'https://visualizemydata.in/tools',
             },
             {
-                '@type': 'ListItem',
-                'position': 3,
-                'name': tool.category,
-                'item': `https://visualizemydata.in/tools?cat=${encodeURIComponent(tool.category)}`,
+                "@type": "ListItem",
+                "position": 3,
+                "name": tool.category,
+                "item": `https://visualizemydata.in/category/${tool.category.toLowerCase().replace(' ', '-')}`
             },
             {
                 '@type': 'ListItem',
