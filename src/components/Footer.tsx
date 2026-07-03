@@ -180,6 +180,27 @@ export default function Footer() {
                             ))}
                         </nav>
                     </div>
+
+                    {/* Editorial & Trust */}
+                    <div>
+                        <h4 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: 16, fontSize: '0.82rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Editorial</h4>
+                        <nav style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                            {[
+                                { label: 'Editorial Policy', href: '/editorial-policy' },
+                                { label: 'How We Test Tools', href: '/how-we-test-tools' },
+                                { label: 'Content Update Policy', href: '/content-update-policy' },
+                                { label: 'Blog', href: '/blog' },
+                                { label: 'Learn', href: '/learn' },
+                            ].map(l => (
+                                <Link key={l.href} href={l.href} style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.82rem', transition: 'color 0.15s' }}
+                                    onMouseEnter={e => (e.target as HTMLElement).style.color = 'var(--text-primary)'}
+                                    onMouseLeave={e => (e.target as HTMLElement).style.color = 'var(--text-secondary)'}
+                                >
+                                    {l.label}
+                                </Link>
+                            ))}
+                        </nav>
+                    </div>
                 </div>
 
                 <div className="divider" style={{ borderTop: '1px solid var(--border-subtle)', margin: '40px 0 24px' }} />

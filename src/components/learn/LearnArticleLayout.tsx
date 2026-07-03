@@ -47,6 +47,31 @@ export default function LearnArticleLayout({ title, description, date, readTime,
                         {children}
                     </div>
 
+                    {/* Author Bio Block — EEAT */}
+                    <div style={{
+                        marginTop: 48, padding: '20px 24px', borderRadius: 14,
+                        border: '1px solid var(--border-subtle)', background: 'rgba(255,255,255,0.01)',
+                        display: 'flex', gap: 18, alignItems: 'flex-start'
+                    }}>
+                        <div style={{
+                            width: 52, height: 52, borderRadius: '50%',
+                            background: 'rgba(186,158,255,0.06)', display: 'flex',
+                            alignItems: 'center', justifyContent: 'center',
+                            flexShrink: 0, fontSize: '1.4rem'
+                        }}>👤</div>
+                        <div>
+                            <p style={{ margin: '0 0 2px', fontSize: '0.88rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                                Prabhdeep Singh
+                            </p>
+                            <p style={{ margin: '0 0 8px', fontSize: '0.68rem', color: 'var(--accent-primary)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                                Founder &amp; Senior Product Engineer
+                            </p>
+                            <p style={{ margin: 0, fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
+                                Prabhdeep is a full-stack engineer specialising in browser-based data processing and privacy-first tool design. All content on VisualizeMyData is written, tested, and reviewed by the founding team. <strong>Reviewed &amp; updated:</strong> July 2026.
+                            </p>
+                        </div>
+                    </div>
+
                     {/* Related Tools CTA */}
                     <div style={{
                         marginTop: 64, padding: '32px 40px', borderRadius: 16,

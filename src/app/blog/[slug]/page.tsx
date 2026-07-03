@@ -241,6 +241,20 @@ export default async function BlogSlugPage({ params }: { params: Promise<Params>
                             {article.conclusion}
                         </p>
 
+                        {/* Author Profile Bio Block */}
+                        <div style={{ margin: '40px 0', padding: 24, borderRadius: 16, border: '1px solid var(--border-subtle)', background: 'rgba(255,255,255,0.01)', display: 'flex', gap: 20 }} className="features-grid">
+                            <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'rgba(186,158,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: '1.5rem' }}>
+                                👤
+                            </div>
+                            <div>
+                                <h4 style={{ margin: '0 0 4px', fontSize: '0.9rem', fontWeight: 850, color: 'var(--text-primary)' }}>Prabhdeep Singh</h4>
+                                <p style={{ margin: '0 0 8px', fontSize: '0.7rem', color: 'var(--accent-primary)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>Founder &amp; Senior Product Engineer</p>
+                                <p style={{ margin: 0, fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                                    Prabhdeep Singh is a full-stack engineer and data systems architect with a background in secure cloudless processing. He compiles in-depth data visualization tutorials and builds open-source browser tools. <strong>Last updated:</strong> July 2026.
+                                </p>
+                            </div>
+                        </div>
+
                         {/* Cross-linking navigation blocks (Phase 5 internal linking) */}
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, borderTop: '1px solid var(--border-subtle)', paddingTop: 40, marginTop: 40 }} className="features-grid">
                             {/* Related Guides */}

@@ -126,6 +126,9 @@ const infoPages = [
     '/privacy-policy',
     '/terms',
     '/disclaimer',
+    '/editorial-policy',
+    '/how-we-test-tools',
+    '/content-update-policy',
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

@@ -1308,6 +1308,72 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ── 15. ABOUT THE PLATFORM (EEAT / AdSense Trust Section) ── */}
+      <section style={{ padding: '80px 0', borderTop: '1px solid var(--border-subtle)', background: 'var(--surface-low)' }}>
+        <div className="container" style={{ maxWidth: 900 }}>
+          <div style={{ textAlign: 'center', marginBottom: 48 }}>
+            <span className="badge" style={{ marginBottom: 14, background: 'rgba(16,185,129,0.08)', color: '#10b981', border: '1px solid rgba(16,185,129,0.2)' }}>About the Platform</span>
+            <h2 style={{ fontFamily: 'var(--font-manrope)', fontSize: 'clamp(1.75rem, 4vw, 2.25rem)', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.02em', margin: 0 }}>
+              Built for Privacy. Engineered for Productivity.
+            </h2>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 24, marginBottom: 48 }}>
+            {[
+              {
+                icon: '🔒',
+                title: 'Zero-Server Architecture',
+                body: 'Every tool on VisualizeMyData operates entirely inside your browser using Web APIs and client-side JavaScript. Your files are never uploaded to any server, database, or cloud. Processing happens in a sandboxed memory context that is automatically cleared when you close the tab.'
+              },
+              {
+                icon: '🛠️',
+                title: 'Built by Engineers, Tested Rigorously',
+                body: 'All 40+ tools are designed, coded, and stress-tested by Prabhdeep Singh, a full-stack systems engineer focused on privacy-first productivity software. Each tool undergoes accuracy verification, cross-browser compatibility testing, and performance benchmarking before release.'
+              },
+              {
+                icon: '📋',
+                title: 'Editorial & Content Standards',
+                body: 'Every guide, article, and tool description on this platform follows a strict editorial process. Information is researched from primary sources, verified for technical accuracy, and updated quarterly. We publish our editorial policy and testing methodology transparently.'
+              }
+            ].map(card => (
+              <div key={card.title} className="glass-card" style={{ padding: 24, borderRadius: 16 }}>
+                <div style={{ fontSize: '2rem', marginBottom: 14 }}>{card.icon}</div>
+                <h3 style={{ fontFamily: 'var(--font-manrope)', fontSize: '1rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: 10 }}>{card.title}</h3>
+                <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.65, margin: 0 }}>{card.body}</p>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ padding: 28, borderRadius: 16, border: '1px solid var(--border-subtle)', background: 'rgba(255,255,255,0.01)', display: 'flex', gap: 24, flexWrap: 'wrap', alignItems: 'flex-start' }}>
+            <div style={{ flex: '1 1 300px' }}>
+              <h3 style={{ fontFamily: 'var(--font-manrope)', fontSize: '1rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: 10 }}>Who This Platform Is For</h3>
+              <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.65, margin: '0 0 12px' }}>
+                VisualizeMyData is used by data analysts, small business owners, students, finance teams, HR professionals, and developers who need fast, private, and reliable browser-based tools without paying for premium SaaS subscriptions.
+              </p>
+              <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.65, margin: 0 }}>
+                Whether you need to create a dashboard from an Excel report, compress images for a web project, generate a professional invoice, or validate JSON — every tool is free, instant, and works offline after load.
+              </p>
+            </div>
+            <div style={{ flex: '1 1 240px' }}>
+              <h3 style={{ fontFamily: 'var(--font-manrope)', fontSize: '1rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: 10 }}>Transparency & Trust</h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {[
+                  { label: 'Editorial Policy', href: '/editorial-policy' },
+                  { label: 'How We Test Tools', href: '/how-we-test-tools' },
+                  { label: 'Content Update Policy', href: '/content-update-policy' },
+                  { label: 'Privacy Policy', href: '/privacy-policy' },
+                  { label: 'About the Founder', href: '/about' },
+                ].map(l => (
+                  <a key={l.href} href={l.href} style={{ fontSize: '0.8rem', color: 'var(--accent-primary)', textDecoration: 'underline', fontWeight: 500 }}>
+                    → {l.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <Footer />
       <StickyUploadButton />
     </div>
