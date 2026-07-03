@@ -7,12 +7,6 @@ export const dynamic = 'force-static';
 
 const BASE_URL = 'https://visualizemydata.in';
 
-/**
- * Generates sitemap.xml at build time.
- * Adding a new app/[route]/page.tsx automatically adds its entry here
- * just by including its slug in the appropriate category array.
- */
-
 const coreTools = [
     { path: '/', priority: 1.0, changeFrequency: 'weekly' },
     { path: '/excel-visualizer', priority: 0.95, changeFrequency: 'monthly' },
@@ -99,6 +93,31 @@ const blogPages = [
     '/blog/csv-to-chart-guide',
     '/blog/pdf-data-visualization-guide',
     '/blog/create-dashboard-from-csv',
+    '/blog/how-to-create-professional-dashboards',
+    '/blog/best-excel-dashboard-templates',
+    '/blog/data-visualization-best-practices',
+    '/blog/bar-chart-vs-line-chart',
+    '/blog/dashboard-design-principles',
+    '/blog/excel-tips',
+    '/blog/google-sheets-guide',
+    '/blog/csv-guide',
+    '/blog/data-cleaning-guide',
+    '/blog/image-optimization-guide',
+    '/blog/pdf-workflow-guide',
+    '/blog/developer-utilities-guide',
+];
+
+const categoryPages = [
+    '/category/dashboard-tools',
+    '/category/excel-tools',
+    '/category/csv-tools',
+    '/category/google-sheets-tools',
+    '/category/image-tools',
+    '/category/pdf-tools',
+    '/category/developer-tools',
+    '/category/business-tools',
+    '/category/student-tools',
+    '/category/food-science-tools',
 ];
 
 const infoPages = [
@@ -120,7 +139,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: p.priority,
     }));
 
-    // SEO landing pages — 0.75–0.85 priority
+    // SEO landing pages — 0.8 priority
     const allSeoPages = [
         ...excelSeoPages,
         ...csvSeoPages,
@@ -135,7 +154,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: 0.8,
     }));
 
-    // Learn / blog — 0.7 priority
+    // Learn / blog — 0.7-0.8 priority
     const contentEntries: MetadataRoute.Sitemap = [
         ...[...learnPages, ...blogPages].map((path) => ({
             url: `${BASE_URL}${path}`,
@@ -144,6 +163,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
             priority: path === '/blog' || path === '/learn' ? 0.8 : 0.7,
         })),
     ];
+
+    // Category pages — 0.85 priority
+    const categoryEntries: MetadataRoute.Sitemap = categoryPages.map((path) => ({
+        url: `${BASE_URL}${path}`,
+        lastModified: now,
+        changeFrequency: 'weekly',
+        priority: 0.85,
+    }));
 
     // Gallery Pages — 0.8 priority
     const galleryEntries: MetadataRoute.Sitemap = [
@@ -185,5 +212,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
         }))
     ];
 
-    return [...coreEntries, ...seoEntries, ...contentEntries, ...galleryEntries, ...quickToolsEntries, ...infoEntries];
+    return [
+        ...coreEntries,
+        ...seoEntries,
+        ...contentEntries,
+        ...categoryEntries,
+        ...galleryEntries,
+        ...quickToolsEntries,
+        ...infoEntries
+    ];
 }

@@ -11,6 +11,7 @@ export interface LearnArticle {
     readTime: string;
     icon: string;
     color: string;
+    category: string;
 }
 
 interface LearnArticleCardProps {
