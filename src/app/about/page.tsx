@@ -81,10 +81,10 @@ export default function AboutPage() {
                                 👤
                             </div>
                             <div>
-                                <h3 style={{ margin: '0 0 4px', fontSize: '1rem', fontWeight: 800, color: 'var(--text-primary)' }}>Prabhdeep Singh</h3>
+                                <h3 style={{ margin: '0 0 4px', fontSize: '1rem', fontWeight: 800, color: 'var(--text-primary)' }}>Prabhash Kumar</h3>
                                 <p style={{ margin: '0 0 10px', fontSize: '0.72rem', color: 'var(--accent-primary)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>Founder &amp; Senior Product Engineer</p>
                                 <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                                    Prabhdeep Singh is an experienced Full-Stack Developer, SEO Architect, and Information Systems Engineer. He designed and engineered VisualizeMyData with the goal of creating a client-side productivity platform that operates with zero database footprints, ensuring 100% privacy compliance.
+                                    Prabhash Kumar is an experienced Full-Stack Developer, SEO Architect, and Information Systems Engineer. He designed and engineered VisualizeMyData with the goal of creating a client-side productivity platform that operates with zero database footprints, ensuring 100% privacy compliance.
                                 </p>
                             </div>
                         </div>

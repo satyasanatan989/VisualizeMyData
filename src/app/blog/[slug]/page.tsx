@@ -91,7 +91,7 @@ export default async function BlogSlugPage({ params }: { params: Promise<Params>
         "dateModified": "2026-07-03T00:00:00Z",
         "author": {
             "@type": "Person",
-            "name": "Prabhdeep Singh",
+            "name": "Prabhash Kumar",
             "url": "https://visualizemydata.in/about"
         },
         "publisher": {
@@ -176,7 +176,7 @@ export default async function BlogSlugPage({ params }: { params: Promise<Params>
 
                     {/* EEAT Author / Time block */}
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: 40, borderBottom: '1px solid var(--border-subtle)', paddingBottom: 16, alignItems: 'center' }}>
-                        <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><User size={12} /> By Prabhdeep Singh (Founder)</span>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><User size={12} /> By Prabhash Kumar (Founder)</span>
                         <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><Check size={12} color="#10b981" /> Peer Reviewed for Accuracy</span>
                         <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><Clock size={12} /> {article.readTime}</span>
                     </div>
@@ -247,10 +247,10 @@ export default async function BlogSlugPage({ params }: { params: Promise<Params>
                                 👤
                             </div>
                             <div>
-                                <h4 style={{ margin: '0 0 4px', fontSize: '0.9rem', fontWeight: 850, color: 'var(--text-primary)' }}>Prabhdeep Singh</h4>
+                                <h4 style={{ margin: '0 0 4px', fontSize: '0.9rem', fontWeight: 800, color: 'var(--text-primary)' }}>Prabhash Kumar</h4>
                                 <p style={{ margin: '0 0 8px', fontSize: '0.7rem', color: 'var(--accent-primary)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>Founder &amp; Senior Product Engineer</p>
                                 <p style={{ margin: 0, fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                                    Prabhdeep Singh is a full-stack engineer and data systems architect with a background in secure cloudless processing. He compiles in-depth data visualization tutorials and builds open-source browser tools. <strong>Last updated:</strong> July 2026.
+                                    Prabhash Kumar is a full-stack engineer and data systems architect with a background in secure cloudless processing. He compiles in-depth data visualization tutorials and builds open-source browser tools. <strong>Last updated:</strong> July 2026.
                                 </p>
                             </div>
                         </div>

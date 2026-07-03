@@ -61,13 +61,13 @@ export default function LearnArticleLayout({ title, description, date, readTime,
                         }}>👤</div>
                         <div>
                             <p style={{ margin: '0 0 2px', fontSize: '0.88rem', fontWeight: 800, color: 'var(--text-primary)' }}>
-                                Prabhdeep Singh
+                                Prabhash Kumar
                             </p>
                             <p style={{ margin: '0 0 8px', fontSize: '0.68rem', color: 'var(--accent-primary)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                                 Founder &amp; Senior Product Engineer
                             </p>
                             <p style={{ margin: 0, fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
-                                Prabhdeep is a full-stack engineer specialising in browser-based data processing and privacy-first tool design. All content on VisualizeMyData is written, tested, and reviewed by the founding team. <strong>Reviewed &amp; updated:</strong> July 2026.
+                                Prabhash is a full-stack engineer specialising in browser-based data processing and privacy-first tool design. All content on VisualizeMyData is written, tested, and reviewed by the founding team. <strong>Reviewed &amp; updated:</strong> July 2026.
                             </p>
                         </div>
                     </div>

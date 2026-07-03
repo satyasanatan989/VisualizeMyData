@@ -1328,7 +1328,7 @@ export default function HomePage() {
               {
                 icon: '🛠️',
                 title: 'Built by Engineers, Tested Rigorously',
-                body: 'All 40+ tools are designed, coded, and stress-tested by Prabhdeep Singh, a full-stack systems engineer focused on privacy-first productivity software. Each tool undergoes accuracy verification, cross-browser compatibility testing, and performance benchmarking before release.'
+                body: 'All 40+ tools are designed, coded, and stress-tested by Prabhash Kumar, a full-stack systems engineer focused on privacy-first productivity software. Each tool undergoes accuracy verification, cross-browser compatibility testing, and performance benchmarking before release.'
               },
               {
                 icon: '📋',

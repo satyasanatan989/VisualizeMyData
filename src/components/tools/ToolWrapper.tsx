@@ -329,7 +329,7 @@ export default function ToolWrapper({ tool, children }: ToolWrapperProps) {
 
                     {/* EEAT Meta Data Row */}
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px 24px', fontSize: '0.72rem', color: 'var(--text-muted)', marginBottom: 8, alignItems: 'center' }}>
-                        <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><User size={11} /> <strong>Written By:</strong> Prabhdeep Singh</span>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><User size={11} /> <strong>Written By:</strong> Prabhash Kumar</span>
                         <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><Check size={11} color="#10b981" /> <strong>Reviewed By:</strong> Editorial Board &amp; Data Architects</span>
                         <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><Clock size={11} /> <strong>Last Updated:</strong> July 2026</span>
                         <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><Lock size={11} color="#10b981" /> <strong>Privacy Promise:</strong> 100% Secure Client Memory</span>
