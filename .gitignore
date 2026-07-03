@@ -36,6 +36,15 @@ yarn-error.log*
 # vercel
 .vercel
 
+# security — never commit credential scripts or utility scripts
+push_to_github.py
+upload_to_hf.py
+agent.py
+test_deployed.py
+requirements.txt
+lint_results.txt
+*.zip
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
