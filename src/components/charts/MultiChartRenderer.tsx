@@ -21,7 +21,22 @@ interface MultiChartRendererProps {
 }
 
 // Built-in color palette for multi-series charts
-const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#f43f5e', '#06b6d4'];
+const COLORS = ['#8455ef', '#3b82f6', '#10b981', '#f59e0b', '#f43f5e', '#06b6d4'];
+
+const renderTooltip = () => (
+    <Tooltip 
+        contentStyle={{ 
+            borderRadius: 12, 
+            background: 'rgba(15, 23, 42, 0.95)', 
+            border: '1px solid var(--border-subtle)', 
+            boxShadow: 'var(--shadow-lg)', 
+            color: 'var(--text-primary)', 
+            fontSize: 12 
+        }} 
+        itemStyle={{ color: 'var(--text-secondary)' }} 
+        labelStyle={{ fontWeight: 700, color: '#fff', marginBottom: 4 }} 
+    />
+);
 
 export default function MultiChartRenderer({ parsedData, initialConfigs = [], hideToolbar = false }: MultiChartRendererProps) {
     const [configs, setConfigs] = useState<ChartConfig[]>(initialConfigs);
@@ -83,7 +98,7 @@ export default function MultiChartRenderer({ parsedData, initialConfigs = [], hi
                             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border-subtle)" />
                             <XAxis dataKey={xAxisKey} tick={{ fontSize: 12, fill: 'var(--text-secondary)' }} />
                             <YAxis tick={{ fontSize: 12, fill: 'var(--text-secondary)' }} />
-                            <Tooltip contentStyle={{ borderRadius: 8, border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
+                            {renderTooltip()}
                             <Legend wrapperStyle={{ fontSize: 12 }} />
                             {yAxisKeys.map((k, i) => <Bar key={k} dataKey={k} fill={COLORS[i % COLORS.length]} radius={[4, 4, 0, 0]} />)}
                         </BarChart>
@@ -97,7 +112,7 @@ export default function MultiChartRenderer({ parsedData, initialConfigs = [], hi
                             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border-subtle)" />
                             <XAxis dataKey={xAxisKey} tick={{ fontSize: 12, fill: 'var(--text-secondary)' }} />
                             <YAxis tick={{ fontSize: 12, fill: 'var(--text-secondary)' }} />
-                            <Tooltip contentStyle={{ borderRadius: 8, border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
+                            {renderTooltip()}
                             <Legend wrapperStyle={{ fontSize: 12 }} />
                             {yAxisKeys.map((k, i) => <Bar key={k} dataKey={k} stackId="a" fill={COLORS[i % COLORS.length]} />)}
                         </BarChart>
@@ -111,7 +126,7 @@ export default function MultiChartRenderer({ parsedData, initialConfigs = [], hi
                             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border-subtle)" />
                             <XAxis dataKey={xAxisKey} tick={{ fontSize: 12, fill: 'var(--text-secondary)' }} />
                             <YAxis tick={{ fontSize: 12, fill: 'var(--text-secondary)' }} />
-                            <Tooltip contentStyle={{ borderRadius: 8, border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
+                            {renderTooltip()}
                             <Legend wrapperStyle={{ fontSize: 12 }} />
                             {yAxisKeys.map((k, i) => <Line key={k} type="monotone" dataKey={k} stroke={COLORS[i % COLORS.length]} strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} />)}
                         </LineChart>
@@ -125,7 +140,7 @@ export default function MultiChartRenderer({ parsedData, initialConfigs = [], hi
                             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border-subtle)" />
                             <XAxis dataKey={xAxisKey} tick={{ fontSize: 12, fill: 'var(--text-secondary)' }} />
                             <YAxis tick={{ fontSize: 12, fill: 'var(--text-secondary)' }} />
-                            <Tooltip contentStyle={{ borderRadius: 8, border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
+                            {renderTooltip()}
                             <Legend wrapperStyle={{ fontSize: 12 }} />
                             {yAxisKeys.map((k, i) => (
                                 <Area key={k} type="monotone" dataKey={k} stroke={COLORS[i % COLORS.length]} fill={COLORS[i % COLORS.length]} fillOpacity={0.3} />
@@ -141,7 +156,7 @@ export default function MultiChartRenderer({ parsedData, initialConfigs = [], hi
                             <CartesianGrid strokeDasharray="3 3" stroke="var(--border-subtle)" />
                             <XAxis type="number" dataKey={xAxisKey} name={xAxisKey} tick={{ fontSize: 12, fill: 'var(--text-secondary)' }} />
                             <YAxis type="number" dataKey={yAxisKeys[0]} name={yAxisKeys[0]} tick={{ fontSize: 12, fill: 'var(--text-secondary)' }} />
-                            <Tooltip cursor={{ strokeDasharray: '3 3' }} contentStyle={{ borderRadius: 8, border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
+                            {renderTooltip()}
                             <Scatter name={`${xAxisKey} vs ${yAxisKeys[0]}`} data={data} fill={COLORS[0]} />
                         </ScatterChart>
                     </ResponsiveContainer>
@@ -155,7 +170,7 @@ export default function MultiChartRenderer({ parsedData, initialConfigs = [], hi
                             <XAxis type="number" dataKey={xAxisKey} name={xAxisKey} tick={{ fontSize: 12, fill: 'var(--text-secondary)' }} />
                             <YAxis type="number" dataKey={yAxisKeys[0]} name={yAxisKeys[0]} tick={{ fontSize: 12, fill: 'var(--text-secondary)' }} />
                             <ZAxis type="number" dataKey={zAxisKey} range={[40, 400]} name={zAxisKey} />
-                            <Tooltip cursor={{ strokeDasharray: '3 3' }} contentStyle={{ borderRadius: 8, border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
+                            {renderTooltip()}
                             <Scatter name="Data" data={data} fill={COLORS[1]} fillOpacity={0.6} />
                         </ScatterChart>
                     </ResponsiveContainer>
@@ -170,7 +185,7 @@ export default function MultiChartRenderer({ parsedData, initialConfigs = [], hi
                             <XAxis type="category" dataKey={xAxisKey} name={xAxisKey} tick={{ fontSize: 12, fill: 'var(--text-secondary)' }} />
                             <YAxis type="category" dataKey={yAxisKeys[0]} name={yAxisKeys[0]} tick={{ fontSize: 12, fill: 'var(--text-secondary)' }} />
                             <ZAxis type="number" dataKey={yAxisKeys[0]} range={[100, 100]} /> {/* Fixed area, color varies by value later if custom shape provided */}
-                            <Tooltip cursor={{ strokeDasharray: '3 3' }} contentStyle={{ borderRadius: 8, border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
+                            {renderTooltip()}
                             <Scatter name="Heatmap" data={data} fill={COLORS[3]} shape="square" />
                         </ScatterChart>
                     </ResponsiveContainer>
@@ -199,7 +214,7 @@ export default function MultiChartRenderer({ parsedData, initialConfigs = [], hi
                 return (
                     <ResponsiveContainer width="100%" height="100%">
                         <PieChart>
-                            <Tooltip contentStyle={{ borderRadius: 8, border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
+                            {renderTooltip()}
                             <Legend wrapperStyle={{ fontSize: 11 }} />
                             <Pie data={pieData} dataKey={yAxisKeys[0]} nameKey={xAxisKey} cx="50%" cy="50%" outerRadius={110} innerRadius={0}>
                                 {pieData.map((_, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)}
@@ -216,7 +231,7 @@ export default function MultiChartRenderer({ parsedData, initialConfigs = [], hi
                             <PolarGrid stroke="var(--border-subtle)" />
                             <PolarAngleAxis dataKey={xAxisKey} tick={{ fontSize: 12, fill: 'var(--text-secondary)' }} />
                             <PolarRadiusAxis angle={30} domain={[0, 'auto']} tick={{ fontSize: 10, fill: 'var(--text-muted)' }} />
-                            <Tooltip contentStyle={{ borderRadius: 8, border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
+                            {renderTooltip()}
                             <Legend wrapperStyle={{ fontSize: 12 }} />
                             {yAxisKeys.map((k, i) => (
                                 <Radar key={k} name={k} dataKey={k} stroke={COLORS[i % COLORS.length]} fill={COLORS[i % COLORS.length]} fillOpacity={0.4} />
@@ -233,7 +248,7 @@ export default function MultiChartRenderer({ parsedData, initialConfigs = [], hi
                             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border-subtle)" />
                             <XAxis dataKey="range" tick={{ fontSize: 12, fill: 'var(--text-secondary)' }} />
                             <YAxis tick={{ fontSize: 12, fill: 'var(--text-secondary)' }} />
-                            <Tooltip contentStyle={{ borderRadius: 8, border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
+                            {renderTooltip()}
                             <Bar dataKey="count" fill={COLORS[4]} radius={[4, 4, 0, 0]} />
                         </BarChart>
                     </ResponsiveContainer>

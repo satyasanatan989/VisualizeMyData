@@ -6,7 +6,7 @@ import {
     Lock, Shield, Clock, ArrowRight, Home, History, Sparkles, 
     Image as ImageIcon, FileText, ListFilter, Code, ChevronRight, ChevronLeft,
     Star, Share2, Copy, MessageSquare, Plus, Info, Check, User, ShieldAlert, Award,
-    BookOpen, Tag, Mail
+    BookOpen, Tag, Mail, PanelLeftClose, PanelLeftOpen, Folder, Search
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { ToolDef, getRelatedTools, QUICK_TOOLS } from '@/lib/toolsRegistry';
@@ -57,9 +57,48 @@ const seoSubTitleStyle: React.CSSProperties = {
 };
 
 export default function ToolWrapper({ tool, children }: ToolWrapperProps) {
+    const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+    const [allFavorites, setAllFavorites] = useState<ToolDef[]>([]);
     const [recentlyUsed, setRecentlyUsed] = useState<ToolDef[]>([]);
     const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
     const [isFavourited, setIsFavourited] = useState(false);
+
+    useEffect(() => {
+        const stored = localStorage.getItem('sidebar_collapsed');
+        if (stored) {
+            setSidebarCollapsed(stored === 'true');
+        }
+
+        const favs = localStorage.getItem('favourite_tools');
+        const list: string[] = favs ? JSON.parse(favs) : [];
+        const mappedFavs = list
+            .map(slug => QUICK_TOOLS.find(t => t.slug === slug))
+            .filter((t): t is ToolDef => !!t);
+        setAllFavorites(mappedFavs);
+
+        const handleFavUpdate = () => {
+            const currentFavs = localStorage.getItem('favourite_tools');
+            const currentList: string[] = currentFavs ? JSON.parse(currentFavs) : [];
+            const currentMapped = currentList
+                .map(slug => QUICK_TOOLS.find(t => t.slug === slug))
+                .filter((t): t is ToolDef => !!t);
+            setAllFavorites(currentMapped);
+        };
+        window.addEventListener('favourites-updated', handleFavUpdate);
+        return () => window.removeEventListener('favourites-updated', handleFavUpdate);
+    }, []);
+
+    const toggleSidebar = () => {
+        const nextState = !sidebarCollapsed;
+        setSidebarCollapsed(nextState);
+        localStorage.setItem('sidebar_collapsed', String(nextState));
+    };
+
+    const handleSearchClick = () => {
+        window.dispatchEvent(new CustomEvent('trigger-global-search'));
+    };
+
+    const categories = Array.from(new Set(QUICK_TOOLS.map(t => t.category)));
 
     useEffect(() => {
         trackToolUsage(tool.slug, tool.name);
@@ -301,9 +340,132 @@ export default function ToolWrapper({ tool, children }: ToolWrapperProps) {
                 </div>
             </div>
 
-            {/* Main grid */}
-            <div className="container" style={{ marginTop: 32 }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '3fr 1.1fr', gap: 32 }} className="tool-layout-grid">
+            {/* Collapsible Left Sidebar Layout */}
+            <div className="container" style={{ display: 'flex', gap: 24, marginTop: 24 }}>
+                {/* Left Sidebar */}
+                <div className="hidden-mobile" style={{
+                    width: sidebarCollapsed ? 0 : 240,
+                    opacity: sidebarCollapsed ? 0 : 1,
+                    pointerEvents: sidebarCollapsed ? 'none' : 'auto',
+                    transition: 'width 0.25s ease, opacity 0.2s ease',
+                    overflow: 'hidden',
+                    flexShrink: 0,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 20,
+                    borderRight: sidebarCollapsed ? 'none' : '1px solid var(--border-subtle)',
+                    paddingRight: sidebarCollapsed ? 0 : 16
+                }}>
+                    {/* Collapsible header */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <span style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Navigator</span>
+                        <button onClick={toggleSidebar} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: 4 }} title="Collapse Sidebar">
+                            <PanelLeftClose size={15} />
+                        </button>
+                    </div>
+
+                    {/* Search shortcut bar */}
+                    <button onClick={handleSearchClick} style={{
+                        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                        padding: '10px 12px', borderRadius: 8, background: 'rgba(255,255,255,0.03)',
+                        border: '1px solid var(--border-subtle)', color: 'var(--text-muted)', fontSize: '0.78rem',
+                        cursor: 'pointer', width: '100%', textAlign: 'left'
+                    }}>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}><Search size={13} /> Search...</span>
+                        <kbd style={{ fontSize: '0.62rem', background: 'rgba(255,255,255,0.08)', padding: '2px 4px', borderRadius: 4 }}>Ctrl K</kbd>
+                    </button>
+
+                    {/* Pinned / Favorites */}
+                    <div>
+                        <h4 style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', margin: '0 0 8px', display: 'flex', alignItems: 'center', gap: 6 }}>
+                            <Star size={12} color="var(--accent-primary)" fill="var(--accent-primary)" /> Pinned Tools
+                        </h4>
+                        {allFavorites.length > 0 ? (
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                                {allFavorites.slice(0, 5).map(f => (
+                                    <Link key={f.slug} href={`/tools/${f.slug}`} style={{
+                                        fontSize: '0.76rem', color: f.slug === tool.slug ? '#fff' : 'var(--text-secondary)',
+                                        textDecoration: 'none', padding: '6px 8px', borderRadius: 6,
+                                        background: f.slug === tool.slug ? 'rgba(186,158,255,0.12)' : 'transparent',
+                                        transition: 'background 0.2s'
+                                    }}>
+                                        {f.name}
+                                    </Link>
+                                ))}
+                            </div>
+                        ) : (
+                            <p style={{ margin: 0, fontSize: '0.68rem', color: 'var(--text-muted)' }}>No pinned tools.</p>
+                        )}
+                    </div>
+
+                    {/* Recently Visited */}
+                    <div>
+                        <h4 style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', margin: '0 0 8px', display: 'flex', alignItems: 'center', gap: 6 }}>
+                            <History size={12} color="var(--accent-primary)" /> Recent Tools
+                        </h4>
+                        {recentlyUsed.length > 0 ? (
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                                {recentlyUsed.map(r => (
+                                    <Link key={r.slug} href={`/tools/${r.slug}`} style={{
+                                        fontSize: '0.76rem', color: 'var(--text-secondary)',
+                                        textDecoration: 'none', padding: '6px 8px', borderRadius: 6,
+                                        transition: 'background 0.2s'
+                                    }}>
+                                        {r.name}
+                                    </Link>
+                                ))}
+                            </div>
+                        ) : (
+                            <p style={{ margin: 0, fontSize: '0.68rem', color: 'var(--text-muted)' }}>History is empty.</p>
+                        )}
+                    </div>
+
+                    {/* Dynamic Categories */}
+                    <div>
+                        <h4 style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-secondary)', margin: '0 0 8px', display: 'flex', alignItems: 'center', gap: 6 }}>
+                            <Folder size={12} color="var(--accent-primary)" /> Categories
+                        </h4>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                            {categories.map(c => (
+                                <Link key={c} href={`/category/${c.toLowerCase().replace(/\s+/g, '-')}`} style={{
+                                    fontSize: '0.76rem', color: 'var(--text-secondary)',
+                                    textDecoration: 'none', padding: '6px 8px', borderRadius: 6,
+                                    transition: 'background 0.2s', display: 'flex', justifyContent: 'space-between', alignItems: 'center'
+                                }}>
+                                    <span>{c}</span>
+                                    <ChevronRight size={10} color="var(--text-muted)" />
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Toggle Button when collapsed */}
+                {sidebarCollapsed && (
+                    <button onClick={toggleSidebar} className="hidden-mobile" style={{
+                        position: 'fixed', left: 16, bottom: 84, zIndex: 40,
+                        width: 36, height: 36, borderRadius: 10, background: 'var(--bg-card)',
+                        border: '1px solid var(--border-subtle)', display: 'flex', alignItems: 'center',
+                        justifyContent: 'center', color: 'var(--text-secondary)', cursor: 'pointer',
+                        boxShadow: '0 4px 15px rgba(0,0,0,0.3)'
+                    }} title="Expand Navigator">
+                        <PanelLeftOpen size={16} />
+                    </button>
+                )}
+
+                {/* Main Content Workspace */}
+                <div style={{ flex: 1, minWidth: 0 }}>
+                    
+                    {/* Collapsible toggle bar on top */}
+                    {!sidebarCollapsed && (
+                        <div className="hidden-mobile" style={{ marginBottom: 12 }}>
+                            <button onClick={toggleSidebar} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.75rem', padding: '4px 8px', borderRadius: 6 }}>
+                                <PanelLeftClose size={13} /> Collapse Navigator
+                            </button>
+                        </div>
+                    )}
+
+                    <div style={{ display: 'grid', gridTemplateColumns: '3fr 1.1fr', gap: 32 }} className="tool-layout-grid">
                     
                     {/* Left: Main Tool workspace */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
@@ -679,6 +841,7 @@ export default function ToolWrapper({ tool, children }: ToolWrapperProps) {
                     </div>
 
                 </div>
+            </div>
             </div>
         </div>
     );

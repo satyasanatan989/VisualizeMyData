@@ -161,6 +161,14 @@ export default function GlobalEngagementWrapper({ children }: { children: React.
     }, []);
 
     useEffect(() => {
+        const handleCustomSearchTrigger = () => {
+            setSearchOpen(true);
+        };
+        window.addEventListener('trigger-global-search', handleCustomSearchTrigger);
+        return () => window.removeEventListener('trigger-global-search', handleCustomSearchTrigger);
+    }, []);
+
+    useEffect(() => {
         if (searchOpen && searchInputRef.current) {
             searchInputRef.current.focus();
         } else {

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { BarChart2, Moon, Sun, Monitor, Menu, X, ChevronDown, Search, ArrowRight } from 'lucide-react';
+import { BarChart2, Moon, Sun, Monitor, Menu, X, ChevronDown, Search, ArrowRight, Github, HelpCircle } from 'lucide-react';
 import { trackThemeToggle } from '@/lib/analytics';
 
 const TOOL_LINKS = [
@@ -279,6 +279,46 @@ export default function Navbar({ darkMode: propDarkMode, onToggleDark }: { darkM
 
                 {/* Actions */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                    
+                    {/* GitHub Link */}
+                    <a 
+                        href="https://github.com/satyasanatan989/VisualizeMyData" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        aria-label="GitHub Repository"
+                        className="hidden-mobile"
+                        style={{
+                            width: 36, height: 36, borderRadius: 8,
+                            background: 'rgba(255,255,255,0.06)',
+                            border: '1px solid rgba(255,255,255,0.08)',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            cursor: 'pointer', color: 'var(--text-secondary)',
+                            transition: 'all 0.2s',
+                        }}
+                        onMouseEnter={e => e.currentTarget.style.color = '#fff'}
+                        onMouseLeave={e => e.currentTarget.style.color = 'var(--text-secondary)'}
+                    >
+                        <Github size={16} />
+                    </a>
+
+                    {/* Support Mail Link */}
+                    <a 
+                        href="mailto:support@visualizemydata.in?subject=VisualizeMyData Support Request"
+                        aria-label="Contact Support"
+                        className="hidden-mobile"
+                        style={{
+                            width: 36, height: 36, borderRadius: 8,
+                            background: 'rgba(255,255,255,0.06)',
+                            border: '1px solid rgba(255,255,255,0.08)',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            cursor: 'pointer', color: 'var(--text-secondary)',
+                            transition: 'all 0.2s',
+                        }}
+                        onMouseEnter={e => e.currentTarget.style.color = '#fff'}
+                        onMouseLeave={e => e.currentTarget.style.color = 'var(--text-secondary)'}
+                    >
+                        <HelpCircle size={16} />
+                    </a>
                     
                     {/* Theme Selector Dropdown */}
                     <div style={{ position: 'relative' }}>
