@@ -3,6 +3,7 @@ import { Inter, Manrope } from "next/font/google";
 import Script from "next/script";
 import { Toaster } from 'sonner';
 import PageTransition from "@/components/PageTransition";
+import GlobalEngagementWrapper from "@/components/GlobalEngagementWrapper";
 import "./globals.css";
 
 const inter = Inter({
@@ -156,9 +157,11 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
         <Toaster position="top-center" richColors theme="dark" closeButton duration={3000} />
-        <PageTransition>
-          {children}
-        </PageTransition>
+        <GlobalEngagementWrapper>
+          <PageTransition>
+            {children}
+          </PageTransition>
+        </GlobalEngagementWrapper>
         {/* Google Analytics 4 */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-K9YT82L55H"

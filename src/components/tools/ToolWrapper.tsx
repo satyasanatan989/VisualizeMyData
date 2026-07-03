@@ -4,8 +4,9 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { 
     Lock, Shield, Clock, ArrowRight, Home, History, Sparkles, 
-    Image as ImageIcon, FileText, ListFilter, Code, ChevronRight,
-    Star, Share2, Copy, MessageSquare, Plus, Info, Check, User, ShieldAlert, Award
+    Image as ImageIcon, FileText, ListFilter, Code, ChevronRight, ChevronLeft,
+    Star, Share2, Copy, MessageSquare, Plus, Info, Check, User, ShieldAlert, Award,
+    BookOpen, Tag, Mail
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { ToolDef, getRelatedTools, QUICK_TOOLS } from '@/lib/toolsRegistry';
@@ -59,10 +60,6 @@ export default function ToolWrapper({ tool, children }: ToolWrapperProps) {
     const [recentlyUsed, setRecentlyUsed] = useState<ToolDef[]>([]);
     const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
     const [isFavourited, setIsFavourited] = useState(false);
-    const [feedbackOpen, setFeedbackOpen] = useState(false);
-    const [feedbackText, setFeedbackText] = useState('');
-    const [feedbackType, setFeedbackType] = useState<'feedback' | 'suggest'>('feedback');
-    const [feedbackEmail, setFeedbackEmail] = useState('');
 
     useEffect(() => {
         trackToolUsage(tool.slug, tool.name);
@@ -127,21 +124,48 @@ export default function ToolWrapper({ tool, children }: ToolWrapperProps) {
         }
     };
 
-    const handleFeedbackSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!feedbackText.trim()) return;
-        
-        toast.success(
-            feedbackType === 'feedback' 
-                ? 'Thank you for your feedback! Our engineers will review it.' 
-                : 'Thank you for your suggestion! We will notify you when it is built.'
-        );
-        setFeedbackText('');
-        setFeedbackEmail('');
-        setFeedbackOpen(false);
-    };
+
 
     const related = getRelatedTools(tool, 3);
+    
+    // Programmatic Tag Calculations for SaaS metadata
+    const catStr = tool.category as string;
+    const difficulty = ['Developer Tools', 'CSV Tools', 'Excel Tools', 'Food Technology'].includes(catStr) ? 'Intermediate' : 'Beginner';
+    
+    let bestFor = 'Everyone';
+    if (catStr === 'Developer Tools') bestFor = 'Developers';
+    else if (catStr === 'Image Tools') bestFor = 'Designers';
+    else if (catStr === 'Student Tools') bestFor = 'Students';
+    else if (catStr === 'Business Tools') bestFor = 'Businesses';
+    else if (catStr === 'Food Technology') bestFor = 'Food Scientists';
+
+    // Smart Navigation: Prev & Next Tools
+    const currentIndex = QUICK_TOOLS.findIndex(t => t.slug === tool.slug);
+    const prevTool = currentIndex > 0 ? QUICK_TOOLS[currentIndex - 1] : null;
+    const nextTool = currentIndex < QUICK_TOOLS.length - 1 ? QUICK_TOOLS[currentIndex + 1] : null;
+
+    // Recommendations lists (5 tools, 3 guides, 2 templates)
+    const similarTools = getRelatedTools(tool, 5);
+    const SEARCH_GUIDES = [
+        { title: 'What is Data Visualization?', href: '/learn/what-is-data-visualization' },
+        { title: 'How to Create Charts from Excel', href: '/learn/how-to-create-charts-from-excel' },
+        { title: 'Best Data Visualization Techniques', href: '/learn/best-data-visualization-techniques' },
+        { title: 'Dashboard Design Best Practices', href: '/learn/dashboard-design-best-practices' },
+        { title: 'Common Chart Types Guide', href: '/learn/common-chart-types' },
+        { title: 'How to Visualize Excel Data', href: '/blog/how-to-visualize-excel-data' },
+        { title: 'CSV Data Visualization Guide', href: '/blog/csv-data-visualization-guide' },
+        { title: 'Best Free Data Visualization Tools', href: '/blog/best-free-data-visualization-tools' }
+    ];
+    const relatedGuides = SEARCH_GUIDES.filter(g => !g.title.toLowerCase().includes(tool.name.toLowerCase())).slice(0, 3);
+
+    const SEARCH_TEMPLATES = [
+        { name: 'Sales Performance Dashboard', href: '/gallery/sales-performance-dashboard' },
+        { name: 'Marketing Campaign ROI Dashboard', href: '/gallery/marketing-campaign-roi' },
+        { name: 'Financial Overview Dashboard', href: '/gallery/financial-overview-dashboard' },
+        { name: 'Employee Satisfaction Survey', href: '/gallery/employee-satisfaction-survey' }
+    ];
+    const relatedTemplates = SEARCH_TEMPLATES.slice(0, 2);
+
     const seoData = getDynamicSEOContent(tool.slug);
     const siteUrl = "https://visualizemydata.in";
 
@@ -244,6 +268,26 @@ export default function ToolWrapper({ tool, children }: ToolWrapperProps) {
                         </span>
                     </div>
                     
+                    {/* Tool Tags */}
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 14 }}>
+                        <span style={{ fontSize: '0.7rem', display: 'flex', alignItems: 'center', gap: 4, background: 'rgba(255,255,255,0.03)', border: '1px solid var(--border-subtle)', padding: '4px 10px', borderRadius: 20, color: 'var(--text-secondary)' }}>
+                            <Tag size={10} color="var(--accent-primary)" /> {difficulty}
+                        </span>
+                        <span style={{ fontSize: '0.7rem', display: 'flex', alignItems: 'center', gap: 4, background: 'rgba(255,255,255,0.03)', border: '1px solid var(--border-subtle)', padding: '4px 10px', borderRadius: 20, color: 'var(--text-secondary)' }}>
+                            <User size={10} color="var(--accent-primary)" /> Best for {bestFor}
+                        </span>
+                        {(tool as any).isPopular && (
+                            <span style={{ fontSize: '0.7rem', background: 'rgba(245, 158, 11, 0.1)', border: '1px solid rgba(245, 158, 11, 0.25)', padding: '4px 10px', borderRadius: 20, color: '#f59e0b', fontWeight: 600 }}>
+                                🔥 Popular Today
+                            </span>
+                        )}
+                        {tool.badge === 'NEW' && (
+                            <span style={{ fontSize: '0.7rem', background: 'rgba(59, 130, 246, 0.1)', border: '1px solid rgba(59, 130, 246, 0.25)', padding: '4px 10px', borderRadius: 20, color: '#3b82f6', fontWeight: 600 }}>
+                                ✨ New Release
+                            </span>
+                        )}
+                    </div>
+
                     {/* EEAT Meta Data Row */}
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, fontSize: '0.72rem', color: 'var(--text-muted)', marginBottom: 4, alignItems: 'center' }}>
                         <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}><User size={11} /> Written by Prabhdeep Singh</span>
@@ -271,23 +315,52 @@ export default function ToolWrapper({ tool, children }: ToolWrapperProps) {
                             {children}
                         </div>
 
-                        {/* Tool Actions Row */}
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12, borderTop: '1px solid var(--border-subtle)', paddingTop: 16 }}>
-                            <div style={{ display: 'flex', gap: 8 }}>
-                                <button onClick={handleShare} className="btn-secondary" style={{ padding: '6px 12px', fontSize: '0.78rem', gap: 6, display: 'inline-flex', alignItems: 'center' }}>
-                                    <Share2 size={13} /> Share Tool
-                                </button>
-                                <button onClick={handleCopyLink} className="btn-secondary" style={{ padding: '6px 12px', fontSize: '0.78rem', gap: 6, display: 'inline-flex', alignItems: 'center' }}>
-                                    <Copy size={13} /> Copy Link
-                                </button>
-                            </div>
-                            <div style={{ display: 'flex', gap: 8 }}>
-                                <button onClick={() => { setFeedbackType('feedback'); setFeedbackOpen(true); }} className="btn-secondary" style={{ padding: '6px 12px', fontSize: '0.78rem', gap: 6, display: 'inline-flex', alignItems: 'center', borderColor: 'transparent', color: 'var(--text-muted)' }}>
-                                    <MessageSquare size={13} /> Feedback
-                                </button>
-                                <button onClick={() => { setFeedbackType('suggest'); setFeedbackOpen(true); }} className="btn-secondary" style={{ padding: '6px 12px', fontSize: '0.78rem', gap: 6, display: 'inline-flex', alignItems: 'center', borderColor: 'transparent', color: 'var(--text-muted)' }}>
-                                    <Plus size={13} /> Suggest a Tool
-                                </button>
+                        {/* Tool Actions Row & Viral Sharing System */}
+                        <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: 20 }} className="tool-actions-container">
+                            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
+                                {/* Left side: Social Sharing */}
+                                <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 8 }}>
+                                    <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', marginRight: 6 }}>Share:</span>
+                                    <button onClick={handleShare} className="btn-secondary" style={{ padding: '6px 12px', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: 4 }} title="System Native Share">
+                                        <Share2 size={13} /> Share
+                                    </button>
+                                    <button onClick={handleCopyLink} className="btn-secondary" style={{ padding: '6px 12px', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: 4 }} title="Copy Link to Clipboard">
+                                        <Copy size={13} /> Copy Link
+                                    </button>
+                                    
+                                    {/* Whatsapp */}
+                                    <a href={`https://api.whatsapp.com/send?text=${encodeURIComponent(tool.name + ' - Free online browser tool: ' + (typeof window !== 'undefined' ? window.location.href : ''))}`} target="_blank" rel="noopener noreferrer" className="btn-secondary" style={{ padding: '6px 10px', fontSize: '0.72rem', textDecoration: 'none', color: '#25D366' }}>
+                                        WhatsApp
+                                    </a>
+
+                                    {/* X / Twitter */}
+                                    <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent('Use ' + tool.name + ' online for free: ')}&url=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : '')}`} target="_blank" rel="noopener noreferrer" className="btn-secondary" style={{ padding: '6px 10px', fontSize: '0.72rem', textDecoration: 'none', color: '#1DA1F2' }}>
+                                        X
+                                    </a>
+
+                                    {/* LinkedIn */}
+                                    <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : '')}`} target="_blank" rel="noopener noreferrer" className="btn-secondary" style={{ padding: '6px 10px', fontSize: '0.72rem', textDecoration: 'none', color: '#0A66C2' }}>
+                                        LinkedIn
+                                    </a>
+
+                                    {/* Facebook */}
+                                    <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : '')}`} target="_blank" rel="noopener noreferrer" className="btn-secondary" style={{ padding: '6px 10px', fontSize: '0.72rem', textDecoration: 'none', color: '#1877F2' }}>
+                                        Facebook
+                                    </a>
+                                </div>
+
+                                {/* Right side: Serverless Feedback Actions */}
+                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                                    <a href={`mailto:support@visualizemydata.in?subject=Bug Report - ${tool.name}&body=Please enter bug details below:`} className="btn-secondary" style={{ padding: '6px 12px', fontSize: '0.75rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 4, color: '#ef4444' }}>
+                                        <ShieldAlert size={12} /> Report Bug
+                                    </a>
+                                    <a href={`mailto:support@visualizemydata.in?subject=Improvement Suggestion - ${tool.name}&body=Describe the feature or improvement you would like to see:`} className="btn-secondary" style={{ padding: '6px 12px', fontSize: '0.75rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                                        <MessageSquare size={12} /> Suggest Improvement
+                                    </a>
+                                    <a href={`mailto:support@visualizemydata.in?subject=Request New In-Browser Tool&body=Detail the tool specifications you want:`} className="btn-secondary" style={{ padding: '6px 12px', fontSize: '0.75rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                                        <Plus size={12} /> Request New Tool
+                                    </a>
+                                </div>
                             </div>
                         </div>
 
@@ -297,6 +370,62 @@ export default function ToolWrapper({ tool, children }: ToolWrapperProps) {
                             <p style={{ margin: 0, fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
                                 <strong>Privacy Secured:</strong> This utility runs 100% inside your browser. No files, logs, or values are uploaded to any server. Your information stays safe on your device.
                             </p>
+                        </div>
+
+                        {/* Learning Center Widget */}
+                        <div className="card" style={{ padding: 24, background: 'rgba(132, 85, 239, 0.02)', border: '1px solid rgba(132, 85, 239, 0.15)', borderRadius: 20 }}>
+                            <h3 style={{ fontFamily: 'var(--font-manrope)', fontSize: '1rem', fontWeight: 800, color: '#fff', margin: '0 0 16px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                                <BookOpen size={16} color="var(--accent-primary)" /> Learning Center &amp; Guides
+                            </h3>
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }} className="features-grid">
+                                <div style={{ background: 'rgba(0,0,0,0.15)', padding: 16, borderRadius: 12, border: '1px solid var(--border-subtle)' }}>
+                                    <span style={{ fontSize: '0.62rem', background: '#10b981', color: '#000', fontWeight: 800, padding: '2px 6px', borderRadius: 4, textTransform: 'uppercase', display: 'inline-block', marginBottom: 8 }}>Beginner</span>
+                                    <h4 style={{ fontSize: '0.8rem', fontWeight: 700, margin: '0 0 6px', color: '#fff' }}>Get Started Guide</h4>
+                                    <p style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', margin: '0 0 10px', lineHeight: 1.4 }}>Master the fundamentals of browser-based calculations in 2 minutes.</p>
+                                    <Link href="/learn/what-is-data-visualization" style={{ fontSize: '0.72rem', color: 'var(--accent-primary)', textDecoration: 'none', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                                        Read Tutorial <ChevronRight size={10} />
+                                    </Link>
+                                </div>
+                                <div style={{ background: 'rgba(0,0,0,0.15)', padding: 16, borderRadius: 12, border: '1px solid var(--border-subtle)' }}>
+                                    <span style={{ fontSize: '0.62rem', background: '#f59e0b', color: '#000', fontWeight: 800, padding: '2px 6px', borderRadius: 4, textTransform: 'uppercase', display: 'inline-block', marginBottom: 8 }}>Advanced</span>
+                                    <h4 style={{ fontSize: '0.8rem', fontWeight: 700, margin: '0 0 6px', color: '#fff' }}>High Volume Tips</h4>
+                                    <p style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', margin: '0 0 10px', lineHeight: 1.4 }}>Learn how to manage large files and batch process data locally.</p>
+                                    <Link href="/learn/dashboard-design-best-practices" style={{ fontSize: '0.72rem', color: 'var(--accent-primary)', textDecoration: 'none', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                                        Read Guide <ChevronRight size={10} />
+                                    </Link>
+                                </div>
+                                <div style={{ background: 'rgba(0,0,0,0.15)', padding: 16, borderRadius: 12, border: '1px solid var(--border-subtle)' }}>
+                                    <span style={{ fontSize: '0.62rem', background: 'var(--accent-primary)', color: '#000', fontWeight: 800, padding: '2px 6px', borderRadius: 4, textTransform: 'uppercase', display: 'inline-block', marginBottom: 8 }}>Tutorial</span>
+                                    <h4 style={{ fontSize: '0.8rem', fontWeight: 700, margin: '0 0 6px', color: '#fff' }}>Related Tutorial</h4>
+                                    <p style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', margin: '0 0 10px', lineHeight: 1.4 }}>Step-by-step workbook for extracting insights without server limits.</p>
+                                    <Link href="/blog/how-to-visualize-excel-data" style={{ fontSize: '0.72rem', color: 'var(--accent-primary)', textDecoration: 'none', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                                        Open Tutorial <ChevronRight size={10} />
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Smart Navigation Buttons */}
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 20px', borderRadius: 16, background: 'rgba(255,255,255,0.01)', border: '1px solid var(--border-subtle)', flexWrap: 'wrap', gap: 12 }}>
+                            {prevTool ? (
+                                <Link href={`/tools/${prevTool.slug}`} style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: '0.78rem', color: 'var(--text-secondary)', fontWeight: 600 }} className="hover-white">
+                                    <ChevronLeft size={14} /> Previous: {prevTool.name}
+                                </Link>
+                            ) : (
+                                <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>First Tool</span>
+                            )}
+
+                            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                                Category: <Link href={`/category/${tool.category.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`} style={{ color: 'var(--accent-primary)', textDecoration: 'none', fontWeight: 700 }}>{tool.category}</Link>
+                            </span>
+
+                            {nextTool ? (
+                                <Link href={`/tools/${nextTool.slug}`} style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: '0.78rem', color: 'var(--text-secondary)', fontWeight: 600 }} className="hover-white">
+                                    Next: {nextTool.name} <ChevronRight size={14} />
+                                </Link>
+                            ) : (
+                                <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Last Tool</span>
+                            )}
                         </div>
 
                         {/* Mid-Page AdSense Banner (Disabled by default) */}
@@ -424,15 +553,44 @@ export default function ToolWrapper({ tool, children }: ToolWrapperProps) {
                                 </ul>
                             </div>
 
-                            {/* 12. Related Tools */}
+                            {/* 12. Related Tools, Guides, & Templates (10-Slot Recommendation Grid) */}
                             <div style={seoSectionStyle}>
-                                <h2 style={seoSectionTitleStyle}>12. Related Free Utility Tools</h2>
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }} className="explore-grid">
-                                    {seoData.relatedTools.map((t, idx) => (
+                                <h2 style={seoSectionTitleStyle}>12. Related Free Tools, Guides &amp; Templates</h2>
+                                
+                                {/* 5 Similar Tools */}
+                                <h3 style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--text-secondary)', margin: '14px 0 10px' }}>Similar Tools You Might Like:</h3>
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 12, marginBottom: 20 }}>
+                                    {similarTools.map((t, idx) => (
+                                        <Link key={idx} href={`/tools/${t.slug}`} style={{ textDecoration: 'none' }}>
+                                            <div style={{ ...seoInnerCardStyle, padding: '12px 14px' }} className="glass-card-hover">
+                                                <h4 style={{ margin: 0, fontSize: '0.78rem', fontWeight: 700, color: '#fff' }}>{t.name}</h4>
+                                                <span style={{ fontSize: '0.62rem', color: 'var(--text-muted)', marginTop: 4, display: 'block' }}>{t.category}</span>
+                                            </div>
+                                        </Link>
+                                    ))}
+                                </div>
+
+                                {/* 3 Guides */}
+                                <h3 style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--text-secondary)', margin: '0 0 10px' }}>Recommended Reading:</h3>
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 12, marginBottom: 20 }}>
+                                    {relatedGuides.map((g, idx) => (
+                                        <Link key={idx} href={g.href} style={{ textDecoration: 'none' }}>
+                                            <div style={{ ...seoInnerCardStyle, padding: '12px 14px' }} className="glass-card-hover">
+                                                <h4 style={{ margin: 0, fontSize: '0.78rem', fontWeight: 700, color: 'var(--accent-primary)' }}>{g.title}</h4>
+                                                <span style={{ fontSize: '0.62rem', color: 'var(--text-muted)', marginTop: 4, display: 'block' }}>Guide</span>
+                                            </div>
+                                        </Link>
+                                    ))}
+                                </div>
+
+                                {/* 2 Templates */}
+                                <h3 style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--text-secondary)', margin: '0 0 10px' }}>SaaS Dashboard Templates:</h3>
+                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                                    {relatedTemplates.map((t, idx) => (
                                         <Link key={idx} href={t.href} style={{ textDecoration: 'none' }}>
-                                            <div style={seoInnerCardStyle} className="glass-card-hover">
-                                                <h4 style={{ ...seoSubTitleStyle, margin: 0, fontSize: '0.82rem', color: 'var(--accent-primary)' }}>{t.name}</h4>
-                                                <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: 8, display: 'inline-flex', alignItems: 'center', gap: 4 }}>Open Tool <ArrowRight size={11} /></span>
+                                            <div style={{ ...seoInnerCardStyle, padding: '12px 14px' }} className="glass-card-hover">
+                                                <h4 style={{ margin: 0, fontSize: '0.78rem', fontWeight: 700, color: '#fff' }}>{t.name}</h4>
+                                                <span style={{ fontSize: '0.62rem', color: '#10b981', marginTop: 4, display: 'block' }}>Premium Template</span>
                                             </div>
                                         </Link>
                                     ))}
@@ -522,43 +680,6 @@ export default function ToolWrapper({ tool, children }: ToolWrapperProps) {
 
                 </div>
             </div>
-
-            {/* Feedback Modal Overlay */}
-            {feedbackOpen && (
-                <div style={{ position: 'fixed', inset: 0, zIndex: 100, background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
-                    <div className="glass-card" style={{ padding: 28, maxWidth: 440, width: '100%', border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(10,18,36,0.98)', borderRadius: 20 }}>
-                        <h3 style={{ fontFamily: 'var(--font-manrope)', fontSize: '1.2rem', fontWeight: 800, color: '#fff', margin: '0 0 8px' }}>
-                            {feedbackType === 'feedback' ? 'Send Tool Feedback' : 'Suggest a New Tool'}
-                        </h3>
-                        <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: 20, lineHeight: 1.5 }}>
-                            {feedbackType === 'feedback' 
-                                ? `Share comments or report issues concerning the ${tool.name}. Your suggestions are directly reviewed.` 
-                                : 'Describe the utility or visualization tool you need. We will try to build it in-browser for free.'}
-                        </p>
-                        <form onSubmit={handleFeedbackSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                            <input 
-                                type="email" 
-                                placeholder="Your email address (optional)" 
-                                value={feedbackEmail}
-                                onChange={e => setFeedbackEmail(e.target.value)}
-                                style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid var(--border-subtle)', borderRadius: 10, padding: 12, fontSize: '0.82rem', color: '#fff', outline: 'none' }}
-                            />
-                            <textarea 
-                                placeholder={feedbackType === 'feedback' ? "What can we improve in this tool?" : "Detail the input, calculations, and visual charts you would like to see..."}
-                                rows={4}
-                                required
-                                value={feedbackText}
-                                onChange={e => setFeedbackText(e.target.value)}
-                                style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid var(--border-subtle)', borderRadius: 10, padding: 12, fontSize: '0.82rem', color: '#fff', outline: 'none', resize: 'none' }}
-                            />
-                            <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end', marginTop: 12 }}>
-                                <button type="button" onClick={() => setFeedbackOpen(false)} className="btn-secondary" style={{ padding: '8px 16px', fontSize: '0.8rem' }}>Cancel</button>
-                                <button type="submit" className="btn-primary" style={{ padding: '8px 20px', fontSize: '0.8rem' }}>Submit</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            )}
         </div>
     );
 }
