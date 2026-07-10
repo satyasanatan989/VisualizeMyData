@@ -195,7 +195,12 @@ export function getBlogArticle(slug: string): BlogArticleData | null {
         'data-cleaning-guide': { title: 'The Ultimate Data Cleaning Guide for Spreadsheets', category: 'CSV', description: 'Step-by-step guide to removing empty cells, standardizing columns, and preparing clean data.' },
         'image-optimization-guide': { title: 'Image Optimization Best Practices for Web Performance', category: 'Images', description: 'Optimize your web image assets using crop, resize, and modern WEBP formats.' },
         'pdf-workflow-guide': { title: 'PDF Table Extraction & Workspace Workflows', category: 'PDF', description: 'Learn how to extract tabular data from PDF files and convert them to interactive charts.' },
-        'developer-utilities-guide': { title: 'Essential Developer Utilities Guide', category: 'Developer', description: 'Explore browser-based JSON formatting, UUID generation, and base64 tools.' }
+        'developer-utilities-guide': { title: 'Essential Developer Utilities Guide', category: 'Developer', description: 'Explore browser-based JSON formatting, UUID generation, and base64 tools.' },
+        'how-to-make-chart-from-excel-free': { title: 'How to Make a Chart from Excel for Free (Step-by-Step Guide)', category: 'Excel', description: 'Learn how to easily convert Microsoft Excel sheets (.xlsx/.xls) into interactive charts online for free.' },
+        'csv-data-cleaning-guide': { title: 'The Ultimate CSV Data Cleaning Guide for Database Imports', category: 'CSV', description: 'Learn how to clean, standardize, and format CSV spreadsheets before database import.' },
+        'create-dashboard-without-excel': { title: 'How to Create a Data Dashboard Without Excel or BI Software', category: 'Dashboards', description: 'Learn how to easily build interactive KPI dashboards online directly in your browser.' },
+        'free-invoice-generator-india': { title: 'Free PDF Invoice Generator online for Indian Businesses', category: 'Business', description: 'Learn how to generate professional, GST-compliant invoice PDF reports online for free.' },
+        'food-costing-calculation-guide': { title: 'How to Calculate Recipe Food Costs and Profit Margins', category: 'Food Tech', description: 'Learn the exact formulas to calculate recipe portion costs, waste yield factors, and food cost percentages.' }
     };
 
     const config = requestedSlugs[slug];
