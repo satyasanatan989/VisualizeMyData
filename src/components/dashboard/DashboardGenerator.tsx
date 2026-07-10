@@ -13,7 +13,7 @@ import DashboardTable from './DashboardTable';
 import ColorPaletteGenerator from './ColorPaletteGenerator';
 import DataStoryGenerator from './DataStoryGenerator';
 import { RefreshCw, Download, FileDown, FileImage, FileText, LayoutDashboard, Globe } from 'lucide-react';
-import * as xlsx from 'xlsx';
+import { exportToXLSX } from '@/lib/excelExporter';
 import PublishModal from '@/components/gallery/PublishModal';
 import { exportNativeExcelDashboard } from '@/lib/nativeExcelExport';
 import { toast } from 'sonner';
@@ -107,15 +107,10 @@ export default function DashboardGenerator({ parsedData, onReset }: DashboardGen
         finally { setDownloading(null); }
     }, [parsedData.fileName]);
 
-    const handleDownloadExcel = useCallback((format: 'xlsx' | 'xls' | 'xlsm') => {
+    const handleDownloadExcel = useCallback(async (format: 'xlsx' | 'xls' | 'xlsm') => {
         setDownloading(format);
         try {
-            const ws = xlsx.utils.json_to_sheet(parsedData.data);
-            const wb = xlsx.utils.book_new();
-            xlsx.utils.book_append_sheet(wb, ws, 'Data');
-            const ext = format === 'xlsm' ? 'xlsm' : format;
-            const bookType = format === 'xlsm' ? 'xlsm' : format === 'xls' ? 'xls' : 'xlsx';
-            xlsx.writeFile(wb, `${parsedData.fileName.replace(/\.[^.]+$/, '')}.${ext}`, { bookType: bookType as any });
+            await exportToXLSX(parsedData.data, parsedData.fileName);
         } catch (e) { console.error(e); }
         finally { setDownloading(null); }
     }, [parsedData]);

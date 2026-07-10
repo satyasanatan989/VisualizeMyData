@@ -23,6 +23,9 @@ import {
     UnlockPdf, ProtectPdf, DataToolbox
 } from './NewTools';
 
+import { GstCalculator, EmiCalculator, SipCalculator, IncomeTaxCalculator, FdCalculator, PpfCalculator } from './FinanceTools';
+import { FancyTextGenerator, HashtagGenerator, YoutubeTitleGenerator } from './CreatorTools';
+
 interface ToolClientRendererProps {
     tool: ToolDef;
 }
@@ -75,6 +78,9 @@ export default function ToolClientRenderer({ tool }: ToolClientRendererProps) {
             case 'character-counter': return <CharacterCounter />;
             case 'remove-duplicate-lines': return <RemoveDuplicateLines />;
             case 'password-generator': return <PasswordGenerator />;
+            case 'fancy-text-generator': return <FancyTextGenerator />;
+            case 'hashtag-generator': return <HashtagGenerator />;
+            case 'youtube-title-generator': return <YoutubeTitleGenerator />;
 
             // Dev Tools
             case 'json-formatter': return <JsonFormatter />;
@@ -119,6 +125,12 @@ export default function ToolClientRenderer({ tool }: ToolClientRendererProps) {
             case 'signature-generator': return <SignatureGenerator />;
             case 'certificate-generator': return <CertificateGenerator />;
             case 'receipt-generator': return <ReceiptGenerator />;
+            case 'gst-calculator': return <GstCalculator />;
+            case 'emi-calculator': return <EmiCalculator />;
+            case 'sip-calculator': return <SipCalculator />;
+            case 'income-tax-calculator': return <IncomeTaxCalculator />;
+            case 'fd-calculator': return <FdCalculator />;
+            case 'ppf-calculator': return <PpfCalculator />;
 
             // Food Tech Tools
             case 'milk-snf-calculator': return <MilkSnfCalculator />;

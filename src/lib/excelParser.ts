@@ -1,4 +1,4 @@
-import * as xlsx from 'xlsx';
+import ExcelJS from 'exceljs';
 
 export type DataType = 'string' | 'number' | 'date' | 'boolean';
 
@@ -18,43 +18,152 @@ export interface ParsedData {
     rowCount: number;
 }
 
+/**
+ * Robust CSV string parsing helper that handles quoted strings and comma separations correctly.
+ */
+export function parseCsvText(csvText: string): Record<string, any>[] {
+    const lines = csvText.split(/\r?\n/);
+    if (lines.length === 0) return [];
+
+    const splitCsvLine = (line: string): string[] => {
+        const result: string[] = [];
+        let current = '';
+        let inQuotes = false;
+        for (let i = 0; i < line.length; i++) {
+            const char = line[i];
+            if (char === '"') {
+                inQuotes = !inQuotes;
+            } else if (char === ',' && !inQuotes) {
+                result.push(current.trim());
+                current = '';
+            } else {
+                current += char;
+            }
+        }
+        result.push(current.trim());
+        return result;
+    };
+
+    const headers = splitCsvLine(lines[0]).map(h => h.replace(/^["']|["']$/g, '').trim());
+    const rawJson: Record<string, any>[] = [];
+
+    for (let i = 1; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (!line) continue;
+        const cells = splitCsvLine(line);
+        const rowData: Record<string, any> = {};
+        headers.forEach((header, index) => {
+            if (header) {
+                let cellVal = cells[index] !== undefined ? cells[index].replace(/^["']|["']$/g, '').trim() : '';
+                // Clean columns that start with __EMPTY
+                if (header.startsWith('__EMPTY')) return;
+
+                // Try to infer number
+                if (cellVal !== '' && !isNaN(Number(cellVal))) {
+                    rowData[header] = Number(cellVal);
+                } else if (cellVal.toLowerCase() === 'true') {
+                    rowData[header] = true;
+                } else if (cellVal.toLowerCase() === 'false') {
+                    rowData[header] = false;
+                } else {
+                    rowData[header] = cellVal;
+                }
+            }
+        });
+        if (Object.keys(rowData).length > 0) {
+            rawJson.push(rowData);
+        }
+    }
+    return rawJson;
+}
+
+/**
+ * Clean cell values (e.g. from formula results or rich texts)
+ */
+function cleanCellValue(val: any): any {
+    if (val === null || val === undefined) return '';
+    if (typeof val === 'object') {
+        if ('result' in val) {
+            return val.result;
+        } else if ('richText' in val) {
+            return val.richText.map((t: any) => t.text).join('');
+        } else if ('text' in val) {
+            return val.text;
+        }
+    }
+    return val;
+}
+
 export function parseExcelFile(file: File): Promise<ParsedData> {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
 
-        reader.onload = (e) => {
+        reader.onload = async (e) => {
             try {
-                const data = e.target?.result;
-                if (!data) throw new Error("Could not read file data");
+                const buffer = e.target?.result;
+                if (!buffer || !(buffer instanceof ArrayBuffer)) {
+                    throw new Error("Could not read file data");
+                }
 
-                const workbook = xlsx.read(data, { type: 'array' });
-                const firstSheetName = workbook.SheetNames[0];
-                const worksheet = workbook.Sheets[firstSheetName];
+                // If file is CSV, parse it textually
+                if (file.name.endsWith('.csv')) {
+                    const textDecoder = new TextDecoder('utf-8');
+                    const text = textDecoder.decode(buffer);
+                    const rawJson = parseCsvText(text);
+                    const columns = analyzeColumns(rawJson);
+                    resolve({
+                        fileName: file.name,
+                        data: rawJson,
+                        columns,
+                        rowCount: rawJson.length
+                    });
+                    return;
+                }
 
-                const rawJson = xlsx.utils.sheet_to_json<Record<string, any>>(worksheet);
+                const workbook = new ExcelJS.Workbook();
+                await workbook.xlsx.load(buffer);
+
+                const worksheet = workbook.worksheets[0];
+                if (!worksheet) {
+                    throw new Error("Spreadsheet contains no sheets.");
+                }
+
+                const rawJson: Record<string, any>[] = [];
+                const headers: string[] = [];
+
+                // Load headers
+                const headerRow = worksheet.getRow(1);
+                headerRow.eachCell((cell, colNumber) => {
+                    const headerVal = cleanCellValue(cell.value);
+                    headers[colNumber] = headerVal ? String(headerVal) : `Column_${colNumber}`;
+                });
+
+                worksheet.eachRow((row, rowNumber) => {
+                    if (rowNumber === 1) return; // Skip headers
+                    const rowData: Record<string, any> = {};
+                    row.eachCell((cell, colNumber) => {
+                        const header = headers[colNumber] || `Column_${colNumber}`;
+                        if (header.startsWith('__EMPTY')) return;
+
+                        let val = cleanCellValue(cell.value);
+                        rowData[header] = val;
+                    });
+                    if (Object.keys(rowData).length > 0) {
+                        rawJson.push(rowData);
+                    }
+                });
 
                 if (rawJson.length === 0) {
                     throw new Error("Spreadsheet is empty or invalid format.");
                 }
 
-                // Remove "__EMPTY" columns from the dataset
-                const cleanedJson = rawJson.map(row => {
-                    const newRow: Record<string, any> = {};
-                    for (const key in row) {
-                        if (!key.startsWith('__EMPTY')) {
-                            newRow[key] = row[key];
-                        }
-                    }
-                    return newRow;
-                });
-
-                const columns = analyzeColumns(cleanedJson);
+                const columns = analyzeColumns(rawJson);
 
                 resolve({
                     fileName: file.name,
-                    data: cleanedJson,
+                    data: rawJson,
                     columns,
-                    rowCount: cleanedJson.length
+                    rowCount: rawJson.length
                 });
             } catch (err) {
                 reject(err);
@@ -91,30 +200,17 @@ export async function parseGoogleSheet(url: string): Promise<ParsedData> {
     }
 
     const csvText = await response.text();
-    const workbook = xlsx.read(csvText, { type: 'string' });
-    const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-    const rawJson = xlsx.utils.sheet_to_json<Record<string, any>>(worksheet);
+    const rawJson = parseCsvText(csvText);
 
     if (rawJson.length === 0) throw new Error("Google Sheet appears to be empty.");
 
-    // Remove "__EMPTY" columns from the dataset
-    const cleanedJson = rawJson.map(row => {
-        const newRow: Record<string, any> = {};
-        for (const key in row) {
-            if (!key.startsWith('__EMPTY')) {
-                newRow[key] = row[key];
-            }
-        }
-        return newRow;
-    });
-
-    const columns = analyzeColumns(cleanedJson);
+    const columns = analyzeColumns(rawJson);
 
     return {
         fileName: 'Google Sheet',
-        data: cleanedJson,
+        data: rawJson,
         columns,
-        rowCount: cleanedJson.length,
+        rowCount: rawJson.length,
     };
 }
 

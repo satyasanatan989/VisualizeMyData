@@ -11,7 +11,7 @@ import {
     ResponsiveContainer, PieChart, Pie, Cell, Tooltip, Legend,
     BarChart, Bar, XAxis, YAxis, CartesianGrid 
 } from 'recharts';
-import * as xlsx from 'xlsx';
+import { parseExcelFile, parseCsvText } from '@/lib/excelParser';
 import { toast } from 'sonner';
 
 interface SurveyQuestion {
@@ -128,27 +128,19 @@ export default function SurveyVisualizer() {
     };
 
     // Dropzone config
-    const onDrop = React.useCallback((acceptedFiles: File[]) => {
+    const onDrop = React.useCallback(async (acceptedFiles: File[]) => {
         if (acceptedFiles.length === 0) return;
         const file = acceptedFiles[0];
         setIsLoading(true);
 
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            try {
-                const buffer = e.target?.result;
-                if (!buffer) throw new Error("Could not load file buffer.");
-                const workbook = xlsx.read(buffer, { type: 'array' });
-                const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-                const json = xlsx.utils.sheet_to_json<Record<string, any>>(worksheet);
-                loadData(json, file.name);
-            } catch (err: any) {
-                toast.error(err.message || "Failed to load spreadsheet.");
-            } finally {
-                setIsLoading(false);
-            }
-        };
-        reader.readAsArrayBuffer(file);
+        try {
+            const parsed = await parseExcelFile(file);
+            loadData(parsed.data, file.name);
+        } catch (err: any) {
+            toast.error(err.message || "Failed to load spreadsheet.");
+        } finally {
+            setIsLoading(false);
+        }
     }, []);
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -163,9 +155,12 @@ export default function SurveyVisualizer() {
     const handleLoadSample = () => {
         setIsLoading(true);
         setTimeout(() => {
-            const workbook = xlsx.read(SAMPLE_SURVEY_CSV, { type: 'string' });
-            const json = xlsx.utils.sheet_to_json<Record<string, any>>(workbook.Sheets[workbook.SheetNames[0]]);
-            loadData(json, 'Google_Forms_Sample_Export.csv');
+            try {
+                const json = parseCsvText(SAMPLE_SURVEY_CSV);
+                loadData(json, 'Google_Forms_Sample_Export.csv');
+            } catch (err: any) {
+                toast.error("Failed to load sample data.");
+            }
             setIsLoading(false);
         }, 400);
     };

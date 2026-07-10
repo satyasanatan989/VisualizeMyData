@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import { ParsedData } from '@/lib/excelParser';
 import { ArrowUp, ArrowDown, Search, Download, ChevronLeft, ChevronRight } from 'lucide-react';
-import * as xlsx from 'xlsx';
+import { exportToXLSX, exportToCSV } from '@/lib/excelExporter';
 import { toast } from 'sonner';
 
 interface DashboardTableProps {
@@ -73,21 +73,17 @@ export default function DashboardTable({ parsedData, maxRows }: DashboardTablePr
         setCurrentPage(1);
     };
 
-    const handleDownload = (format: 'csv' | 'xlsx') => {
+    const handleDownload = async (format: 'csv' | 'xlsx') => {
         if (sortedData.length === 0) {
-            toast.error("No data available to export.");
-            return;
+             toast.error("No data available to export.");
+             return;
         }
 
-        const ws = xlsx.utils.json_to_sheet(sortedData);
-        const wb = xlsx.utils.book_new();
-        xlsx.utils.book_append_sheet(wb, ws, 'FilteredData');
-        
         const baseName = fileName.replace(/\.[^.]+$/, '') + '_exported';
         if (format === 'csv') {
-            xlsx.writeFile(wb, `${baseName}.csv`, { bookType: 'csv' });
+            exportToCSV(sortedData, baseName);
         } else {
-            xlsx.writeFile(wb, `${baseName}.xlsx`, { bookType: 'xlsx' });
+            await exportToXLSX(sortedData, baseName);
         }
         toast.success(`Exported ${sortedData.length} rows as ${format.toUpperCase()}`);
     };

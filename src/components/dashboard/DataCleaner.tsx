@@ -7,7 +7,8 @@ import {
     Trash2, CheckCircle2, Download, Table2, Sparkles, 
     AlertCircle, RefreshCw, UploadCloud, FileText, Check 
 } from 'lucide-react';
-import * as xlsx from 'xlsx';
+import { parseExcelFile } from '@/lib/excelParser';
+import { exportToXLSX, exportToCSV } from '@/lib/excelExporter';
 import { toast } from 'sonner';
 
 interface CleanStats {
@@ -50,38 +51,23 @@ export default function DataCleaner() {
         setStats(null);
         
         try {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                try {
-                    const data = e.target?.result;
-                    if (!data) throw new Error("Could not read file");
-                    const workbook = xlsx.read(data, { type: 'array' });
-                    const sheetName = workbook.SheetNames[0];
-                    const sheet = workbook.Sheets[sheetName];
-                    const json = xlsx.utils.sheet_to_json<Record<string, any>>(sheet);
-                    
-                    if (json.length === 0) {
-                        throw new Error("The uploaded sheet is empty.");
-                    }
-                    
-                    // Extract headers
-                    const allKeys = new Set<string>();
-                    json.forEach(row => Object.keys(row).forEach(k => allKeys.add(k)));
-                    const headerList = Array.from(allKeys).filter(h => !h.startsWith('__EMPTY'));
-                    
-                    setHeaders(headerList);
-                    setRawData(json);
-                    setCleanedData(json); // Initially set cleaned to raw
-                    toast.success(`Successfully loaded ${json.length} rows of data.`);
-                } catch (err: any) {
-                    toast.error(err.message || "Failed to parse file.");
-                } finally {
-                    setIsLoading(false);
-                }
-            };
-            reader.readAsArrayBuffer(file);
+            const parsed = await parseExcelFile(file);
+            if (parsed.data.length === 0) {
+                throw new Error("The uploaded sheet is empty.");
+            }
+            
+            // Extract headers
+            const allKeys = new Set<string>();
+            parsed.data.forEach(row => Object.keys(row).forEach(k => allKeys.add(k)));
+            const headerList = Array.from(allKeys).filter(h => !h.startsWith('__EMPTY'));
+            
+            setHeaders(headerList);
+            setRawData(parsed.data);
+            setCleanedData(parsed.data); // Initially set cleaned to raw
+            toast.success(`Successfully loaded ${parsed.data.length} rows of data.`);
         } catch (err: any) {
-            toast.error("File reading error.");
+            toast.error(err.message || "Failed to parse file.");
+        } finally {
             setIsLoading(false);
         }
     }, []);
@@ -264,19 +250,14 @@ export default function DataCleaner() {
         }, 600);
     };
 
-    // Download functions
-    const downloadFile = (format: 'csv' | 'xlsx') => {
+    const downloadFile = async (format: 'csv' | 'xlsx') => {
         if (cleanedData.length === 0) return;
-        
-        const ws = xlsx.utils.json_to_sheet(cleanedData);
-        const wb = xlsx.utils.book_new();
-        xlsx.utils.book_append_sheet(wb, ws, 'CleanedData');
         
         const baseName = fileName.replace(/\.[^.]+$/, '') + '_cleaned';
         if (format === 'csv') {
-            xlsx.writeFile(wb, `${baseName}.csv`, { bookType: 'csv' });
+            exportToCSV(cleanedData, baseName);
         } else {
-            xlsx.writeFile(wb, `${baseName}.xlsx`, { bookType: 'xlsx' });
+            await exportToXLSX(cleanedData, baseName);
         }
         toast.success(`Cleaned dataset downloaded as ${format.toUpperCase()}!`);
     };

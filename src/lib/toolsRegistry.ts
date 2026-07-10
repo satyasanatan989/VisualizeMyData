@@ -321,6 +321,31 @@ export const QUICK_TOOLS: ToolDef[] = [
 
     // Text Tools
     {
+        slug: 'fancy-text-generator',
+        name: 'Fancy Text Generator',
+        description: 'Convert standard text into stylish, cool unicode fonts for social media bios and posts.',
+        category: 'Text Tools',
+        icon: 'Sparkles',
+        badge: 'NEW',
+    },
+    {
+        slug: 'hashtag-generator',
+        name: 'Viral Hashtag Generator',
+        description: 'Generate high-engagement, trending hashtags based on your topic keywords.',
+        category: 'Text Tools',
+        icon: 'Hash',
+        badge: 'POPULAR',
+        isPopular: true,
+    },
+    {
+        slug: 'youtube-title-generator',
+        name: 'YouTube Title & Idea Generator',
+        description: 'Get high-CTR, click-worthy titles for your YouTube videos using formula patterns.',
+        category: 'Text Tools',
+        icon: 'Youtube',
+        badge: 'NEW',
+    },
+    {
         slug: 'word-counter',
         name: 'Word Counter',
         description: 'Get live stats on words, characters, sentences, paragraphs, and reading time.',
@@ -586,6 +611,56 @@ export const QUICK_TOOLS: ToolDef[] = [
     },
 
     // Business Tools
+    {
+        slug: 'gst-calculator',
+        name: 'GST Calculator India',
+        description: 'Calculate Central GST (CGST), State GST (SGST), and Integrated GST (IGST) splits online.',
+        category: 'Business Tools',
+        icon: 'Percent',
+        badge: 'FREE',
+    },
+    {
+        slug: 'emi-calculator',
+        name: 'Home & Car Loan EMI Calculator',
+        description: 'Calculate monthly loan EMI payments, total interest payable, and amortization schedules.',
+        category: 'Business Tools',
+        icon: 'DollarSign',
+        badge: 'POPULAR',
+        isPopular: true,
+    },
+    {
+        slug: 'sip-calculator',
+        name: 'SIP Investment Mutual Fund Calculator',
+        description: 'Calculate future wealth estimates for your monthly systematic investment plans (SIP).',
+        category: 'Business Tools',
+        icon: 'TrendingUp',
+        badge: 'POPULAR',
+        isPopular: true,
+    },
+    {
+        slug: 'income-tax-calculator',
+        name: 'Income Tax Calculator India (FY 2025-26)',
+        description: 'Calculate net tax liability under the new tax regime and compare tax splits.',
+        category: 'Business Tools',
+        icon: 'Calculator',
+        badge: 'NEW',
+    },
+    {
+        slug: 'fd-calculator',
+        name: 'Fixed Deposit (FD) Calculator',
+        description: 'Calculate FD maturity amounts, compounding returns, and interest payouts.',
+        category: 'Business Tools',
+        icon: 'CircleDot',
+        badge: 'FREE',
+    },
+    {
+        slug: 'ppf-calculator',
+        name: 'Public Provident Fund (PPF) Calculator',
+        description: 'Calculate PPF maturity values, yearly interest accruals, and investment returns.',
+        category: 'Business Tools',
+        icon: 'Briefcase',
+        badge: 'FREE',
+    },
     {
         slug: 'invoice-generator',
         name: 'PDF Invoice Generator',

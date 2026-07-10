@@ -3,7 +3,7 @@
 import React from 'react';
 import { Plus, Download, FileText, Table } from 'lucide-react';
 import { ParsedData } from '@/lib/excelParser';
-import * as xlsx from 'xlsx';
+import { exportToXLSX, exportToCSV } from '@/lib/excelExporter';
 import { exportNativeExcelDashboard } from '@/lib/nativeExcelExport';
 
 interface ChartToolbarProps {
@@ -15,23 +15,12 @@ interface ChartToolbarProps {
 
 export default function ChartToolbar({ onAddNewRequest, isAdding, canExport, parsedData }: ChartToolbarProps) {
 
-    const handleExportXLSX = () => {
-        const ws = xlsx.utils.json_to_sheet(parsedData.data);
-        const wb = xlsx.utils.book_new();
-        xlsx.utils.book_append_sheet(wb, ws, "Data");
-        xlsx.writeFile(wb, `${parsedData.fileName.replace(/\.[^/.]+$/, "")}_Export.xlsx`);
+    const handleExportXLSX = async () => {
+        await exportToXLSX(parsedData.data, parsedData.fileName);
     };
 
     const handleExportCSV = () => {
-        const ws = xlsx.utils.json_to_sheet(parsedData.data);
-        const csvStr = xlsx.utils.sheet_to_csv(ws);
-        const blob = new Blob([csvStr], { type: 'text/csv' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `${parsedData.fileName.replace(/\.[^/.]+$/, "")}_Export.csv`;
-        a.click();
-        URL.revokeObjectURL(url);
+        exportToCSV(parsedData.data, parsedData.fileName);
     };
 
     return (
