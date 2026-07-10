@@ -8,7 +8,7 @@ import { trackThemeToggle } from '@/lib/analytics';
 const TOOL_LINKS = [
     { label: '📗 Excel Visualizer', href: '/excel-visualizer' },
     { label: '📋 CSV Visualizer', href: '/csv-visualizer' },
-    { label: '📕 PDF Visualizer', href: '/pdf-visualizer' },
+    { label: '📕 PDF Table to Chart', href: '/pdf-table-to-chart' },
     { label: '🔗 Google Sheets', href: '/google-sheets-visualizer' },
     { label: '🧹 Data Cleaner', href: '/data-cleaning-tool' },
     { label: '📊 Survey Visualizer', href: '/survey-visualizer' },

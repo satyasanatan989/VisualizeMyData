@@ -129,7 +129,7 @@ export default function CsvVisualizerPage() {
                         <h2>Related Visualization Tools</h2>
                         <ul>
                             <li><Link href="/excel-visualizer/">→ <strong>Free Excel Visualizer</strong></Link> — upload .xlsx or .xls spreadsheet files directly</li>
-                            <li><Link href="/pdf-visualizer/">→ <strong>PDF Table to Chart Converter</strong></Link> — extract and chart tables from PDF documents</li>
+                            <li><Link href="/pdf-table-to-chart/">→ <strong>PDF Table to Chart Converter</strong></Link> — extract and chart tables from PDF documents</li>
                             <li><Link href="/google-sheets-visualizer/">→ <strong>Google Sheets Chart Generator</strong></Link> — paste a Google Sheets URL and visualize instantly</li>
                             <li><Link href="/">→ <strong>Homepage — All Formats</strong></Link> — try any file format in one place</li>
                         </ul>

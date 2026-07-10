@@ -82,13 +82,13 @@ export const SEO_PAGES: SEOPageConfig[] = [
         file: 'pdf', action: 'chart-generator', slug: 'pdf-chart-generator',
         title: 'PDF Chart Generator – Convert PDF Tables to Charts Online',
         metaDescription: 'Extract tables from PDF documents and generate charts instantly. Free online PDF-to-chart tool. No signup, no software installation.',
-        toolHref: '/pdf-visualizer', accentColor: '#f43f5e', priority: 0.8,
+        toolHref: '/pdf-table-to-chart', accentColor: '#f43f5e', priority: 0.8,
     },
     {
         file: 'pdf', action: 'graph-maker', slug: 'pdf-graph-maker',
         title: 'PDF Graph Maker – Create Graphs from PDF Data Online',
         metaDescription: 'Turn PDF table data into professional graphs online. Upload your PDF, extract tables automatically, and visualize as bar or line charts. Free.',
-        toolHref: '/pdf-visualizer', accentColor: '#f43f5e', priority: 0.75,
+        toolHref: '/pdf-table-to-chart', accentColor: '#f43f5e', priority: 0.75,
     },
     {
         file: 'pdf', action: 'dashboard-generator', slug: 'pdf-dashboard-generator',
@@ -100,7 +100,7 @@ export const SEO_PAGES: SEOPageConfig[] = [
         file: 'pdf', action: 'data-visualizer', slug: 'pdf-data-visualizer',
         title: 'PDF Data Visualizer Online – Visualize PDF Table Data Free',
         metaDescription: 'Visualize tabular data from PDF documents as interactive charts. Free online PDF data visualization tool. Upload and analyze instantly.',
-        toolHref: '/pdf-visualizer', accentColor: '#f43f5e', priority: 0.75,
+        toolHref: '/pdf-table-to-chart', accentColor: '#f43f5e', priority: 0.75,
     },
 
     // ── Google Sheets pages ──────────────────────────────────────────────────
@@ -114,7 +114,7 @@ export const SEO_PAGES: SEOPageConfig[] = [
         file: 'google-sheets', action: 'dashboard-generator', slug: 'google-sheets-dashboard-generator',
         title: 'Google Sheets Dashboard Generator – Build Dashboards from Sheets',
         metaDescription: 'Create interactive dashboards from Google Sheets. Paste your spreadsheet link and instantly get KPI cards, charts, and data insights. Free.',
-        toolHref: '/google-sheets-dashboard', accentColor: '#8b5cf6', priority: 0.85,
+        toolHref: '/google-sheets-visualizer', accentColor: '#8b5cf6', priority: 0.85,
     },
     {
         file: 'google-sheets', action: 'data-visualizer', slug: 'google-sheets-data-visualizer',

@@ -56,10 +56,10 @@ export default function Page() {
             { q: 'Can I share the chart online?', a: 'Yes. Download the chart as PNG or PDF and share via email, Slack, Google Drive, or any platform.' },
         ]}
         related={[
-            { label: 'Excel Chart Generator', href: '/excel-chart-generator' },
-            { label: 'CSV Chart Generator', href: '/csv-chart-generator' },
-            { label: 'PDF Chart Generator', href: '/pdf-chart-generator' },
-            { label: 'Google Sheets Chart Generator', href: '/google-sheets-chart-generator' },
+            { label: 'Excel Visualizer', href: '/excel-visualizer' },
+            { label: 'CSV Visualizer', href: '/csv-visualizer' },
+            { label: 'PDF Table to Chart', href: '/pdf-table-to-chart' },
+            { label: 'Google Sheets Visualizer', href: '/google-sheets-visualizer' },
             { label: 'Dashboard Generator', href: '/dashboard-generator' },
         ]}
     />;

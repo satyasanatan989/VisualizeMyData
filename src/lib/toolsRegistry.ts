@@ -472,24 +472,6 @@ export const QUICK_TOOLS: ToolDef[] = [
 
     // Utility Tools
     {
-        slug: 'qr-code-generator',
-        name: 'QR Code Generator',
-        description: 'Create custom QR codes for websites or text and download as PNG.',
-        category: 'Utility Tools',
-        icon: 'QrCode',
-        badge: 'POPULAR',
-        isFeatured: true,
-        isPopular: true,
-    },
-    {
-        slug: 'barcode-generator',
-        name: 'Barcode Generator',
-        description: 'Create standard Code 39 barcodes for numbers and text.',
-        category: 'Utility Tools',
-        icon: 'Barcode',
-        badge: 'NEW',
-    },
-    {
         slug: 'age-calculator',
         name: 'Age Calculator',
         description: 'Calculate your exact age in years, months, days, and countdown to next birthday.',

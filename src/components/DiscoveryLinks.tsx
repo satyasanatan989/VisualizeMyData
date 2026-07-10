@@ -9,16 +9,16 @@ interface DiscoveryLink {
 const DISCOVERY_LINKS: DiscoveryLink[] = [
     { icon: '🏠', label: 'Home', href: '/' },
     { icon: '📊', label: 'Dashboard Generator', href: '/dashboard-generator' },
-    { icon: '📈', label: 'Excel Chart Generator', href: '/excel-chart-generator' },
-    { icon: '📋', label: 'CSV Chart Generator', href: '/csv-chart-generator' },
-    { icon: '📕', label: 'PDF Chart Generator', href: '/pdf-chart-generator' },
-    { icon: '🔗', label: 'Google Sheets Charts', href: '/google-sheets-chart-generator' },
+    { icon: '📈', label: 'Excel Visualizer', href: '/excel-visualizer' },
+    { icon: '📋', label: 'CSV Visualizer', href: '/csv-visualizer' },
+    { icon: '📕', label: 'PDF Table to Chart', href: '/pdf-table-to-chart' },
+    { icon: '🔗', label: 'Google Sheets Visualizer', href: '/google-sheets-visualizer' },
     { icon: '🌐', label: 'Online Chart Maker', href: '/online-chart-maker' },
-    { icon: '🆓', label: 'Free Viz Tool', href: '/free-data-visualization-tool' },
+    { icon: '🧹', label: 'Data Cleaning Tool', href: '/data-cleaning-tool' },
     { icon: '✨', label: 'Templates', href: '/templates' },
     { icon: '📝', label: 'Blog', href: '/blog' },
     { icon: '📑', label: 'Data Report', href: '/data-report-generator' },
-    { icon: '📉', label: 'Spreadsheet to Chart', href: '/spreadsheet-to-chart' },
+    { icon: '📉', label: 'Multi-Chart Generator', href: '/multi-chart-generator' },
 ];
 
 interface DiscoveryLinksProps {

@@ -1,8 +1,0 @@
-User-agent: *
-Allow: /
-
-# Sitemaps
-Sitemap: https://visualizemydata.in/sitemap.xml
-
-# Disallow admin or internal paths (none currently)
-Disallow: /api/

@@ -7,73 +7,27 @@ export const dynamic = 'force-static';
 
 const BASE_URL = 'https://visualizemydata.in';
 
-const coreTools = [
-    { path: '/', priority: 1.0, changeFrequency: 'weekly' },
-    { path: '/excel-visualizer', priority: 0.95, changeFrequency: 'monthly' },
-    { path: '/csv-visualizer', priority: 0.95, changeFrequency: 'monthly' },
-    { path: '/pdf-visualizer', priority: 0.95, changeFrequency: 'monthly' },
-    { path: '/google-sheets-visualizer', priority: 0.9, changeFrequency: 'monthly' },
-    { path: '/multi-chart-generator', priority: 0.9, changeFrequency: 'weekly' },
-    { path: '/dashboard-generator', priority: 0.95, changeFrequency: 'weekly' },
-    { path: '/data-report-generator', priority: 0.9, changeFrequency: 'weekly' },
-    { path: '/templates', priority: 0.85, changeFrequency: 'weekly' },
-    { path: '/data-analysis-tool', priority: 0.8, changeFrequency: 'monthly' },
-    { path: '/data-visualization-tool', priority: 0.8, changeFrequency: 'monthly' },
-    { path: '/data-dashboard-builder', priority: 0.85, changeFrequency: 'monthly' },
-    { path: '/create-charts-online', priority: 0.8, changeFrequency: 'monthly' },
+// ── Canonical landing pages (one per intent, no duplicates) ──────────────────
+const canonicalLandingPages = [
+    { path: '/',                         priority: 1.0,  changeFrequency: 'weekly'  },
+    { path: '/csv-visualizer',           priority: 0.95, changeFrequency: 'monthly' },
+    { path: '/excel-visualizer',         priority: 0.95, changeFrequency: 'monthly' },
+    { path: '/pdf-table-to-chart',       priority: 0.9,  changeFrequency: 'monthly' },
+    { path: '/google-sheets-visualizer', priority: 0.9,  changeFrequency: 'monthly' },
+    { path: '/online-chart-maker',       priority: 0.9,  changeFrequency: 'monthly' },
+    { path: '/multi-chart-generator',    priority: 0.9,  changeFrequency: 'weekly'  },
+    { path: '/dashboard-generator',      priority: 0.95, changeFrequency: 'weekly'  },
+    { path: '/data-report-generator',    priority: 0.9,  changeFrequency: 'weekly'  },
+    { path: '/data-analysis-tool',       priority: 0.85, changeFrequency: 'monthly' },
+    { path: '/data-cleaning-tool',       priority: 0.85, changeFrequency: 'monthly' },
+    { path: '/survey-visualizer',        priority: 0.85, changeFrequency: 'monthly' },
+    { path: '/dashboard-templates',      priority: 0.85, changeFrequency: 'weekly'  },
+    { path: '/excel-formula-generator',  priority: 0.8,  changeFrequency: 'monthly' },
+    { path: '/csv-cleaner',              priority: 0.8,  changeFrequency: 'monthly' },
+    { path: '/templates',                priority: 0.8,  changeFrequency: 'weekly'  },
 ] as const;
 
-const excelSeoPages = [
-    '/excel-chart-generator',
-    '/excel-dashboard-generator',
-    '/excel-data-visualizer',
-    '/excel-graph-maker',
-    '/excel-to-bar-chart',
-    '/excel-to-line-chart',
-    '/excel-to-pie-chart',
-    '/excel-to-scatter-plot',
-    '/excel-formula-generator',
-];
-
-const csvSeoPages = [
-    '/csv-chart-generator',
-    '/csv-dashboard-generator',
-    '/csv-data-visualizer',
-    '/csv-graph-maker',
-    '/csv-to-bar-chart',
-    '/csv-to-line-chart',
-    '/csv-to-pie-chart',
-    '/csv-cleaner',
-];
-
-const pdfSeoPages = [
-    '/pdf-chart-generator',
-    '/pdf-data-visualization',
-    '/pdf-data-visualizer',
-    '/pdf-dashboard-generator',
-    '/pdf-graph-maker',
-    '/pdf-table-to-chart',
-    '/pdf-to-bar-chart',
-];
-
-const googleSheetsSeoPages = [
-    '/google-sheets-chart-generator',
-    '/google-sheets-dashboard',
-    '/google-sheets-dashboard-generator',
-    '/google-sheets-data-visualizer',
-    '/google-sheets-graph-maker',
-];
-
-const generalSeoPages = [
-    '/online-chart-maker',
-    '/free-data-visualization-tool',
-    '/spreadsheet-to-chart',
-    '/data-to-chart-online',
-    '/data-cleaning-tool',
-    '/dashboard-templates',
-    '/survey-visualizer',
-];
-
+// ── Learn / Blog ─────────────────────────────────────────────────────────────
 const learnPages = [
     '/learn',
     '/learn/what-is-data-visualization',
@@ -105,8 +59,15 @@ const blogPages = [
     '/blog/image-optimization-guide',
     '/blog/pdf-workflow-guide',
     '/blog/developer-utilities-guide',
+    // Phase 2 new blog posts
+    '/blog/how-to-make-chart-from-excel-free',
+    '/blog/csv-data-cleaning-guide',
+    '/blog/create-dashboard-without-excel',
+    '/blog/free-invoice-generator-india',
+    '/blog/food-costing-calculation-guide',
 ];
 
+// ── Category pages ────────────────────────────────────────────────────────────
 const categoryPages = [
     '/category/dashboard-tools',
     '/category/excel-tools',
@@ -120,6 +81,7 @@ const categoryPages = [
     '/category/food-science-tools',
 ];
 
+// ── Trust / Info pages ────────────────────────────────────────────────────────
 const infoPages = [
     '/about',
     '/contact',
@@ -134,30 +96,15 @@ const infoPages = [
 export default function sitemap(): MetadataRoute.Sitemap {
     const now = new Date();
 
-    // Core tools — highest authority
-    const coreEntries: MetadataRoute.Sitemap = coreTools.map((p) => ({
+    // Canonical landing pages — highest authority
+    const landingEntries: MetadataRoute.Sitemap = canonicalLandingPages.map((p) => ({
         url: `${BASE_URL}${p.path}`,
         lastModified: now,
         changeFrequency: p.changeFrequency as MetadataRoute.Sitemap[0]['changeFrequency'],
         priority: p.priority,
     }));
 
-    // SEO landing pages — 0.8 priority
-    const allSeoPages = [
-        ...excelSeoPages,
-        ...csvSeoPages,
-        ...pdfSeoPages,
-        ...googleSheetsSeoPages,
-        ...generalSeoPages,
-    ];
-    const seoEntries: MetadataRoute.Sitemap = allSeoPages.map((path) => ({
-        url: `${BASE_URL}${path}`,
-        lastModified: now,
-        changeFrequency: 'monthly',
-        priority: 0.8,
-    }));
-
-    // Learn / blog — 0.7-0.8 priority
+    // Learn / Blog — 0.7–0.8 priority
     const contentEntries: MetadataRoute.Sitemap = [
         ...[...learnPages, ...blogPages].map((path) => ({
             url: `${BASE_URL}${path}`,
@@ -171,11 +118,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const categoryEntries: MetadataRoute.Sitemap = categoryPages.map((path) => ({
         url: `${BASE_URL}${path}`,
         lastModified: now,
-        changeFrequency: 'weekly',
+        changeFrequency: 'weekly' as const,
         priority: 0.85,
     }));
 
-    // Gallery Pages — 0.8 priority
+    // Gallery pages — 0.8 priority
     const galleryEntries: MetadataRoute.Sitemap = [
         {
             url: `${BASE_URL}/gallery`,
@@ -188,18 +135,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
             lastModified: now,
             changeFrequency: 'monthly' as const,
             priority: 0.8,
-        }))
+        })),
     ];
 
-    // Info pages — low priority
-    const infoEntries: MetadataRoute.Sitemap = infoPages.map((path) => ({
-        url: `${BASE_URL}${path}`,
-        lastModified: now,
-        changeFrequency: 'yearly',
-        priority: path === '/about' || path === '/contact' ? 0.6 : 0.3,
-    }));
-
-    // Quick tools entries
+    // Quick tools — 0.8 priority
     const quickToolsEntries: MetadataRoute.Sitemap = [
         {
             url: `${BASE_URL}/tools`,
@@ -212,16 +151,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
             lastModified: now,
             changeFrequency: 'monthly' as const,
             priority: 0.8,
-        }))
+        })),
     ];
 
+    // Info pages — lowest priority
+    const infoEntries: MetadataRoute.Sitemap = infoPages.map((path) => ({
+        url: `${BASE_URL}${path}`,
+        lastModified: now,
+        changeFrequency: 'yearly' as const,
+        priority: path === '/about' || path === '/contact' ? 0.6 : 0.3,
+    }));
+
     return [
-        ...coreEntries,
-        ...seoEntries,
+        ...landingEntries,
         ...contentEntries,
         ...categoryEntries,
         ...galleryEntries,
         ...quickToolsEntries,
-        ...infoEntries
+        ...infoEntries,
     ];
 }

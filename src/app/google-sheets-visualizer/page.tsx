@@ -138,7 +138,7 @@ export default function GoogleSheetsVisualizerPage() {
                         <ul>
                             <li><Link href="/excel-visualizer/">→ <strong>Free Excel Visualizer</strong></Link> — upload .xlsx files and visualize spreadsheet data</li>
                             <li><Link href="/csv-visualizer/">→ <strong>Free CSV Chart Generator</strong></Link> — upload CSV files and create interactive charts</li>
-                            <li><Link href="/pdf-visualizer/">→ <strong>PDF Table Extractor</strong></Link> — extract tables from PDFs and convert to charts</li>
+                            <li><Link href="/pdf-table-to-chart/">→ <strong>PDF Table Extractor</strong></Link> — extract tables from PDFs and convert to charts</li>
                             <li><Link href="/">→ <strong>Homepage — All Formats</strong></Link> — use all tools in one place</li>
                         </ul>
                     </div>

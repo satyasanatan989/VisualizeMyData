@@ -133,7 +133,7 @@ export default function ExcelVisualizerPage() {
                         </p>
                         <ul>
                             <li><Link href="/csv-visualizer/">→ <strong>Free CSV to Chart Converter</strong></Link> — visualize raw CSV data files instantly</li>
-                            <li><Link href="/pdf-visualizer/">→ <strong>PDF Table Extractor &amp; Visualizer</strong></Link> — extract tables from PDFs and chart them</li>
+                            <li><Link href="/pdf-table-to-chart/">→ <strong>PDF Table Extractor &amp; Visualizer</strong></Link> — extract tables from PDFs and chart them</li>
                             <li><Link href="/google-sheets-visualizer/">→ <strong>Google Sheets Visualizer</strong></Link> — paste a public Sheets URL and generate charts</li>
                             <li><Link href="/">→ <strong>Back to Homepage</strong></Link> — try all formats in one place</li>
                         </ul>

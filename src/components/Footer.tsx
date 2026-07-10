@@ -123,7 +123,7 @@ export default function Footer() {
                             {[
                                 { label: 'Excel Visualizer', href: '/excel-visualizer' },
                                 { label: 'CSV Visualizer', href: '/csv-visualizer' },
-                                { label: 'PDF Visualizer', href: '/pdf-visualizer' },
+                                { label: 'PDF Table to Chart', href: '/pdf-table-to-chart' },
                                 { label: 'Google Sheets', href: '/google-sheets-visualizer' },
                                 { label: 'Dashboard Creator', href: '/dashboard-generator' },
                                 { label: 'Visual Templates', href: '/templates' },
@@ -143,12 +143,12 @@ export default function Footer() {
                         <h4 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: 16, fontSize: '0.82rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Resources</h4>
                         <nav style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                             {[
-                                { label: 'Excel Chart Generator', href: '/excel-chart-generator' },
-                                { label: 'CSV Chart Generator', href: '/csv-chart-generator' },
-                                { label: 'PDF Chart Generator', href: '/pdf-chart-generator' },
-                                { label: 'Sheets Chart Maker', href: '/google-sheets-chart-generator' },
+                                { label: 'Excel Chart Maker', href: '/excel-visualizer' },
+                                { label: 'CSV Chart Maker', href: '/csv-visualizer' },
+                                { label: 'PDF Data Extractor', href: '/pdf-table-to-chart' },
+                                { label: 'Sheets Visualizer', href: '/google-sheets-visualizer' },
                                 { label: 'Online Chart Maker', href: '/online-chart-maker' },
-                                { label: 'Free Viz Tool', href: '/free-data-visualization-tool' },
+                                { label: 'Data Analysis Tool', href: '/data-analysis-tool' },
                             ].map(l => (
                                 <Link key={l.href} href={l.href} style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.82rem', transition: 'color 0.15s' }}
                                     onMouseEnter={e => (e.target as HTMLElement).style.color = 'var(--text-primary)'}
