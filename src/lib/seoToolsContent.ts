@@ -718,6 +718,162 @@ const RAW_SEO_TOOLS_CONTENT: Record<string, ToolSEOData> = {
             { question: 'Does the converter support scientific units?', answer: 'We support standard metric and imperial units. Advanced scientific units are not supported in this simple utility.' },
             { question: 'Is my data private?', answer: 'Yes. All conversions happen locally on your device. Your data is never sent to our servers.' }
         ]
+    },
+    'gst-calculator': {
+        seoTitle: 'GST Calculator India – Free Online Tax Tool | VisualizeMyData',
+        seoDescription: 'Calculate GST payments online for free without any login. Determine net and gross amounts with cgst, sgst, and igst splits instantly.',
+        introduction: 'Navigating the Goods and Services Tax framework in India requires precision to avoid accounting discrepancies and regulatory mismatches. The GST Calculator India provides a robust, browser-based sandbox environment that simplifies this calculation for business owners, freelancers, and accountants. Intra-state supplies require splitting the tax amount equally between Central GST and State GST, whereas inter-state transactions involve Integrated GST. Our local computation model ensures that your proprietary billing parameters, invoices, and product costs remain confidential and are never uploaded to external databases. By keeping your accounting data inside your browser\'s memory, this interface protects you from server-side security vulnerabilities while executing complex tax splits with zero latency.',
+        howItWorks: 'The calculation engine handles two distinct tax computation modes: adding tax to a net value or extracting tax from a gross amount. When adding tax, the calculation is straight: Tax = Net Price × GST Rate / 100. For reverse calculations where you must extract tax from an inclusive price, the formula is: Tax = Inclusive Price − [Inclusive Price / (1 + GST Rate / 100)]. The system automatically takes your entered value, checks the mode, applies the appropriate mathematical formula, and calculates the tax splits. It divides the tax into 50% CGST and 50% SGST for local transactions, or registers it as 100% IGST for inter-state deals.',
+        features: [
+            'Direct client-side privacy keeps your billing inputs fully secured on your device.',
+            'Calculates both forward GST addition and reverse GST extraction modes.',
+            'Computes precise Central, State, and Integrated tax division splits.',
+            'Saves calculations to local storage for quick bookkeeping review.'
+        ],
+        technicalDetails: 'The computational logic is written in vanilla TypeScript, operating directly on the local browser document thread. By utilizing standard floating-point arithmetic with defensive rounding techniques (multiplying to integers before division), the tool prevents classic binary floating-point inaccuracy. Output values are displayed up to two decimal places, rendering splits in real-time as you modify the input fields. No network packets are dispatched during this operation.',
+        useCases: [
+            'Freelancers in Mumbai billing clients in Delhi and calculating IGST splits.',
+            'Retail shopkeepers in Chennai determining the pre-tax base price of inclusive products.',
+            'Startups drafting compliant invoices for tax audits and internal reports.'
+        ],
+        applicationCategory: 'UtilityApplication',
+        faqs: [
+            { question: 'How does the reverse GST calculation work?', answer: 'The reverse calculation extracts tax from an inclusive price. The formula used is Base Price = Inclusive Price / (1 + Rate/100). The total GST is the difference between the inclusive price and this calculated base price.' },
+            { question: 'What is the split between CGST and SGST?', answer: 'For intra-state supply of goods or services, the tax is divided equally between CGST and SGST. For example, an 18% slab is split into 9% CGST and 9% SGST.' },
+            { question: 'Are my business invoicing details uploaded to the server?', answer: 'No. All calculations occur inside your local browser memory sandbox. Your invoice figures and tax rates are completely private and never leave your computer.' },
+            { question: 'What are the common rates of GST in India?', answer: 'The standard slabs are 5%, 12%, 18%, and 28%. These rates are revised periodically by the GST Council; check official resources to confirm current slabs for your industry.' },
+            { question: 'How does this tool handle fractional decimal calculations?', answer: 'The code uses Javascript rounding utilities to limit outputs to two decimal points, ensuring compliance with standard Indian accounting practices.' }
+        ]
+    },
+    'emi-calculator': {
+        seoTitle: 'EMI Calculator – Home & Car Loan EMI Tool | VisualizeMyData',
+        seoDescription: 'Calculate monthly loan EMI payments online for free with no login. Generate full amortization tables and calculate total interest splits locally.',
+        introduction: 'Planning a major debt commitment like a home or car loan requires a deep understanding of your long-term debt liabilities. The Loan EMI Calculator provides an interactive portal designed to model reducing-balance loan interest splits. Borrowers can simulate different combinations of loan amounts, interest rates, and tenures to find a monthly payment that fits their cash flow budget. Unlike other portals that capture your financial intent and target you with aggressive banking ads, this tool runs entirely on your local machine. Your personal financial variables remain safely stored in your browser session, giving you a private sandbox to plan your financial milestones with confidence.',
+        howItWorks: 'The mathematical core utilizes the standard reducing-balance amortizing equation: EMI = P × r × (1 + r)^n / ((1 + r)^n − 1). Here, P represents the principal loan amount, r is the monthly interest rate (annual rate divided by 12 and then divided by 100), and n is the total tenure in months. The code processes these input variables, computes the recurring monthly installment, and calculates the total interest payable by subtracting the original principal from the sum of all monthly installments.',
+        features: [
+            'Client-side execution keeps your loan and borrowing details 100% private.',
+            'Computes interest payouts using the standard reducing-balance formula.',
+            'Generates complete monthly amortization schedules for tenure reviews.',
+            'Interactive charts display principal-to-interest ratios in real-time.'
+        ],
+        technicalDetails: 'This utility is engineered with reactive React hooks that trigger recalculations on input modifications. It dynamically constructs a monthly repayment array to build the amortization tables. The calculations use exponential variables which are protected against overflow errors. The output renders immediately, compiling into static components during the production build step.',
+        useCases: [
+            'Prospective homebuyers in Delhi estimating monthly payments for a 15-year housing loan.',
+            'Car buyers comparing EMI variations across different bank loan offers.',
+            'Financial planners structuring early loan prepayment strategies for clients.'
+        ],
+        applicationCategory: 'UtilityApplication',
+        faqs: [
+            { question: 'What is the reducing-balance EMI formula?', answer: 'It calculates interest on the outstanding loan balance rather than the original principal. The monthly interest drops as the principal is repaid over time.' },
+            { question: 'How does loan tenure affect total interest?', answer: 'A longer tenure reduces your monthly EMI payments but increases the total interest paid over the life of the loan, making it more expensive.' },
+            { question: 'Are my salary or loan details stored on a database?', answer: 'No. Every computation runs locally in your browser memory. We do not store or transmit any financial inputs to external servers.' },
+            { question: 'What is the difference between flat and reducing rates?', answer: 'Flat rates compute interest on the entire original principal, which costs much more. Reducing rates compute interest on the remaining balance. Always choose reducing rates.' },
+            { question: 'Can I calculate the impact of loan prepayments here?', answer: 'Yes. By adjusting the tenure or loan amount parameters, you can simulate how lump-sum prepayments shorten your loan period and save interest.' }
+        ]
+    },
+    'sip-calculator': {
+        seoTitle: 'SIP Calculator – Mutual Fund Investment Tool | VisualizeMyData',
+        seoDescription: 'Calculate mutual fund SIP maturity values for free with no login. Compare compound returns and visualize future wealth splits locally.',
+        introduction: 'Systematic Investment Plans offer a disciplined path to wealth creation by leveraging compounding returns in equity mutual funds. The SIP Mutual Fund Calculator provides a private, client-side planning dashboard for retail investors in India. By simulating regular monthly deposits over long horizons, you can estimate the future value of your financial portfolio. The tool is designed to model the power of rupee-cost averaging, helping you understand how consistent investing reduces volatility. Because all parameters are calculated locally on your device, you can plan for early retirement or education goals without sharing your wealth milestones with third-party tracking portals.',
+        howItWorks: 'The math behind systematic investments utilizes the future value of an annuity-due formula: FV = P × [((1 + i)^n − 1) / i] × (1 + i). In this equation, P is the monthly investment amount, i is the periodic interest rate (annual return rate / 12 / 100), and n is the total number of monthly deposits. The tool processes these inputs to calculate the maturity amount, total invested capital, and estimated wealth gain.',
+        features: [
+            'Enforces 100% client-side privacy, keeping your wealth goals secure on your machine.',
+            'Applies the annuity-due future value formula for compounding calculations.',
+            'Displays clear splits between invested capital and accrued return wealth.',
+            'Operates offline, allowing financial planning without internet connectivity.'
+        ],
+        technicalDetails: 'The calculation script is implemented inside a React component using optimized state hooks. It handles compounding variables safely, limiting potential floating-point errors. Returns are represented as mathematical assumptions rather than historical guarantees. The output renders instantly in the UI with full responsive layout grids.',
+        useCases: [
+            'Salaried professionals in Bengaluru planning retirement portfolios with monthly SIPs.',
+            'Parents estimating the maturity value of 10-year mutual fund plans for child education.',
+            'Young investors modeling the compounding effect of starting small SIP investments early.'
+        ],
+        applicationCategory: 'UtilityApplication',
+        faqs: [
+            { question: 'What does a SIP calculator estimate?', answer: 'It estimates the future value of regular monthly investments in mutual funds based on an assumed annual compounding return rate.' },
+            { question: 'Are mutual fund returns guaranteed in this calculation?', answer: 'No. Mutual fund investments are subject to market risks. The returns entered are hypothetical projections and not guaranteed future outcomes.' },
+            { question: 'How does rupee-cost averaging help in SIPs?', answer: 'You buy more units when prices are low and fewer when they are high. This averages out the cost of your investments over time.' },
+            { question: 'What tax applies to SIP returns in India?', answer: 'Long-Term Capital Gains (LTCG) and Short-Term Capital Gains (STCG) taxes apply to mutual fund withdrawals depending on the holding period and asset class.' },
+            { question: 'Is my financial profile uploaded to any server?', answer: 'No. VisualizeMyData operates completely in your local browser sandbox. Your investment amounts and wealth calculations are kept confidential on your device.' }
+        ]
+    },
+    'income-tax-calculator': {
+        seoTitle: 'Income Tax Calculator India – FY 2025-26 New Regime | VisualizeMyData',
+        seoDescription: 'Calculate tax liabilities under the new tax regime online for free with no login. Compare standard deductions and tax splits locally.',
+        introduction: 'Understanding personal tax liabilities under the Indian Income Tax Act is essential for effective financial planning and compliance. The Income Tax Calculator India provides a private client-side interface to calculate net tax liabilities, standard deductions, and cess additions. The app focuses on the progressive tax slabs of the new tax regime, helping you estimate take-home pay. Since tax decisions require inputting sensitive salary data, deductions, and bonuses, uploading this data to a remote host raises privacy concerns. Our tool runs calculations entirely in your browser\'s active sandbox, ensuring that your salary data and tax computations remain private and secure on your device.',
+        howItWorks: 'The calculation engine takes your gross salary and applies standard deductions (e.g., ₹75,000 for the new regime) to determine taxable income. It then applies the progressive marginal slab rates: up to 4L Nil, 4-8L 5%, 8-12L 10%, 12-16L 15%, 16-20L 20%, and 20L+ 25%. A marginal rebate under Section 87A is calculated if taxable income falls below the rebate limits. Finally, a 4% Health and Education Cess is added to the base tax.',
+        features: [
+            'Zero server uploads ensure your salary details are processed in-browser.',
+            'Calculates standard deduction adjustments and Section 87A rebates.',
+            'Applies the 4% Health and Education Cess to calculate final tax.',
+            'Provides a responsive layout for mobile, tablet, and desktop viewports.'
+        ],
+        technicalDetails: 'The calculation logic iterates through tax slab thresholds dynamically. Slabs and rates are defined as configurable memory arrays to allow easy updates in future releases. It uses conditional statements to verify rebate eligibility under Section 87A, rounding values to the nearest rupee.',
+        useCases: [
+            'IT professionals in Hyderabad calculating tax liability under the new regime.',
+            'HR professionals estimating net take-home salary configurations for new hires.',
+            'Tax consultants running quick tax simulations for client consultations.'
+        ],
+        applicationCategory: 'UtilityApplication',
+        faqs: [
+            { question: 'What are the tax slabs for the new regime in India?', answer: 'Slabs are revised periodically in Union Budgets. The progressive rates apply above the exemption limit up to 25% for taxable income above 20L.' },
+            { question: 'How does the standard deduction work under the new regime?', answer: 'A standard deduction of ₹75,000 (or the current budget limit) is subtracted from your gross salary before tax calculations begin, reducing taxable income.' },
+            { question: 'What is the Section 87A rebate?', answer: 'It provides a tax rebate for individuals with taxable income below a certain threshold, effectively reducing their tax liability to zero.' },
+            { question: 'What is the 4% Health and Education Cess?', answer: 'It is an additional tax calculated on top of your base income tax liability to fund government health and education initiatives.' },
+            { question: 'Does this calculator save my salary data?', answer: 'No. All calculations occur locally in your browser. Your data is cleared from memory as soon as you close the browser tab.' }
+        ]
+    },
+    'fd-calculator': {
+        seoTitle: 'Fixed Deposit (FD) Calculator – Compounding Return Tool | VisualizeMyData',
+        seoDescription: 'Calculate fixed deposit maturity values and compounding returns online for free with no login. View interest payouts locally.',
+        introduction: 'Fixed Deposits remain a popular low-risk investment for saving capital in India due to their guaranteed returns. The Fixed Deposit Calculator provides a private, client-side tool to calculate maturity values and compounding interest. Users can test different principal amounts, interest rates, and durations to see the impact of compounding frequencies. Because all calculations run in your browser\'s active memory, you can compare bank offers without sharing your investment capital amounts or financial goals with external tracking servers.',
+        howItWorks: 'The maturity amount is calculated using the compound interest formula: Maturity = P × (1 + r/n)^(n×t). Here, P is the principal investment amount, r is the annual nominal interest rate (as a decimal), n is the compounding frequency per year (e.g., 4 for quarterly compounding), and t is the total tenure in years. The accrued interest is calculated by subtracting the principal from the maturity amount.',
+        features: [
+            '100% client-side privacy ensures your deposit details are kept secure.',
+            'Supports monthly, quarterly, half-yearly, and yearly compounding options.',
+            'Displays clear interest splits and total maturity values instantly.',
+            'Works offline without an active internet connection once loaded.'
+        ],
+        technicalDetails: 'The calculation script uses React state hooks to trigger calculations on input change. It handles compounding variables with standard floating-point operations. The output is rounded to the nearest integer, ensuring accurate projections.',
+        useCases: [
+            'Retirees in Chennai calculating quarterly interest payouts from bank FDs.',
+            'Savers comparing maturity returns across public and private sector banks.',
+            'Investors planning short-term cash reserves for home down payments.'
+        ],
+        applicationCategory: 'UtilityApplication',
+        faqs: [
+            { question: 'What is the formula for quarterly compounding?', answer: 'The formula is Maturity = P × (1 + r/4)^(4×t), where interest compounding occurs four times a year, yielding higher returns than simple interest.' },
+            { question: 'Is FD interest taxable in India?', answer: 'Yes. Interest earned is fully taxable according to your income tax slab. Banks also deduct Tax Deducted at Source (TDS) if interest exceeds limits.' },
+            { question: 'Are fixed deposit returns safe in India?', answer: 'Yes. Bank deposits are insured by the DICGC up to a maximum of ₹5 lakh per bank, covering both principal and interest.' },
+            { question: 'Can I withdraw my fixed deposit early?', answer: 'Yes, but banks typically charge a premature withdrawal penalty (usually 0.5% to 1% lower interest than the contracted rate).' },
+            { question: 'Is my deposit amount shared with third parties?', answer: 'No. All calculations occur locally in your browser memory. We do not store or transmit any inputs to external servers.' }
+        ]
+    },
+    'ppf-calculator': {
+        seoTitle: 'Public Provident Fund (PPF) Calculator – EEE Tax Tool | VisualizeMyData',
+        seoDescription: 'Calculate PPF maturity values and yearly interest compounding online for free with no login. Track long-term retirement savings locally.',
+        introduction: 'The Public Provident Fund is a popular tax-saving and retirement investment vehicle backed by the Government of India. The PPF Calculator provides a private, client-side interface to estimate maturity values and yearly interest compounding. PPF features a 15-year lock-in period and Exempt-Exempt-Exempt (EEE) tax status. Because all calculations run in your browser\'s active memory, you can model your retirement savings without sharing your yearly contributions or financial goals with external tracking servers.',
+        howItWorks: 'The future value of PPF contributions is calculated using the compound interest formula: F = P × [((1 + r)^t − 1) / r] × (1 + r). Here, P is the yearly contribution amount, r is the annual interest rate (compounded annually), and t is the tenure in years. The interest is computed on the lowest balance between the 5th and the last day of each month, compounding at the end of the fiscal year.',
+        features: [
+            'Client-side processing ensures your yearly contribution details remain private.',
+            'Applies the annual compounding formula for long-term PPF projections.',
+            'Displays detailed year-by-year balance schedules and interest splits.',
+            'Works offline, allowing financial planning without internet connectivity.'
+        ],
+        technicalDetails: 'The script calculates the interest and balance accumulation year-by-year using loop structures. Interest rates are defined in code memory to allow easy updates in future releases. It handles contribution limits dynamically, enforcing the ₹1.5 lakh annual ceiling.',
+        useCases: [
+            'Salaried workers calculating tax savings under Section 80C with PPF.',
+            'Parents building long-term education funds for children over 15 years.',
+            'Self-employed individuals planning retirement savings using government schemes.'
+        ],
+        applicationCategory: 'UtilityApplication',
+        faqs: [
+            { question: 'What deposit limits apply to a PPF account?', answer: 'The minimum contribution is ₹500 and the maximum is ₹1.5 lakh per fiscal year. Contributions above ₹1.5 lakh do not earn interest.' },
+            { question: 'What is the EEE tax status of PPF?', answer: 'EEE stands for Exempt-Exempt-Exempt. Contributions are tax-exempt, interest earned is tax-exempt, and maturity proceeds are also tax-exempt.' },
+            { question: 'How is PPF interest calculated?', answer: 'Interest is calculated monthly on the lowest balance between the 5th and the end of the month, and compounded annually on March 31st.' },
+            { question: 'Can I extend my PPF account after 15 years?', answer: 'Yes. You can extend your PPF account in blocks of 5 years, with or without making additional contributions.' },
+            { question: 'Are my yearly deposits stored on a server?', answer: 'No. All calculations occur locally in your browser memory. We do not store or transmit any inputs to external servers.' }
+        ]
     }
 };
 
