@@ -82,9 +82,9 @@ export default function AboutPage() {
                             </div>
                             <div>
                                 <h3 style={{ margin: '0 0 4px', fontSize: '1rem', fontWeight: 800, color: 'var(--text-primary)' }}>Prabhash Kumar</h3>
-                                <p style={{ margin: '0 0 10px', fontSize: '0.72rem', color: 'var(--accent-primary)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>Founder &amp; Senior Product Engineer</p>
+                                <p style={{ margin: '0 0 10px', fontSize: '0.72rem', color: 'var(--accent-primary)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em' }}>Founder &amp; Certified Food Technologist</p>
                                 <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                                    Prabhash Kumar is an experienced Full-Stack Developer, SEO Architect, and Information Systems Engineer. He designed and engineered VisualizeMyData with the goal of creating a client-side productivity platform that operates with zero database footprints, ensuring 100% privacy compliance.
+                                    Prabhash Kumar is a B.Tech graduate in Food Science and Technology from Dr. NTR College of Food Science and Technology (ANGRAU), certified in ISO 22000 Internal Auditing, FSSC 22000 V7, HACCP, and Six Sigma (Yellow Belt). During his QA/QC tenure at Bikanervala Foods, he authored 200+ standard operating procedures and 140+ quality log sheets and implemented HACCP plans in live production — experience that directly shaped this site&apos;s Food Technology calculators (SNF, Gerber fat, FFA, shelf life, HACCP decision tree). He built VisualizeMyData as a fully client-side, zero-database platform where every tool runs privately in the user&apos;s own browser, and he personally tests each tool against real-world data before publishing.
                                 </p>
                             </div>
                         </div>
